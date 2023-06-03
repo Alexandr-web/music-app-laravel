@@ -1,0 +1,19 @@
+@import "../../node_modules/normalize.css/normalize.css";
+@import "./vars.scss";
+@import "./fonts.scss";
+
+*,
+*::after,
+*::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    resize: none;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
