@@ -11,9 +11,23 @@
     list-style-type: none;
     resize: none;
     text-decoration: none;
+    outline: none;
+}
+
+body {
+    font-family: "Inter";
+    background-color: $white;
+    color: $black;
 }
 
 img {
     max-width: 100%;
     height: auto;
+}
+
+.container {
+    max-width: 1440px;
+    height: 100%;
+    padding: 0 10px;
+    margin: 0 auto;
 }

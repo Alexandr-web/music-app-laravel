@@ -1,1 +1,139 @@
 @import "./global.scss";
+
+.auth {
+    padding: 10px 0;
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        width: 50%;
+    }
+}
+
+.title {
+    margin-bottom: 15px;
+}
+
+.form {
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    &__field {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__label {
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: $grey;
+    }
+
+    &__input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        color: $black;
+        border: 1px solid $grey;
+        background-color: $white;
+        transition: border-color .3s;
+        -webkit-box-shadow: inset 0 0 0 50px $white;
+        -webkit-text-fill-color: $black;
+
+        &:focus {
+            border-color: $blue;
+        }
+
+        &-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 15px;
+
+            &-btn {
+                display: flex;
+                padding: 10px;
+                justify-content: center;
+                align-items: center;
+                background-color: $lightGrey;
+            }
+        }
+
+        &-area {
+            display: flex;
+        }
+
+        &-block {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                transition: transform .2s;
+                transform: translateY(100%);
+                border-radius: 0 0 5px 5px;
+            }
+
+            &--invalid::after {
+                transform: translateY(0);
+                background-color: $red;
+            }
+
+            &--valid::after {
+                transform: translateY(0);
+                background-color: $green;
+            }
+        }
+    }
+
+    &__submit {
+        background-color: $blue;
+        color: $white;
+        width: 50%;
+    }
+
+    &__addition {
+        text-align: center;
+        margin-top: 25px;
+    }
+}
+
+.btn {
+    cursor: pointer;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+
+    &:disabled {
+        opacity: .8;
+        cursor: not-allowed;
+    }
+}
+
+.link {
+    color: $blue;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: inline-block;
+}
