@@ -1,7 +1,7 @@
-function uploadAvatar(selectorInput, selectorImg, selectorAvatarText, selectorLoader) {
+function uploadFile(selectorInput, selectorImg, selectorText, selectorLoader) {
 	const input = document.querySelector(selectorInput);
-	const avatar = document.querySelector(selectorImg);
-	const text = document.querySelector(selectorAvatarText);
+	const img = document.querySelector(selectorImg);
+	const text = document.querySelector(selectorText);
 	const loader = document.querySelector(selectorLoader);
 
 	input.addEventListener("change", (event) => {
@@ -13,9 +13,9 @@ function uploadAvatar(selectorInput, selectorImg, selectorAvatarText, selectorLo
 		loader.classList.remove("hide");
 
 		reader.onload = () => {
-			avatar.src = reader.result;
+			img.src = reader.result;
 			text.classList.add("hide");
-			avatar.classList.remove("hide");
+			img.classList.remove("hide");
 			loader.classList.add("hide");
 		};
 		reader.onerror = () => {
@@ -25,4 +25,4 @@ function uploadAvatar(selectorInput, selectorImg, selectorAvatarText, selectorLo
 	});
 }
 
-export default uploadAvatar;
+export default uploadFile;

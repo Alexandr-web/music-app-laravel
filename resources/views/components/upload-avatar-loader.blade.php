@@ -1,1 +1,0 @@
-<span class="avatar--loader hide"></span>
