@@ -84,6 +84,7 @@
         "no-case-declarations": "off",
         "camelcase": "off",
         "lines-between-class-members": "off",
-        "no-loop-func": "off"
+        "no-loop-func": "off",
+        "no-unused-expressions": "off"
     }
 }

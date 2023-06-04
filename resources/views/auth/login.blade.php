@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="btn form__submit" type="submit" value="Войти" disabled>
+                        <input class="btn form__submit" type="submit" value="Войти">
                     </div>
                     <div class="form__addition">
                         <p class="form__addition-desc">
