@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 
 Route::prefix('auth')->group(function () {
     Route::view('/login', 'auth.login');
     Route::view('/registration', 'auth.registration');
+	Route::post('/login', [UserController::class, 'login']);
 });
 
 Route::view('/', 'index');

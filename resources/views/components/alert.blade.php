@@ -1,7 +1,11 @@
-<div id="alert" class="hide">
+<div class="alert hide">
 	<div class="alert--left">
-		<x-success-icon />
-		<x-error-icon />
+		<span class="alert__icon--success hide">
+			<x-success-icon />
+		</span>
+		<span class="alert__icon--error hide">
+			<x-error-icon />
+		</span>
 		<p class="alert__text"></p>
 	</div>
 	<button class="alert__close">
