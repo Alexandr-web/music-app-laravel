@@ -140,14 +140,6 @@
     }
 }
 
-.hide {
-    display: none !important;
-}
-
-.show {
-    display: inline-block;
-}
-
 .custom-radio {
     &__area {
         cursor: pointer;
@@ -313,6 +305,10 @@
 .main-content {
     height: 100%;
     overflow: auto;
+
+    &__title {
+        padding: 10px;
+    }
 }
 
 .sidebar {
@@ -521,6 +517,102 @@
     &--red {
         background: $red;
     }
+}
+
+.table {
+    width: 100%;
+    text-align: left;
+    border-collapse: separate;
+    border-spacing: 15px;
+}
+
+.audio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border: 1px solid $lightGrey;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transition: transform .3s;
+        width: 100%;
+        height: 2px;
+        background: $green;
+        z-index: -1;
+        transform: translateY(100%);
+    }
+
+    &--active::after {
+        transform: translateY(0);
+    }
+
+    &__block {
+        &--flex {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    &__poster {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+    &__song-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__singer,
+    &__name {
+        font-weight: 400;
+    }
+
+    &__singer {
+        color: $grey;
+        margin-top: 5px;
+    }
+
+    &__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__add-btn {
+        width: 35px;
+        height: 35px;
+        background: none;
+    }
+
+    &__play-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: $blue;
+
+        svg {
+            fill: $white;
+        }
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: inline-block;
 }
 
 @import "./supports.scss";
