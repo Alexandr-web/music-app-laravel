@@ -1,4 +1,6 @@
 @import "./global.scss";
+@import "./supports.scss";
+@import "./keyframes.scss";
 
 .auth {
     padding: 10px 0;
@@ -220,12 +222,57 @@
 	position: absolute;
 }
 
-@keyframes rotation {
-	0% {
-		transform: rotate(0deg);
+#alert {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	max-width: 400px;
+	padding: 20px 15px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 6px;
+	gap: 0 35px;
+}
+
+.alert {
+	&--left {
+		display: grid;
+		grid-template-columns: 23px 1fr;
+		gap: 0 7px;
+		align-items: center;
 	}
 
-	100% {
-		transform: rotate(360deg);
+	&__text {
+		font-size: 15px;
+		line-height: 19px;
+		word-wrap: anywhere;
+	}
+
+	&--success {
+		background-color: $alertSuccessBackground;
+		border: 1px solid $alertSuccessBorder;
+		
+		.alert__text {
+			color: $alertSuccessText;
+		}
+	}
+
+	&--error {
+		background-color: $alertErrorBackground;
+		border: 1px solid $alertErrorBorder;
+
+		.alert__text {
+			color: $alertErrorText;
+		}
+	}
+
+	&__close {
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: none;
+		background: none;
 	}
 }
