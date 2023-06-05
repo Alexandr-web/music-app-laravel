@@ -1,0 +1,3 @@
+@mixin getColor($r, $g, $b, $opacity: 1) {
+    background: rgba($r, $g, $b, $opacity);
+}

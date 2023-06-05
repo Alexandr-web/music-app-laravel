@@ -8,14 +8,14 @@
     @include('../includes/style')
     <title>@yield('title')</title>
 </head>
-<body>
+<body class="default-page">
     <div class="wrapper">
         <div class="wrapper__inner">
-            <div class="wrapper__block">
-                {{-- sidebar --}}
+            <div class="wrapper__block wrapper__block-left">
+                <x-sidebar />
             </div>
-            <div class="wrapper__block">
-                {{-- header --}}
+            <div class="wrapper__block wrapper__block-right">
+                <x-header />
                 <main class="main-content">
                     @yield('content')
                 </main>

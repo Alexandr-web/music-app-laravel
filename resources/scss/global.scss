@@ -1,6 +1,7 @@
 @import "../../node_modules/normalize.css/normalize.css";
 @import "./vars.scss";
 @import "./fonts.scss";
+@import "./mixins.scss";
 
 *,
 *::after,
@@ -45,4 +46,5 @@ img {
     height: 100%;
     padding: 0 10px;
     margin: 0 auto;
+    min-height: inherit;
 }

@@ -3,5 +3,5 @@
 @section('title', 'Главная')
 
 @section('content')
-    <h1 class="title">Hello</h1>
+<h1 class="title">Главная</h1>
 @endsection

@@ -1,5 +1,4 @@
 @import "./global.scss";
-@import "./supports.scss";
 @import "./keyframes.scss";
 
 .auth {
@@ -118,6 +117,15 @@
     padding: 10px;
     border-radius: 5px;
 
+    &--back {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        fill: $black;
+        padding: 10px;
+        background: $lightGrey;
+    }
+
     &:disabled {
         opacity: .8;
         cursor: not-allowed;
@@ -189,7 +197,7 @@
 .file-upload-area {
     display: flex;
     flex-direction: column;
-	position: relative;
+    position: relative;
 
     &__avatar {
         cursor: pointer;
@@ -212,67 +220,307 @@
 }
 
 .loader {
-	width: 48px;
-	height: 48px;
-	border-radius: 50%;
-	display: inline-block;
-	border-top: 3px solid $blue;
-	border-right: 3px solid transparent;
-	animation: rotation 1s linear infinite;
-	position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid $blue;
+    border-right: 3px solid transparent;
+    animation: rotation 1s linear infinite;
+    position: absolute;
 }
 
 #alert {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	max-width: 400px;
-	padding: 20px 15px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	border-radius: 6px;
-	gap: 0 35px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    max-width: 400px;
+    padding: 20px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 6px;
+    gap: 0 35px;
 }
 
 .alert {
-	&--left {
-		display: grid;
-		grid-template-columns: 23px 1fr;
-		gap: 0 7px;
-		align-items: center;
-	}
+    &--left {
+        display: grid;
+        grid-template-columns: 23px 1fr;
+        gap: 0 7px;
+        align-items: center;
+    }
 
-	&__text {
-		font-size: 15px;
-		line-height: 19px;
-		word-wrap: anywhere;
-	}
+    &__text {
+        font-size: 15px;
+        line-height: 19px;
+        word-wrap: anywhere;
+    }
 
-	&--success {
-		background-color: $alertSuccessBackground;
-		border: 1px solid $alertSuccessBorder;
-		
-		.alert__text {
-			color: $alertSuccessText;
-		}
-	}
+    &--success {
+        background-color: $alertSuccessBackground;
+        border: 1px solid $alertSuccessBorder;
 
-	&--error {
-		background-color: $alertErrorBackground;
-		border: 1px solid $alertErrorBorder;
+        .alert__text {
+            color: $alertSuccessText;
+        }
+    }
 
-		.alert__text {
-			color: $alertErrorText;
-		}
-	}
+    &--error {
+        background-color: $alertErrorBackground;
+        border: 1px solid $alertErrorBorder;
 
-	&__close {
-		cursor: pointer;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border: none;
-		background: none;
-	}
+        .alert__text {
+            color: $alertErrorText;
+        }
+    }
+
+    &__close {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        background: none;
+    }
 }
+
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+
+    &__inner {
+        width: 100%;
+        min-height: inherit;
+        display: flex;
+    }
+
+    &__block {
+        &-left {
+            width: 15%;
+            max-width: 280px;
+        }
+
+        &-right {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+.main-content {
+    height: 100%;
+    overflow: auto;
+}
+
+.sidebar {
+    width: 100%;
+    height: 100vh;
+    transition: transform .3s;
+    padding: 10px;
+    border-right: 1px solid $lightGrey;
+    background: $white;
+
+    &__inner {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        &-link {
+            color: $grey;
+            width: 100%;
+            display: block;
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid $lightGrey;
+            position: relative;
+            overflow: hidden;
+            transition: color .3s;
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 8%;
+                height: 100%;
+                background: $lightGrey;
+                transition: width, background, .3s;
+            }
+
+            &--active {
+                color: $black;
+
+                &::after {
+                    width: 10%;
+                    background: $blue;
+                }
+            }
+
+            &:hover {
+                @extend .sidebar__list-link--active;
+            }
+        }
+    }
+}
+
+.header {
+    max-height: 65px;
+    border-bottom: 1px solid $lightGrey;
+    padding: 10px;
+    background: $white;
+
+    &__inner {
+        height: 100%;
+    }
+
+    &__nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        height: 100%;
+    }
+
+    &__search {
+        position: relative;
+
+        &-btn {
+            padding: 0;
+            background: none;
+        }
+
+        &-input {
+            font-size: 14px;
+            height: 25px;
+            border: none;
+            background: inherit;
+
+            &-area {
+                width: 300px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: $lightGrey;
+                border-radius: 5px;
+                padding: 5px 8px;
+
+                &--active {
+                    border-radius: 5px 5px 0 0;
+                }
+            }
+        }
+
+        &-result {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            transform: translateY(100%);
+            z-index: 99999999;
+            background: $white;
+            border-right: 1px solid $lightGrey;
+            border-bottom: 1px solid $lightGrey;
+            border-left: 1px solid $lightGrey;
+            padding: 10px;
+            border-radius: 0 0 5px 5px;
+        }
+
+        &-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            &-link {
+                font-size: 13px;
+                word-break: break-all;
+            }
+        }
+    }
+
+    &__block {
+        &--flex {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    &__profile {
+        &-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            border: 1px solid $grey;
+            overflow: hidden;
+            width: 35px;
+            height: 35px;
+        }
+    }
+}
+
+.default-page {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.nothing-find {
+    font-size: 14px;
+    text-align: center;
+    color: $grey;
+    user-select: none;
+}
+
+.spot {
+    border-radius: 50%;
+    filter: blur(50px);
+    position: absolute;
+    z-index: -1;
+
+    &--size-50 {
+        width: 50px;
+        height: 50px;
+    }
+
+    &--size-150 {
+        width: 150px;
+        height: 150px;
+    }
+
+    &--size-250 {
+        width: 250px;
+        height: 250px;
+    }
+
+    &--size-500 {
+        width: 500px;
+        height: 500px;
+    }
+
+    &--green {
+        background: $green;
+    }
+
+    &--white {
+        background: $white;
+    }
+
+    &--blue {
+        background: $blue;
+    }
+
+    &--red {
+        background: $red;
+    }
+}
+
+@import "./supports.scss";

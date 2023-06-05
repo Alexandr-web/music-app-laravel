@@ -1,0 +1,1 @@
+<div class="nothing-find">{{ $text }}</div>

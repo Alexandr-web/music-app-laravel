@@ -9,3 +9,5 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::view('/', 'index');
+Route::view('/music', 'music');
+Route::view('/logout', 'logout');
