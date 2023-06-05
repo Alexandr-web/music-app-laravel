@@ -9,8 +9,8 @@ use Illuminate\View\Component;
 class FileUploadArea extends Component
 {
     public bool $isAvatar = true;
-    public string $id = "";
-    public string $name = "";
+    public string $id = '';
+    public string $name = '';
     public array $accept = [];
 
     /**

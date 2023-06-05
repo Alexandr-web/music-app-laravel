@@ -8,9 +8,9 @@ use Illuminate\View\Component;
 
 class CustomRadio extends Component
 {
-    public string $id = "";
-    public string $name = "";
-    public string $text = "";
+    public string $id = '';
+    public string $name = '';
+    public string $text = '';
     public bool $checked = false;
 
     /**

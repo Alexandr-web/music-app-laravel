@@ -1,13 +1,10 @@
-<div id="alert" class="alert--{{$success ? 'success' : 'error'}}">
+<div id="alert" class="hide">
 	<div class="alert--left">
-		@if ($success)
-			<x-icon-success />
-		@else
-			<x-icon-error />
-		@endif
-		<p class="alert__text">{{ $message }}</p>
+		<x-success-icon />
+		<x-error-icon />
+		<p class="alert__text"></p>
 	</div>
 	<button class="alert__close">
-		<x-icon-close />
+		<x-close-icon />
 	</button>
 </div>
