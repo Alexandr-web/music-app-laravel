@@ -7,7 +7,7 @@
 		@endif
 		<p class="alert--text">{{ $message }}</p>
 	</div>
-	<span class="alert--close">
+	<button class="alert--close">
 		<x-icon-close />
-	</span>
+	</button>
 </div>

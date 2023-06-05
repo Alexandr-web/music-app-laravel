@@ -9,9 +9,7 @@
     <title>Вход</title>
 </head>
 <body>
-	<span class="hide">
-		<x-alert :success="false" :message="'A simple success alert - check it out!'" />
-	</span>
+	<x-alert :success="false" :message="'A simple success alert - check it out!'" />
     <div class="auth">
         <div class="container">
             <div class="auth__inner">

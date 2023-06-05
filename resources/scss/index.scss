@@ -243,6 +243,12 @@
 	gap: 0 35px;
 }
 
+@supports (backdrop-filter: blur(15px)) {
+	#alert {
+		backdrop-filter: blur(15px);
+	}
+}
+
 .alert {
 	&--left {
 		display: grid;
@@ -255,17 +261,17 @@
 		line-height: 19px;
 	}
 	&--success {
-		background-color: #E8F9F1;
-		border: 1px solid #B5EEBF;
+		background-color: $alertSuccessBackground;
+		border: 1px solid $alertSuccessBorder;
 		& .alert--text {
-			color: #01C205;
+			color: $alertSuccessText;
 		}
 	}
 	&--error {
-		background-color: #FAEEEE;
-		border: 1px solid #FEBBBE;
+		background-color: $alertErrorBackground;
+		border: 1px solid $alertErrorBorder;
 		& .alert--text {
-			color: #FF0000;
+			color: $alertErrorText;
 		}
 	}
 	&--close {
@@ -273,5 +279,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		border: none;
+		background: none;
 	}
 }
