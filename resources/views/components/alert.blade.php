@@ -5,9 +5,9 @@
 		@else
 			<x-icon-error />
 		@endif
-		<p class="alert--text">{{ $message }}</p>
+		<p class="alert__text">{{ $message }}</p>
 	</div>
-	<button class="alert--close">
+	<button class="alert__close">
 		<x-icon-close />
 	</button>
 </div>

@@ -1,4 +1,6 @@
 @import "./global.scss";
+@import "./supports.scss";
+@import "./keyframes.scss";
 
 .auth {
     padding: 10px 0;
@@ -220,16 +222,6 @@
 	position: absolute;
 }
 
-@keyframes rotation {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
 #alert {
 	position: absolute;
 	top: 10px;
@@ -243,12 +235,6 @@
 	gap: 0 35px;
 }
 
-@supports (backdrop-filter: blur(15px)) {
-	#alert {
-		backdrop-filter: blur(15px);
-	}
-}
-
 .alert {
 	&--left {
 		display: grid;
@@ -256,25 +242,32 @@
 		gap: 0 7px;
 		align-items: center;
 	}
-	&--text {
+
+	&__text {
 		font-size: 15px;
 		line-height: 19px;
+		word-wrap: anywhere;
 	}
+
 	&--success {
 		background-color: $alertSuccessBackground;
 		border: 1px solid $alertSuccessBorder;
-		& .alert--text {
+		
+		.alert__text {
 			color: $alertSuccessText;
 		}
 	}
+
 	&--error {
 		background-color: $alertErrorBackground;
 		border: 1px solid $alertErrorBorder;
-		& .alert--text {
+
+		.alert__text {
 			color: $alertErrorText;
 		}
 	}
-	&--close {
+
+	&__close {
 		cursor: pointer;
 		display: flex;
 		justify-content: center;

@@ -8,6 +8,6 @@ export default function () {
 	}
 
 	changePasswordState("#password", "#controls-btn-password", "#controls-btn-password #open-eye-icon", "#controls-btn-password #closed-eye-icon");
-	closeAlert("#alert", ".alert--close");
+	closeAlert("#alert", ".alert__close");
 	login();
 }
