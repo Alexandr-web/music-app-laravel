@@ -22,15 +22,17 @@ class UserController extends Controller
 		$find_user = User::where("nickname", $nickname)->first();
 
 		if (!$find_user) {
-			return response()->json([
-				"success" => false,
-				"message" => "Пользователя с таким именем не существует"
-			]);
+			return response()
+				->json([
+					"success" => false,
+					"message" => "Пользователя с таким именем не существует"
+				])
+				->header("Content-Type", "application/json");
 		}
 
-		$current_password = Hash::check($password, $find_user->password);
+		$correct_password = Hash::check($password, $find_user->password);
 
-		if (!$current_password) {
+		if (!$correct_password) {
 			return response()
 				->json([
 					"success" => false,
@@ -42,7 +44,7 @@ class UserController extends Controller
 		$user_id = $find_user->id;
 		$jwt_key = env("SECRET");
 		$expiration = time() * 3600;
-		$issuer = "localhost";
+		$issuer = env("HOST");
 
 		$token = Token::create($user_id, $jwt_key, $expiration, $issuer);
 
@@ -66,13 +68,13 @@ class UserController extends Controller
 		$password = $request->input("password");
 		$fileExt = $request->fileExt;
 
-		$find_user = User::where("email", $email)->first();
+		$find_user = User::where("email", $email)->orWhere("nickname", $nickname)->first();
 
 		if ($find_user) {
 			return response()
 				->json([
 					"success" => false,
-					"message" => "Пользователь с такой почтой уже существует"
+					"message" => "Такой пользователь уже существует"
 				])
 				->header("Content-Type", "application/json");
 		}
