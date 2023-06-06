@@ -1,11 +1,13 @@
-function getDataFromForm(event) {
-	const result = {};
+function getDataFromForm(formEl, file = null) {
+	if (formEl instanceof HTMLFormElement) {
+		const formData = new FormData(formEl);
 
-	[...event.target.elements]
-		.filter(({ nodeName, type, }) => nodeName === "INPUT" && type !== "submit")
-		.map(({ name, value, }) => result[name] = value);
+		if (file) formData.append("avatar", file);
 
-	return result;
+		return formData;
+	}
+
+	return {};
 }
 
 export default getDataFromForm;

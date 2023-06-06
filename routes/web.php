@@ -7,6 +7,7 @@ Route::prefix('auth')->group(function () {
     Route::view('/login', 'auth.login');
     Route::view('/registration', 'auth.registration');
 	Route::post('/login', [UserController::class, 'login']);
+	Route::post('/registration', [UserController::class, "registration"]);
 });
 
 Route::view('/', 'index');
