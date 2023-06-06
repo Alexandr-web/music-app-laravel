@@ -11,14 +11,19 @@
 <body class="default-page">
     <div class="wrapper">
         <div class="wrapper__inner">
-            <div class="wrapper__block wrapper__block-left">
-                <x-sidebar />
+            <div class="wrapper__top">
+                <div class="wrapper__block wrapper__block-left">
+                    <x-sidebar />
+                </div>
+                <div class="wrapper__block wrapper__block-right">
+                    <x-header />
+                    <main class="main-content">
+                        @yield('content')
+                    </main>
+                </div>
             </div>
-            <div class="wrapper__block wrapper__block-right">
-                <x-header />
-                <main class="main-content">
-                    @yield('content')
-                </main>
+            <div class="wrapper__bottom">
+                <x-audio-player />
             </div>
         </div>
     </div>
