@@ -7,7 +7,6 @@ class Auth {
 
 	_fetchPost(url, data, headers = {}) {
 		const allHeaders = Object.assign(headers, {
-			"Content-Type": "application/json",
 			"X-CSRF-TOKEN": this.CSRF_TOKEN,
 			"X-Requested-With": "XMLHttpRequest",
 		});
@@ -15,7 +14,7 @@ class Auth {
 		return fetch(url, {
 			method: "POST",
 			headers: allHeaders,
-			body: JSON.stringify(data),
+			body: data,
 		});
 	}
 

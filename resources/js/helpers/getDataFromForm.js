@@ -1,11 +1,5 @@
-function getDataFromForm(formEl, file = null) {
-	if (formEl instanceof HTMLFormElement) {
-		const formData = new FormData(formEl);
-
-		if (file) formData.append("avatar", file);
-
-		return formData;
-	}
+function getDataFromForm(formEl) {
+	if (formEl instanceof HTMLFormElement) return new FormData(formEl);
 
 	return {};
 }

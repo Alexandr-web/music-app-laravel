@@ -16,8 +16,8 @@ class UserController extends Controller
 		 * Сделать валидацию
 		 */
 		
-		$nickname = $request->input("nickname");
-		$password = $request->input("password");
+		$nickname = $request->nickname;
+		$password = $request->password;
 
 		$find_user = User::where("nickname", $nickname)->first();
 
@@ -57,7 +57,6 @@ class UserController extends Controller
 	public function registration(Request $request) {
 		/**
 		 * TODO:
-		 * Принимать и сохранять файл;
 		 * Сделать валидацию
 		 */
 
@@ -65,6 +64,7 @@ class UserController extends Controller
 		$nickname = $request->input("nickname");
 		$email = $request->input("email");
 		$password = $request->input("password");
+		$fileExt = $request->fileExt;
 
 		$find_user = User::where("email", $email)->first();
 
@@ -79,11 +79,19 @@ class UserController extends Controller
 
 		$hash_password = Hash::make($password);
 
-		User::create([
+		$new_user = User::create([
 			"nickname" => $nickname,
 			"email" => $email,
 			"password" => $hash_password
 		]);
+
+		if ($request->hasFile("avatar") && $avatar->isValid()) {
+			$file_name = Hash::make($new_user->nickname) . "." . $fileExt;			
+			$avatar->storeAs("avatars", $file_name);
+
+			$new_user->avatar = $file_name;
+			$new_user->save();
+		}
 
 		return response()
 			->json([

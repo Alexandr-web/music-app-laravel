@@ -14,6 +14,10 @@ export default function () {
 		const data = getDataFromForm(
 			document.querySelector(".form#registration-form")
 		);
+		const ext = data.get("avatar").type.match(/\w+$/);
+
+		data.append("fileExt", ext);
+
 		const CSRF_TOKEN = document.querySelector("meta[name='csrf-token']").content;
 		const promiseRegistration = new Auth(CSRF_TOKEN).registration(data);
 
