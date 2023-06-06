@@ -9,7 +9,6 @@ function uploadFile(selectorInput, selectorImg, selectorText, selectorLoader) {
 		const reader = new FileReader();
 
 		reader.readAsDataURL(file);
-
 		loader.classList.remove("hide");
 
 		reader.onload = () => {
@@ -18,6 +17,7 @@ function uploadFile(selectorInput, selectorImg, selectorText, selectorLoader) {
 			img.classList.remove("hide");
 			loader.classList.add("hide");
 		};
+
 		reader.onerror = () => {
 			console.error(reader.error);
 			loader.classList.add("hide");

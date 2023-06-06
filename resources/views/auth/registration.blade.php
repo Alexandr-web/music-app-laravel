@@ -4,7 +4,7 @@
 
 @section('content')
     <h2 class="title">Регистрация</h2>
-    <form class="form" id="registration-form" autocomplete="off">
+    <form class="form" id="registration-form" autocomplete="off" enctype="multipart/form-data">
         <div class="form__inner">
             <div class="form__field">
                 <label class="form__label" for="avatar">Аватар</label>
@@ -42,8 +42,8 @@
                 <label class="form__label" for="man">Пол</label>
                 <div class="form__input-area">
                     <div class="form__input-block">
-                        <x-custom-radio id="man" name="gender" text="Мужской" :checked="true" />
-                        <x-custom-radio id="woman" name="gender" text="Женский" />
+                        <x-custom-radio id="man" name="gender" text="Мужской" :checked="true" value="man" />
+                        <x-custom-radio id="woman" name="gender" text="Женский" value="woman" />
                     </div>
                 </div>
             </div>
