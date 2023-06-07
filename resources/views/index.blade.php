@@ -62,8 +62,8 @@ $songs = [
 @section('title', 'Главная')
 
 @section('content')
-    <div class="container">
-        <h1 class="title sticky-title">Главная</h1>
+    <h1 class="title sticky-title">Главная</h1>
+    <div class="main-content__container">
         <x-table-song :songs="$songs" />
     </div>
 @endsection

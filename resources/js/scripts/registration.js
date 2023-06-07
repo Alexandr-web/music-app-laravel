@@ -5,12 +5,12 @@ import initAlert from "../helpers/initAlert";
 
 export default function () {
 	const options = {
-		"nickname": { min: 3, max: 16, },
-		"password": { min: 9, },
-		"email": { email: true, },
+		nickname: { min: 3, max: 16, },
+		password: { min: 9, },
+		email: { email: true, },
 	};
 
-	const callbackWhenAllCompleted = (e) => {
+	const callbackWhenAllCompleted = () => {
 		const data = getDataFromForm(
 			document.querySelector(".form#registration-form")
 		);

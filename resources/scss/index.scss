@@ -223,7 +223,7 @@
 }
 
 .alert {
-	position: absolute;
+    position: absolute;
     top: 10px;
     right: 10px;
     max-width: 400px;
@@ -233,8 +233,8 @@
     justify-content: space-between;
     border-radius: 6px;
     gap: 0 35px;
-	z-index: 99;
-	
+    z-index: 99;
+
     &--left {
         display: grid;
         grid-template-columns: 23px 1fr;
@@ -310,6 +310,12 @@
 .main-content {
     height: calc(100% - $heightHeader);
     overflow: auto;
+
+    &__container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 0 10px;
+    }
 }
 
 .sidebar {
