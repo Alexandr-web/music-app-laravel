@@ -1,16 +1,12 @@
 @supports (backdrop-filter: blur(15px)) {
-	#alert {
+	.alert {
 		backdrop-filter: blur(15px);
 	}
 
 	.sidebar,
-	.header {
+	.header,
+	.sticky-title {
 		@include getColor(255, 255, 255, .3);
 		backdrop-filter: blur(15px);
-	}
-
-	.audio {
-		backdrop-filter: blur(15px);
-		@include getColor(255, 255, 255, .5);
 	}
 }

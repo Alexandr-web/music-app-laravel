@@ -3,6 +3,6 @@
 @section('title', 'Моя музыка')
 
 @section('content')
-    <h1 class="title main-content__title">Моя музыка</h1>
+    <h1 class="title sticky-title">Моя музыка</h1>
     <x-nothing-find text="Ничего нет" />
 @endsection
