@@ -1,9 +1,8 @@
 import ValidForm from "../helpers/ValidForm";
 import Auth from "../classes/Auth";
-import getDataFromForm from "../helpers/getDataFromForm";
 import initAlert from "../helpers/initAlert";
 
-export default function () {
+export default () => {
 	const options = {
 		nickname: { min: 3, max: 16, },
 		password: { min: 9, },
@@ -11,9 +10,7 @@ export default function () {
 	};
 
 	const callbackWhenAllCompleted = () => {
-		const data = getDataFromForm(
-			document.querySelector(".form#registration-form")
-		);
+		const data = new FormData(document.querySelector(".form#registration-form"));
 		const ext = data.get("avatar").type.match(/\w+$/);
 
 		data.append("fileExt", ext);
@@ -30,4 +27,4 @@ export default function () {
 	};
 
 	new ValidForm(".form#registration-form", options, callbackWhenAllCompleted).init();
-}
+};

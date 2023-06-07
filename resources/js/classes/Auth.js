@@ -1,8 +1,8 @@
+import host from "../helpers/host";
+
 class Auth {
 	constructor(CSRF_TOKEN) {
 		this.CSRF_TOKEN = CSRF_TOKEN;
-
-		this._HOST = "http://127.0.0.1:8000";
 	}
 
 	_fetchPost(url, data, headers = {}) {
@@ -19,7 +19,7 @@ class Auth {
 	}
 
 	login(data) {
-		const url = `${this._HOST}/auth/login`;
+		const url = `${host}/auth/login`;
 
 		return this._fetchPost(url, data)
 			.then((response) => response.json())
@@ -34,7 +34,7 @@ class Auth {
 	}
 
 	registration(data) {
-		const url = `${this._HOST}/auth/registration`;
+		const url = `${host}/auth/registration`;
 
 		return this._fetchPost(url, data)
 			.then((response) => response.json())

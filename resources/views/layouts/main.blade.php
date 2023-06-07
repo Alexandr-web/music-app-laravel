@@ -27,6 +27,6 @@
             </div>
         </div>
     </div>
-    @include('../includes/script')
+    @yield('scripts')
 </body>
 </html>

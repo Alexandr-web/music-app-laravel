@@ -57,3 +57,7 @@
         </div>
     </form>
 @endsection
+
+@section('scripts')
+    @vite(["resources/js/pages/auth/registration"])
+@endsection
