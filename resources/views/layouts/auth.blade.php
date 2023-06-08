@@ -18,5 +18,6 @@
         </div>
     </div>
     @yield('scripts')
+    @vite(["resources/js/pages/auth/index"]);
 </body>
 </html>

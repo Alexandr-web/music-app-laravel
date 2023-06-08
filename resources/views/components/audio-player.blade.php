@@ -21,12 +21,12 @@
         </div>
         <div class="audio-player__block audio-player__progress">
             <div class="audio-player__time">00:00</div>
-            <x-custom-range />
+            <x-custom-range id="audio-progress" />
             <div class="audio-player__time">03:21</div>
         </div>
         <div class="audio-player__block audio-player__volume">
             <x-volume-icon />
-            <x-custom-range />
+            <x-custom-range id="volume-progress" />
         </div>
     </div>
 </div>

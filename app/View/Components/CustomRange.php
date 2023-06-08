@@ -8,12 +8,14 @@ use Illuminate\View\Component;
 
 class CustomRange extends Component
 {
+    public string $id;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(string $id)
     {
-        //
+        $this->id = $id;
     }
 
     /**

@@ -676,14 +676,15 @@
 
     &__progress {
         border-radius: 5px;
-        overflow: hidden;
         height: 5px;
         background: $lightGrey;
         cursor: pointer;
+        overflow: hidden;
 
         &-line {
             height: 100%;
-            width: 30%;
+            width: 0%;
+            transition: width .06s;
             background: $blue;
         }
     }
