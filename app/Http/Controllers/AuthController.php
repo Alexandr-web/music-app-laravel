@@ -35,7 +35,7 @@ class AuthController extends Controller
 		$password_is_correct = Hash::check($password, $find_user->password);
 
 		if (!$password_is_correct) {
-			return response(["success" => false, "message" => "Неверный пароль" ], 422)
+			return response(["success" => false, "message" => "Неверный пароль"], 422)
 				->header("Content-Type", "application/json");
 		}
 
@@ -46,7 +46,7 @@ class AuthController extends Controller
 
 		$token = Token::create($user_id, $jwt_key, $expiration, $issuer);
 
-		return response(["success" => true, "token" => $token], 200)
+		return response(["success" => true, "token" => $token, "message" => "Вход выполнен успешно"], 200)
 			->header("Content-Type", "application/json");
 	}
 
@@ -98,7 +98,7 @@ class AuthController extends Controller
 			$new_user->save();
 		}
 
-		return response(["success" => true, "message" => "Пользователь создан"], 200)
+		return response(["success" => true, "message" => "Регистрация прошла успешно"], 200)
 			->header("Content-Type", "application/json");
 	}
 }

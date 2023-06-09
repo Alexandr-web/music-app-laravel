@@ -5,9 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\User;
 use App\Helpers\AuthToken;
 
-class CheckAuthToken
+class CheckAuthToken extends Middleware
 {
     /**
      * Handle an incoming request.
@@ -16,16 +17,16 @@ class CheckAuthToken
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $authHeader = $request->header('Authorization') ?? '';
-        $token = str_replace('Bearer ', '', $authHeader);
-        $tokenData = AuthToken::decode($token);
+        $auth_header = $request->header('Authorization') ?? '';
+        $token = str_replace('Bearer ', '', $auth_header);
+        $token_data = AuthToken::decode($token);
 
-        if ($tokenData) {
-            $userId = $tokenData['user_id'];
-            $findUser = Student::find($userId);
+        if ($token_data) {
+            $user_id = $token_data['user_id'];
+            $find_user = User::find($user_id);
 
-            $request->isAuthenticated = (bool) $findUser;
-            $request->user = $findUser;
+            $request->is_authenticated = (bool) $find_user;
+            $request->user = $find_user;
         }
 
         return $next($request);

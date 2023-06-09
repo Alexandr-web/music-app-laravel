@@ -223,7 +223,7 @@
 }
 
 .alert {
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 10px;
     max-width: 400px;
@@ -234,11 +234,16 @@
     border-radius: 6px;
     gap: 0 35px;
     z-index: 99;
+    border: 1px solid;
 
-    &--left {
-        display: grid;
-        grid-template-columns: 23px 1fr;
-        gap: 0 7px;
+    &__left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &__icon {
+        display: flex;
         align-items: center;
     }
 
@@ -250,7 +255,7 @@
 
     &--success {
         background-color: $alertSuccessBackground;
-        border: 1px solid $alertSuccessBorder;
+        border-color: $alertSuccessBorder;
 
         .alert__text {
             color: $alertSuccessText;
@@ -259,7 +264,7 @@
 
     &--error {
         background-color: $alertErrorBackground;
-        border: 1px solid $alertErrorBorder;
+        border-color: $alertErrorBorder;
 
         .alert__text {
             color: $alertErrorText;
@@ -267,12 +272,11 @@
     }
 
     &__close {
-        cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
-        border: none;
         background: none;
+        padding: 0;
     }
 }
 

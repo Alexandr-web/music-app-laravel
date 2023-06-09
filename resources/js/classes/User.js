@@ -76,7 +76,7 @@ export default class User {
         return request.then((data) => data.json());
     }
 
-    updateOne(id) {
+    updateOne(id, fd) {
         const token = new Cookie().get("token");
         const url = `${host}/user/update/${id}`;
         const request = fetch(url, {
@@ -87,6 +87,7 @@ export default class User {
                 "Authorization": `Bearer ${token || ""}`,
                 "X-CSRF-TOKEN": this.CSRF_TOKEN,
             },
+            body: fd,
         });
 
         return request.then((data) => data.json());

@@ -1,14 +1,14 @@
-<div class="alert hide">
-	<div class="alert--left">
-		<span class="alert__icon--success hide">
+<div class="alert alert--error hide">
+	<div class="alert__left">
+		<div class="alert__icon hide" data-alert-icon="success">
 			<x-success-icon />
-		</span>
-		<span class="alert__icon--error hide">
+		</div>
+		<div class="alert__icon hide" data-alert-icon="error">
 			<x-error-icon />
-		</span>
-		<p class="alert__text"></p>
+		</div>
+		<p class="alert__text">Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты.</p>
 	</div>
-	<button class="alert__close">
+	<button class="btn alert__close">
 		<x-close-icon />
 	</button>
 </div>

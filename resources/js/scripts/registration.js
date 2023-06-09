@@ -1,8 +1,9 @@
 import ValidForm from "../helpers/ValidForm";
 import Auth from "../classes/Auth";
-import initAlert from "../helpers/initAlert";
+import Alert from "../classes/Alert";
 
 export default () => {
+	const alert = new Alert().init();
 	const options = {
 		nickname: { min: 3, max: 16, },
 		password: { min: 9, },
@@ -20,8 +21,11 @@ export default () => {
 		promiseRegistration.then((res) => {
 			const { success, message, } = res;
 
-			if (message) initAlert(success, message);
-			if (success) window.location.href = "/auth/login";
+			alert.show(message, success);
+
+			if (success) {
+				window.location.href = "/auth/login";
+			}
 		});
 	};
 

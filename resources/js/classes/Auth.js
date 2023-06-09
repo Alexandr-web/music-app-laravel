@@ -23,10 +23,6 @@ class Auth {
 
 		return this._fetchPost(url, data)
 			.then((response) => response.json())
-			.then((res) => {
-				const { success, message, token, } = res;
-				return { success, message, token, };
-			})
 			.catch((error) => {
 				console.error(error);
 				return { success: false, message: error.message, error, };
@@ -38,10 +34,6 @@ class Auth {
 
 		return this._fetchPost(url, data)
 			.then((response) => response.json())
-			.then((res) => {
-				const { success, message, } = res;
-				return { success, message, };
-			})
 			.catch((error) => {
 				console.error(error);
 				return { success: false, message: error.message, error, };
