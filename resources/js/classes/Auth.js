@@ -15,13 +15,7 @@ class Auth {
 			method: "POST",
 			headers: allHeaders,
 			body: data,
-		});
-	}
-
-	login(data) {
-		const url = `${host}/auth/login`;
-
-		return this._fetchPost(url, data)
+		})
 			.then((response) => response.json())
 			.then((res) => {
 				const { success, message, token, } = res;
@@ -33,19 +27,18 @@ class Auth {
 			});
 	}
 
-	registration(data) {
-		const url = `${host}/auth/registration`;
+	login(data) {
+		return this._fetchPost(
+			`${host}/auth/login`,
+			data
+		);
+	}
 
-		return this._fetchPost(url, data)
-			.then((response) => response.json())
-			.then((res) => {
-				const { success, message, } = res;
-				return { success, message, };
-			})
-			.catch((error) => {
-				console.error(error);
-				return { success: false, message: error.message, error, };
-			});
+	registration(data) {
+		return this._fetchPost(
+			`${host}/auth/registration`,
+			data
+		);
 	}
 }
 
