@@ -18,7 +18,9 @@
                         </button>
                     </div>
                     <div class="audio__block audio__block--flex">
-                        <img class="audio__poster" src="{{ $song['poster'] }}" alt='Постер песни "{{ $song['name'] }}"'>
+                        <div class="audio__poster">
+                            <img class="audio__poster-image" src="{{ $song['poster'] }}" alt='Постер песни "{{ $song['name'] }}"'>
+                        </div>
                         <div class="audio__song-info">
                             <h4 class="audio__name">{{ $song['name'] }}</h4>
                             <h5 class="audio__singer">{{ $song['singer'] }}</h5>

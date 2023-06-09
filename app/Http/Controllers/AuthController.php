@@ -92,7 +92,7 @@ class AuthController extends Controller
 
 		if ($request->hasFile("avatar") && $avatar->isValid()) {
 			$file_name = $nickname.'-'.date('Y-m-d-H-i-s').".".$fileExt;
-			$avatar->storeAs("avatars", $file_name);
+			$avatar->storeAs("public/avatars", $file_name);
 
 			$new_user->avatar = $file_name;
 			$new_user->save();

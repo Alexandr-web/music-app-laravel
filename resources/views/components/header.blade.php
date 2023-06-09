@@ -14,8 +14,8 @@
                     </button>
                 </div>
                 <div class="header__profile">
-                    <a class="header__profile-link" href="/">
-                        <img class="header__profile-avatar" src="https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg" alt="Аватар пользователя">
+                    <a class="header__profile-link" href="">
+                        <img class="header__profile-avatar" src="" alt="Аватар пользователя">
                     </a>
                 </div>
             </div>
