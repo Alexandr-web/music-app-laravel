@@ -11,8 +11,7 @@ export default () => {
 
 	const callbackWhenAllCompleted = () => {
 		const data = new FormData(document.querySelector(".form#login-form"));
-		const CSRF_TOKEN = document.querySelector("meta[name='csrf-token']").content;
-		const promiseLogin = new Auth(CSRF_TOKEN).login(data);
+		const promiseLogin = new Auth().login(data);
 
 		promiseLogin.then((res) => {
 			const { success, message, token, } = res;

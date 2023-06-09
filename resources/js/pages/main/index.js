@@ -1,7 +1,8 @@
-import setCurrentUserData from "../../scripts/setCurrentUserDataInCookie";
-import setUserDataInHeader from "../../scripts/setUserDataInHeader";
+import User from "../../classes/User";
 
 window.addEventListener("load", () => {
-    setCurrentUserData();
-    setUserDataInHeader();
+    const user = new User();
+
+    user.setDataInCookie();
+    user.displayOnHeader();
 });

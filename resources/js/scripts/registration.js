@@ -15,8 +15,7 @@ export default () => {
 
 		data.append("fileExt", ext);
 
-		const CSRF_TOKEN = document.querySelector("meta[name='csrf-token']").content;
-		const promiseRegistration = new Auth(CSRF_TOKEN).registration(data);
+		const promiseRegistration = new Auth().registration(data);
 
 		promiseRegistration.then((res) => {
 			const { success, message, } = res;

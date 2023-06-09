@@ -1,8 +1,8 @@
 import host from "../helpers/host";
 
 export default class Audio {
-    constructor(CSRF_TOKEN) {
-        this.CSRF_TOKEN = CSRF_TOKEN;
+    constructor() {
+        this.CSRF_TOKEN = document.querySelector("meta[name=csrf-token]").content;
     }
 
     getOne(id) {
