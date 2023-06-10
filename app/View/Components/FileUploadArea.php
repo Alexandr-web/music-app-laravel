@@ -8,20 +8,22 @@ use Illuminate\View\Component;
 
 class FileUploadArea extends Component
 {
-    public bool $isAvatar = true;
+    public bool $isAvatar = false;
     public string $id = '';
     public string $name = '';
     public array $accept = [];
+    public string $defaultSrc = '';
 
     /**
      * Create a new component instance.
      */
-    public function __construct(bool $isAvatar, string $id, string $name, array $accept)
+    public function __construct(bool $isAvatar = false, string $id, string $name, array $accept, string $defaultSrc = '')
     {
         $this->isAvatar = $isAvatar;
         $this->id = $id;
         $this->name = $name;
         $this->accept = $accept;
+        $this->defaultSrc = $defaultSrc;
     }
 
     /**

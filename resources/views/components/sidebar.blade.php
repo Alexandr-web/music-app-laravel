@@ -1,7 +1,9 @@
 <?php
     $navigation = [
         'home' => ['path' => '/', 'name' => 'Главная'],
-        'music' => ['path' => '/music', 'name' => 'Моя музыка'],
+        'audio' => ['path' => "/user/$userId?tab=audio", 'name' => 'Моя музыка'],
+        'add-audio' => ['path' => '/audio/add', 'name' => 'Загрузить песню'],
+        'add-playlist' => ['path' => '/playlist/add', 'name' => 'Создать плейлист'],
         'logout' => ['path' => '/logout', 'name' => 'Выйти'],
     ];
 ?>
@@ -13,7 +15,7 @@
                 @foreach ($navigation as $key => $opt)
                     <li class="sidebar__list-item">
                         <a 
-                            class="sidebar__list-link" 
+                            class="sidebar__list-link link-anim" 
                             href="{{ $opt['path'] }}"
                         >{{ $opt['name'] }}</a>
                     </li>

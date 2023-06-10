@@ -73,6 +73,7 @@ class AuthController extends Controller
 		$nickname = $request->input("nickname");
 		$email = $request->input("email");
 		$password = $request->input("password");
+		$gender = $request->input("gender");
 		$fileExt = $request->fileExt;
 
 		$find_user = User::where("email", $email)->orWhere("nickname", $nickname)->first();
@@ -87,7 +88,8 @@ class AuthController extends Controller
 		$new_user = User::create([
 			"nickname" => $nickname,
 			"email" => $email,
-			"password" => $hash_password
+			"password" => $hash_password,
+			"gender" => $gender
 		]);
 
 		if ($request->hasFile("avatar") && $avatar->isValid()) {

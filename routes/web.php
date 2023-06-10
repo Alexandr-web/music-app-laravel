@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 
 Route::prefix('auth')->group(function () {
     Route::view('/login', 'auth.login')->middleware('redirect_if_token_exist');
@@ -11,6 +13,21 @@ Route::prefix('auth')->group(function () {
 	Route::post('/registration', [AuthController::class, "registration"]);
 });
 
-Route::view('/', 'index')->middleware('redirect_if_token_not_exist');
-Route::view('/music', 'music')->middleware('redirect_if_token_not_exist');
-Route::view('/logout', 'logout')->middleware('redirect_if_token_not_exist');
+Route::prefix('user')->group(function () {
+    Route::get('/{id}', [UserController::class, 'profileRender'])
+        ->middleware('redirect_if_token_not_exist')
+        ->middleware('get_current_user_data')
+        ->where('id', '[0-9]+');
+});
+
+Route::get('/', function (Request $request) {
+    return view('index', ['current_user' => $request->user]);
+})  
+    ->middleware('redirect_if_token_not_exist')
+    ->middleware('get_current_user_data');
+
+Route::get('/logout', function (Request $request) {
+    return view('logout', ['current_user' => $request->user]);
+})
+    ->middleware('redirect_if_token_not_exist')
+    ->middleware('get_current_user_data');

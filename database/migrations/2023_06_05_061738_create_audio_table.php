@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('audio', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('time');
             $table->string('singer');
             $table->integer('ownerId');
             $table->string('name');
             $table->string('poster');
+            $table->string('path');
+            $table->timestamps();
         });
     }
 
