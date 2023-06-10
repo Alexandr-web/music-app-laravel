@@ -6,7 +6,7 @@
 <div class="profile__tab">
     <div class="profile__tab-inner">
         <h1 class="title">Настройки</h1>
-        <form class="form" autocomplete="off" enctype="multipart/form-data">
+        <form class="form" autocomplete="off" id="edit-form" enctype="multipart/form-data">
             <div class="form__inner">
                 <div class="form__field">
                     <label class="form__label" for="avatar">Аватар</label>

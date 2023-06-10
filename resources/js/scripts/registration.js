@@ -5,6 +5,7 @@ import Alert from "../classes/Alert";
 export default () => {
 	const alert = new Alert().init();
 	const options = {
+		avatar: { optional: true, file: true, },
 		nickname: { min: 3, max: 16, },
 		password: { min: 9, },
 		email: { email: true, },
