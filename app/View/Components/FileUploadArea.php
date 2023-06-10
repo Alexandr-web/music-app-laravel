@@ -9,6 +9,8 @@ use Illuminate\View\Component;
 class FileUploadArea extends Component
 {
     public bool $isAvatar = false;
+    public bool $isPoster = false;
+    public bool $isAudio = false;
     public string $id = '';
     public string $name = '';
     public array $accept = [];
@@ -17,9 +19,11 @@ class FileUploadArea extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(bool $isAvatar = false, string $id, string $name, array $accept, string $defaultSrc = '')
+    public function __construct(string $id, string $name, array $accept, bool $isAudio = false, bool $isPoster = false, string $defaultSrc = '', bool $isAvatar = false)
     {
         $this->isAvatar = $isAvatar;
+        $this->isPoster = $isPoster;
+        $this->isAudio = $isAudio;
         $this->id = $id;
         $this->name = $name;
         $this->accept = $accept;

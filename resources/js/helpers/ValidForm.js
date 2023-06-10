@@ -190,7 +190,7 @@ export default class ValidForm {
             this._checkAllStatesOnCompleted();
 
             if (this.allComplete) {
-                this.callbackWhenAllCompleted instanceof Function && this.callbackWhenAllCompleted(e);
+                this.callbackWhenAllCompleted instanceof Function && this.callbackWhenAllCompleted(new FormData(this.form));
             } else {
                 this.callbackWhenFailed instanceof Function && this.callbackWhenFailed(e);
             }

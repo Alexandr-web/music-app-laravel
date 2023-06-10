@@ -26,6 +26,12 @@ Route::get('/', function (Request $request) {
     ->middleware('redirect_if_token_not_exist')
     ->middleware('get_current_user_data');
 
+Route::get('/audio/add', function (Request $request) {
+    return view('audio.add', ['current_user' => $request->user]);
+})  
+    ->middleware('redirect_if_token_not_exist')
+    ->middleware('get_current_user_data');
+
 Route::get('/logout', function (Request $request) {
     return view('logout', ['current_user' => $request->user]);
 })
