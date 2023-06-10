@@ -223,7 +223,7 @@
 }
 
 .alert {
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 10px;
     max-width: 400px;
@@ -234,11 +234,16 @@
     border-radius: 6px;
     gap: 0 35px;
     z-index: 99;
+    border: 1px solid;
 
-    &--left {
-        display: grid;
-        grid-template-columns: 23px 1fr;
-        gap: 0 7px;
+    &__left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &__icon {
+        display: flex;
         align-items: center;
     }
 
@@ -250,7 +255,7 @@
 
     &--success {
         background-color: $alertSuccessBackground;
-        border: 1px solid $alertSuccessBorder;
+        border-color: $alertSuccessBorder;
 
         .alert__text {
             color: $alertSuccessText;
@@ -259,7 +264,7 @@
 
     &--error {
         background-color: $alertErrorBackground;
-        border: 1px solid $alertErrorBorder;
+        border-color: $alertErrorBorder;
 
         .alert__text {
             color: $alertErrorText;
@@ -267,12 +272,11 @@
     }
 
     &__close {
-        cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
-        border: none;
         background: none;
+        padding: 0;
     }
 }
 
@@ -336,42 +340,6 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-
-        &-link {
-            color: $grey;
-            width: 100%;
-            display: block;
-            border-radius: 5px;
-            padding: 10px;
-            border: 1px solid $lightGrey;
-            position: relative;
-            overflow: hidden;
-            transition: color .3s;
-
-            &::after {
-                content: "";
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 8%;
-                height: 100%;
-                background: $lightGrey;
-                transition: width, background, .3s;
-            }
-
-            &--active {
-                color: $black;
-
-                &::after {
-                    width: 10%;
-                    background: $blue;
-                }
-            }
-
-            &:hover {
-                @extend .sidebar__list-link--active;
-            }
-        }
     }
 }
 
@@ -551,6 +519,11 @@
         width: 60px;
         height: 60px;
         border-radius: 50%;
+        overflow: hidden;
+
+        &-image {
+            border-radius: inherit;
+        }
     }
 
     &__song-info {
@@ -687,6 +660,164 @@
             transition: width .06s;
             background: $blue;
         }
+    }
+}
+
+.profile {
+    &__inner {
+        display: flex;
+        gap: 15px;
+    }
+
+    &__controls {
+        flex-basis: 20%;
+    }
+
+    &__content {
+        flex-basis: 80%;
+    }
+
+    &__block {
+        padding: 10px;
+    }
+
+    &__sidebar {
+        border: 1px solid $lightGrey;
+        background: $white;
+        padding: 10px;
+        border-radius: 5px;
+        position: sticky;
+        top: 10px;
+
+        &-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        &-avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        &-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        &-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+
+    &__nickname {
+        font-size: 25px;
+        font-weight: 400;
+    }
+
+    &__email {
+        font-size: 16px;
+        color: $grey;
+        font-weight: 400;
+    }
+
+    &__avatar {
+        width: 128px;
+    }
+}
+
+.link-anim {
+    color: $grey;
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid $lightGrey;
+    position: relative;
+    overflow: hidden;
+    transition: color .3s;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 8%;
+        height: 100%;
+        background: $lightGrey;
+        transition: width, background, .3s;
+    }
+
+    &--active {
+        color: $black;
+
+        &::after {
+            width: 10%;
+            background: $blue;
+        }
+    }
+
+    &:hover {
+        @extend .link-anim--active;
+    }
+}
+
+.playlists {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+}
+
+.playlist {
+    border: 1px solid $lightGrey;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    background: $white;
+
+    &:hover &__poster::before {
+        opacity: 1;
+    }
+
+    &__poster {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: $lightGrey;
+
+        &::before {
+            content: "Открыть";
+            position: absolute;
+            z-index: 9;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $white;
+            left: 0;
+            top: 0;
+            @include getColor(0, 0, 0, .6);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+    }
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__name {
+        font-weight: 400;
     }
 }
 

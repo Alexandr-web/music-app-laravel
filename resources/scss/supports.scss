@@ -9,4 +9,8 @@
 		@include getColor(255, 255, 255, .3);
 		backdrop-filter: blur(15px);
 	}
+
+	.playlist__poster::before {
+		backdrop-filter: blur(5px);
+	}
 }

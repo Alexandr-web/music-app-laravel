@@ -134,38 +134,42 @@ export default class ValidForm {
         this.allComplete = this.completeNames.length === Object.keys(this.options).length;
     }
 
-    _handlerValueInput(element, name) {
+    _checkValueInput(element, name, options) {
         const blockInput = element.closest(".form__input-block");
-        const checkIsComplete = this.checkAll(name, element.value);
 
-        if (checkIsComplete) {
-            this._inputIsComplete(name, blockInput);
-        } else {
-            this._inputIsFailed(name, blockInput);
+        let checkIsComplete = true;
+
+        if (!options.optional || element.value.length) {
+            checkIsComplete = this.checkAll(name, element.value);
         }
+
+        checkIsComplete ? this._inputIsComplete(name, blockInput) : this._inputIsFailed(name, blockInput);
+
+        this._checkAllStatesOnCompleted();
+    }
+
+    _checkValueFile(name, options, e) {
+        const file = e.target.files[0];
+
+        let checkIsComplete = true;
+
+        if (!options.optional) {
+            checkIsComplete = this.checkAll(name, file);
+        }
+
+        checkIsComplete ? this._inputIsComplete(name) : this._inputIsFailed(name);
 
         this._checkAllStatesOnCompleted();
     }
 
     _setEventInputs() {
-        this._getOptionsExceptTypeFile().forEach(({ name, element, }) => {
-            element.addEventListener("input", this._handlerValueInput.bind(this, element, name));
-            element.addEventListener("blur", this._handlerValueInput.bind(this, element, name));
+        this._getOptionsExceptTypeFile().forEach(({ name, element, options, }) => {
+            element.addEventListener("input", this._checkValueInput.bind(this, element, name, options));
+            element.addEventListener("blur", this._checkValueInput.bind(this, element, name, options));
         });
 
-        this._getOptionsOnlyWithTypeFile().forEach(({ name, element, }) => {
-            element.addEventListener("change", (e) => {
-                const file = e.target.files[0];
-                const checkIsComplete = this.checkAll(name, file);
-
-                if (checkIsComplete) {
-                    this._inputIsComplete(name);
-                } else {
-                    this._inputIsFailed(name);
-                }
-
-                this._checkAllStatesOnCompleted();
-            });
+        this._getOptionsOnlyWithTypeFile().forEach(({ name, element, options, }) => {
+            element.addEventListener("change", (e) => this._checkValueFile(name, options, e));
         });
     }
 
@@ -173,19 +177,21 @@ export default class ValidForm {
         this.form.addEventListener("submit", (e) => {
             e.preventDefault();
 
+            this._getOptionsExceptTypeFile().forEach(({ name, element, options, }) => {
+                this._checkValueInput(element, name, options);
+            });
+
+            this._getOptionsOnlyWithTypeFile().forEach(({ name, options, }) => {
+                if (options.optional) {
+                    this._inputIsComplete(name);
+                }
+            });
+
+            this._checkAllStatesOnCompleted();
+
             if (this.allComplete) {
                 this.callbackWhenAllCompleted instanceof Function && this.callbackWhenAllCompleted(e);
             } else {
-                this._getOptionsExceptTypeFile().forEach(({ name, element, }) => {
-                    const blockInput = element.closest(".form__input-block");
-
-                    if (!this.completeNames.includes(name)) {
-                        this._setInvalidElement(blockInput);
-                    } else {
-                        this._setValidElement(blockInput);
-                    }
-                });
-
                 this.callbackWhenFailed instanceof Function && this.callbackWhenFailed(e);
             }
         });

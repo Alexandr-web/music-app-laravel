@@ -1,9 +1,10 @@
 import ValidForm from "../helpers/ValidForm";
 import Auth from "../classes/Auth";
 import Cookie from "../helpers/Cookie";
-import initAlert from "../helpers/initAlert";
+import Alert from "../classes/Alert";
 
 export default () => {
+	const alert = new Alert().init();
 	const options = {
 		nickname: { min: 3, max: 16, },
 		password: { min: 9, },
@@ -11,13 +12,13 @@ export default () => {
 
 	const callbackWhenAllCompleted = () => {
 		const data = new FormData(document.querySelector(".form#login-form"));
-		const CSRF_TOKEN = document.querySelector("meta[name='csrf-token']").content;
-		const promiseLogin = new Auth(CSRF_TOKEN).login(data);
+		const promiseLogin = new Auth().login(data);
 
 		promiseLogin.then((res) => {
 			const { success, message, token, } = res;
 
-			if (message) initAlert(success, message);
+			alert.show(message, success);
+
 			if (success) {
 				const cookie = new Cookie();
 

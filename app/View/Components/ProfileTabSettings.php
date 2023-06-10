@@ -5,17 +5,18 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\User;
 
-class Sidebar extends Component
+class ProfileTabSettings extends Component
 {
-    public int $userId;
+    public User $user;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(int $userId)
+    public function __construct(User $user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
     }
 
     /**
@@ -23,6 +24,6 @@ class Sidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.sidebar');
+        return view('components.profile-tab-settings');
     }
 }

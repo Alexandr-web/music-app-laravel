@@ -13,10 +13,10 @@
         <div class="wrapper__inner">
             <div class="wrapper__top">
                 <div class="wrapper__block wrapper__block-left">
-                    <x-sidebar />
+                    <x-sidebar :userId="$current_user['id']" />
                 </div>
                 <div class="wrapper__block wrapper__block-right">
-                    <x-header />
+                    <x-header :user="$current_user" />
                     <main class="main-content">
                         @yield('content')
                     </main>
@@ -28,5 +28,6 @@
         </div>
     </div>
     @yield('scripts')
+    @vite(['resources/js/pages/main/index'])
 </body>
 </html>

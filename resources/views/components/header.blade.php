@@ -1,3 +1,8 @@
+<?php
+    $host = $_ENV['HOST'];
+    $url_storage = "$host/storage/avatars/";
+?>
+
 <header class="header">
     <div class="header__inner">
         <nav class="header__nav">
@@ -14,8 +19,8 @@
                     </button>
                 </div>
                 <div class="header__profile">
-                    <a class="header__profile-link" href="/">
-                        <img class="header__profile-avatar" src="https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg" alt="Аватар пользователя">
+                    <a class="header__profile-link" href="{{ $user['id'] }}">
+                        <img class="header__profile-avatar" src="{{ $url_storage.$user['avatar'] }}" alt="Аватар пользователя">
                     </a>
                 </div>
             </div>

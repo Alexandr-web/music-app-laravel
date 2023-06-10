@@ -5,17 +5,22 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\User;
 
-class Header extends Component
+class ProfileSidebar extends Component
 {
-    public array $user;
+    public User $user;
+    public bool $isGuest;
+    public string $tab = 'audio';
 
     /**
      * Create a new component instance.
      */
-    public function __construct(array $user)
+    public function __construct(User $user, bool $isGuest, string $tab = '')
     {
         $this->user = $user;
+        $this->isGuest = $isGuest;
+        $this->tab = $tab;
     }
 
     /**
@@ -23,6 +28,6 @@ class Header extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.header');
+        return view('components.profile-sidebar');
     }
 }

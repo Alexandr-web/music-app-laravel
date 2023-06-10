@@ -35,7 +35,7 @@ class AuthController extends Controller
 		$password_is_correct = Hash::check($password, $find_user->password);
 
 		if (!$password_is_correct) {
-			return response(["success" => false, "message" => "Неверный пароль" ], 422)
+			return response(["success" => false, "message" => "Неверный пароль"], 422)
 				->header("Content-Type", "application/json");
 		}
 
@@ -46,7 +46,7 @@ class AuthController extends Controller
 
 		$token = Token::create($user_id, $jwt_key, $expiration, $issuer);
 
-		return response(["success" => true, "token" => $token], 200)
+		return response(["success" => true, "token" => $token, "message" => "Вход выполнен успешно"], 200)
 			->header("Content-Type", "application/json");
 	}
 
@@ -73,6 +73,7 @@ class AuthController extends Controller
 		$nickname = $request->input("nickname");
 		$email = $request->input("email");
 		$password = $request->input("password");
+		$gender = $request->input("gender");
 		$fileExt = $request->fileExt;
 
 		$find_user = User::where("email", $email)->orWhere("nickname", $nickname)->first();
@@ -87,18 +88,19 @@ class AuthController extends Controller
 		$new_user = User::create([
 			"nickname" => $nickname,
 			"email" => $email,
-			"password" => $hash_password
+			"password" => $hash_password,
+			"gender" => $gender
 		]);
 
 		if ($request->hasFile("avatar") && $avatar->isValid()) {
 			$file_name = $nickname.'-'.date('Y-m-d-H-i-s').".".$fileExt;
-			$avatar->storeAs("avatars", $file_name);
+			$avatar->storeAs("public/avatars", $file_name);
 
 			$new_user->avatar = $file_name;
 			$new_user->save();
 		}
 
-		return response(["success" => true, "message" => "Пользователь создан"], 200)
+		return response(["success" => true, "message" => "Регистрация прошла успешно"], 200)
 			->header("Content-Type", "application/json");
 	}
 }
