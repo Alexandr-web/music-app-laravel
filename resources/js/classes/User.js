@@ -5,6 +5,7 @@ import Cookie from "../helpers/Cookie";
 export default class User {
     constructor() {
         this.CSRF_TOKEN = document.querySelector("meta[name=csrf-token]").content;
+        this.token = new Cookie().get("token");
     }
 
     setDataInCookie() {
@@ -48,14 +49,13 @@ export default class User {
     }
 
     removeOne(id) {
-        const token = new Cookie().get("token");
         const url = `${host}/user/delete/${id}`;
         const request = fetch(url, {
             method: "DELETE",
             headers: {
                 "Accept-Type": "application/json",
                 "X-Requested-With": "XMLHttpRequest",
-                "Authorization": `Bearer ${token || ""}`,
+                "Authorization": `Bearer ${this.token || ""}`,
                 "X-CSRF-TOKEN": this.CSRF_TOKEN,
             },
         });
@@ -64,14 +64,13 @@ export default class User {
     }
 
     updateOne(id, fd) {
-        const token = new Cookie().get("token");
         const url = `${host}/user/update/${id}`;
         const request = fetch(url, {
             method: "PUT",
             headers: {
                 "Accept-Type": "application/json",
                 "X-Requested-With": "XMLHttpRequest",
-                "Authorization": `Bearer ${token || ""}`,
+                "Authorization": `Bearer ${this.token || ""}`,
                 "X-CSRF-TOKEN": this.CSRF_TOKEN,
             },
             body: fd,

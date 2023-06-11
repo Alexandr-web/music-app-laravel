@@ -26,9 +26,27 @@ export default class Audio {
     getOne(id) {
         const url = `${host}/api/audio/${id}`;
         const res = fetch(url, {
-            "Accept-Type": "application/json",
-            "X-CSRF-TOKEN": this.CSRF_TOKEN,
-            "X-Requested-With": "XMLHttpRequest",
+            method: "GET",
+            headers: {
+                "Accept-Type": "application/json",
+                "X-CSRF-TOKEN": this.CSRF_TOKEN,
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        });
+
+        return res.then((data) => data.json());
+    }
+
+    getByName(name) {
+        const url = `${host}/api/audio/?name=${name}`;
+        const res = fetch(url, {
+            method: "GET",
+            headers: {
+                "Accept-Type": "application/json",
+                "X-CSRF-TOKEN": this.CSRF_TOKEN,
+                "X-Requested-With": "XMLHttpRequest",
+                "Authorization": `Bearer ${this.token}`,
+            },
         });
 
         return res.then((data) => data.json());
@@ -37,9 +55,12 @@ export default class Audio {
     getAll() {
         const url = `${host}/api/audio`;
         const res = fetch(url, {
-            "Accept-Type": "application/json",
-            "X-CSRF-TOKEN": this.CSRF_TOKEN,
-            "X-Requested-With": "XMLHttpRequest",
+            method: "GET",
+            headers: {
+                "Accept-Type": "application/json",
+                "X-CSRF-TOKEN": this.CSRF_TOKEN,
+                "X-Requested-With": "XMLHttpRequest",
+            },
         });
 
         return res.then((data) => data.json());

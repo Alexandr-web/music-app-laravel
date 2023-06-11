@@ -19,7 +19,7 @@
                     </button>
                 </div>
                 <div class="header__profile">
-                    <a class="header__profile-link" href="{{ $user['id'] }}">
+                    <a class="header__profile-link" href="/user/{{ $user['id'] }}">
                         <img class="header__profile-avatar" src="{{ $url_storage.$user['avatar'] }}" alt="Аватар пользователя">
                     </a>
                 </div>

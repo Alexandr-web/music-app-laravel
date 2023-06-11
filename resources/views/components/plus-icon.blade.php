@@ -1,6 +1,5 @@
 <svg class="{{ $show ? 'show' : 'hide' }}" width="16px" height="16px" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink">
-    </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
         <g id="Dribbble-Light-Preview" transform="translate(-379.000000, -240.000000)">
             <g id="icons" transform="translate(56.000000, 160.000000)">

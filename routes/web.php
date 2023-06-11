@@ -38,6 +38,17 @@ Route::prefix('audio')->group(function () {
         ->middleware('check_token');
 });
 
+Route::prefix('playlist')->group(function () {
+    Route::get('/add', function (Request $request) {
+        return view('playlist.add', ['current_user' => $request->user]);
+    })  
+        ->middleware('redirect_if_token_not_exist')
+        ->middleware('get_current_user_data');
+
+    Route::post('/upload', [PlaylistController::class, 'upload'])
+        ->middleware('check_token');
+});
+
 Route::get('/logout', function (Request $request) {
     return view('logout', ['current_user' => $request->user]);
 })

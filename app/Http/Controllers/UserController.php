@@ -26,7 +26,7 @@ class UserController extends Controller
 		$current_user = $request->user;
 
 		$is_guest = $current_user['id'] !== (int) $id;
-		$active_tab = htmlspecialchars($_GET['tab']) ?? 'audio';
+		$active_tab = htmlspecialchars($_GET['tab'] ?? 'audio');
 		$default_view = view('user', ['current_user' => $current_user, 'user' => $find_user, 'is_guest' => $is_guest, 'active_tab' => $active_tab]);
 
 		switch ($active_tab) {

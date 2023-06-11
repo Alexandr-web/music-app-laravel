@@ -20,8 +20,17 @@ class AudioController extends Controller
             ->header('Content-Type', 'application/json');
     }
 
-    public function getAll() {
-        $audio = Audio::all() ?? [];
+    public function getAll(Request $request) {
+        $name = $_GET['name'] ?? '';
+        $audio;
+
+        if (strlen($name) >= 3 && $request->is_authenticated) {
+            $audio = Audio::where('name', $name)
+                ->where('ownerId', $request->user_id)
+                ->get() ?? [];
+        } else {
+            $audio = Audio::all() ?? [];
+        }
         
         return response(['audio' => $audio, 'success' => true], 200)
             ->header('Content-Type', 'application/json');
@@ -96,7 +105,7 @@ class AudioController extends Controller
 
         array_push($ownerAudio, $created_audio['id']);
 
-        $owner['audio'] = json_encode($ownerAudio);
+        $owner->audio = json_encode($ownerAudio);
         $owner->save();
 
         return response(['success' => true, 'message' => 'Аудио загружено'], 200)

@@ -16,11 +16,11 @@ export default class ValidForm {
     }
 
     checkMin(min, value) {
-        return value.length >= min;
+        return value.trim().length >= min;
     }
 
     checkMax(max, value) {
-        return value.length <= max;
+        return value.trim().length <= max;
     }
 
     checkEmail(value) {
@@ -139,7 +139,7 @@ export default class ValidForm {
 
         let checkIsComplete = true;
 
-        if (!options.optional || element.value.length) {
+        if (!options.optional || element.value.trim().length) {
             checkIsComplete = this.checkAll(name, element.value);
         }
 
