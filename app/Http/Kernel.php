@@ -65,7 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'redirect_if_token_exist' => \App\Http\Middleware\RedirectIfTokenExist::class,
         'redirect_if_token_not_exist' => \App\Http\Middleware\RedirectIfTokenNotExist::class,
-        'check_token' => \App\Http\Middleware\CheckToken::class,
+        'check_token' => \App\Http\Middleware\CheckAuthToken::class,
         'get_current_user_data' => \App\Http\Middleware\GetCurrentUserData::class
     ];
 }

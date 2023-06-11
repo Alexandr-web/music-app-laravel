@@ -1,5 +1,8 @@
 import ValidForm from "../helpers/ValidForm";
 import uploadFile from "../scripts/uploadFile";
+import Audio from "../classes/Audio";
+import getAudioDuration from "../helpers/getAudioDuration";
+import convertToCorrectTime from "../helpers/convertToCorrectTime";
 
 window.addEventListener("load", () => {
     const options = {
@@ -9,9 +12,22 @@ window.addEventListener("load", () => {
         singer: { min: 1, max: 16, },
     };
     const callbackWhenAllCompleted = (fd) => {
-        fd.forEach((val) => {
-            console.log(val);
-        });
+        const extPoster = fd.get("poster").type.match(/\w+$/);
+        const extAudio = fd.get("audio").type.match(/\w+$/);
+
+        getAudioDuration(fd.get("audio"))
+            .then((duration) => {
+                fd.append("extPoster", extPoster);
+                fd.append("extAudio", extAudio);
+                fd.append("time", convertToCorrectTime(duration));
+
+                new Audio()
+                    .add(fd)
+                    .then((data) => console.log(data))
+                    .catch((err) => {
+                        throw err;
+                    });
+            });
     };
 
     new ValidForm("#add-music-form", options, callbackWhenAllCompleted).init();

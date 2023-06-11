@@ -9,5 +9,5 @@ class Audio extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['ownerId', 'time', 'path'];
+    protected $guarded = [];
 }

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 use App\Helpers\AuthToken;
 
-class CheckAuthToken extends Middleware
+class CheckAuthToken
 {
     /**
      * Handle an incoming request.
@@ -26,6 +26,7 @@ class CheckAuthToken extends Middleware
             $find_user = User::find($user_id);
 
             $request->is_authenticated = (bool) $find_user;
+            $request->user_id = $user_id;
             $request->user = $find_user;
         }
 
