@@ -9,7 +9,7 @@
             <div class="form__field">
                 <label class="form__label" for="avatar">Аватар</label>
                 <div class="form__input-block">
-                    <x-file-upload-area id="avatar" name="avatar" :isAvatar="true" :accept="['image/*']" />
+                    <x-file-upload-area id="avatar" name="avatar" :isAvatar="true" :accept="['.png', '.jpg', '.jpeg', '.svg']" />
                 </div>
             </div>
             <div class="form__field">

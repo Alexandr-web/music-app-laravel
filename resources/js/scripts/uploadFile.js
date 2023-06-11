@@ -1,6 +1,5 @@
-function uploadFile(selectorInput, selectorImg, selectorText, selectorLoader) {
+export default (selectorInput, selectorText, selectorLoader, callbackWhenUpload) => {
 	const input = document.querySelector(selectorInput);
-	const img = document.querySelector(selectorImg);
 	const text = document.querySelector(selectorText);
 	const loader = document.querySelector(selectorLoader);
 
@@ -12,10 +11,10 @@ function uploadFile(selectorInput, selectorImg, selectorText, selectorLoader) {
 		loader.classList.remove("hide");
 
 		reader.onload = () => {
-			img.src = reader.result;
 			text.classList.add("hide");
-			img.classList.remove("hide");
 			loader.classList.add("hide");
+
+			callbackWhenUpload(file, reader.result);
 		};
 
 		reader.onerror = () => {
@@ -23,6 +22,4 @@ function uploadFile(selectorInput, selectorImg, selectorText, selectorLoader) {
 			loader.classList.add("hide");
 		};
 	});
-}
-
-export default uploadFile;
+};

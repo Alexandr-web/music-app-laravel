@@ -10,9 +10,8 @@ export default () => {
 		password: { min: 9, },
 	};
 
-	const callbackWhenAllCompleted = () => {
-		const data = new FormData(document.querySelector(".form#login-form"));
-		const promiseLogin = new Auth().login(data);
+	const callbackWhenAllCompleted = (fd) => {
+		const promiseLogin = new Auth().login(fd);
 
 		promiseLogin.then((res) => {
 			const { success, message, token, } = res;

@@ -11,7 +11,7 @@
                 <div class="form__field">
                     <label class="form__label" for="avatar">Аватар</label>
                     <div class="form__input-block">
-                        <x-file-upload-area id="avatar" name="avatar" :isAvatar="true" :accept="['image/*']" :defaultSrc="$url_storage.$user['avatar']" />
+                        <x-file-upload-area id="avatar" name="avatar" :isAvatar="true" :accept="['.png', '.jpg', '.jpeg', '.svg']" :defaultSrc="$url_storage.$user['avatar']" />
                     </div>
                 </div>
                 <div class="form__field">

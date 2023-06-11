@@ -1,3 +1,8 @@
+<?php
+    $host = $_ENV['HOST'];
+    $url_storage = "$host/storage/posters/";
+?>
+
 <table class="table">
     <thead class="table__head">
         <tr class="table__head-inner">
@@ -9,8 +14,8 @@
     <tbody class="table__body">
         @foreach ($songs as $index => $song)
             <tr class="table__body-inner">
-                <td class="table__body-item">{{ $index }}</td>
-                <td class="table__body-item audio">
+                <td class="table__body-item">{{ $index + 1 }}</td>
+                <td class="table__body-item audio" data-audio-id="{{ $song['id'] }}">
                     <div class="audio__block">
                         <button class="btn audio__btn audio__play-btn">
                             <x-play-icon :show="true" />
@@ -19,7 +24,7 @@
                     </div>
                     <div class="audio__block audio__block--flex">
                         <div class="audio__poster">
-                            <img class="audio__poster-image" src="{{ $song['poster'] }}" alt='Постер песни "{{ $song['name'] }}"'>
+                            <img class="audio__poster-image" src="{{ $url_storage.$song['poster'] }}" alt='Постер песни "{{ $song['name'] }}"'>
                         </div>
                         <div class="audio__song-info">
                             <h4 class="audio__name">{{ $song['name'] }}</h4>

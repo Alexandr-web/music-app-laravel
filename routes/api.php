@@ -6,5 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AudioController;
 
 Route::get('user/{id}', [UserController::class, 'getOne'])->where('id', '[0-9]+');
-Route::get('audio/{id}', [AudioController::class, 'getOne'])->where('id', '[0-9]+');
-Route::get('audio', [AudioController::class, 'getAll']);
+
+Route::prefix('audio')->group(function () {
+    Route::get('/{id}', [AudioController::class, 'getOne'])->where('id', '[0-9]+');
+    Route::get('/', [AudioController::class, 'getAll']);
+});

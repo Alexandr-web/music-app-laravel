@@ -11,13 +11,12 @@ export default () => {
 		email: { email: true, },
 	};
 
-	const callbackWhenAllCompleted = () => {
-		const data = new FormData(document.querySelector(".form#registration-form"));
-		const ext = data.get("avatar").type.match(/\w+$/);
+	const callbackWhenAllCompleted = (fd) => {
+		const ext = fd.get("avatar").type.match(/\w+$/);
 
-		data.append("fileExt", ext);
+		fd.append("fileExt", ext);
 
-		const promiseRegistration = new Auth().registration(data);
+		const promiseRegistration = new Auth().registration(fd);
 
 		promiseRegistration.then((res) => {
 			const { success, message, } = res;
