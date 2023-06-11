@@ -1,22 +1,25 @@
 <?php
 $songs = [
-    1 => [
+    [
         'name' => 'Bleach',
         'singer' => '$uicideboy$',
         'time' => '01:31',
-        'poster' => 'https://images.genius.com/f4070376322053f8aee83f60c88710cb.1000x1000x1.png'
+        'poster' => 'https://images.genius.com/f4070376322053f8aee83f60c88710cb.1000x1000x1.png',
+        'id' => 1,
     ],
     [
         'name' => 'Bleach',
         'singer' => '$uicideboy$',
         'time' => '01:31',
-        'poster' => 'https://images.genius.com/f4070376322053f8aee83f60c88710cb.1000x1000x1.png'
+        'poster' => 'https://images.genius.com/f4070376322053f8aee83f60c88710cb.1000x1000x1.png',
+        'id' => 2,
     ],
     [
         'name' => 'Bleach',
         'singer' => '$uicideboy$',
         'time' => '01:31',
-        'poster' => 'https://images.genius.com/f4070376322053f8aee83f60c88710cb.1000x1000x1.png'
+        'poster' => 'https://images.genius.com/f4070376322053f8aee83f60c88710cb.1000x1000x1.png',
+        'id' => 3,
     ]
 ];
 ?>

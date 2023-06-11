@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Audio;
+use App\Models\User;
 
 class AudioController extends Controller
 {
@@ -88,7 +89,15 @@ class AudioController extends Controller
 			$audio_data['path'] = $file_name;
 		}
 
-        Audio::create($audio_data);
+        $created_audio = Audio::create($audio_data);
+        $owner = User::find($request->user_id);
+
+        $ownerAudio = json_decode($owner->audio, true);
+
+        array_push($ownerAudio, $created_audio['id']);
+
+        $owner['audio'] = json_encode($ownerAudio);
+        $owner->save();
 
         return response(['success' => true, 'message' => 'Аудио загружено'], 200)
             ->header('Content-Type', 'application/json');
