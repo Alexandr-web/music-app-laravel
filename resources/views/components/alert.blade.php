@@ -6,7 +6,7 @@
 		<div class="alert__icon hide" data-alert-icon="error">
 			<x-error-icon />
 		</div>
-		<p class="alert__text">Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты.</p>
+		<p class="alert__text"></p>
 	</div>
 	<button class="btn alert__close">
 		<x-close-icon />

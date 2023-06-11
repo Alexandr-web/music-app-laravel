@@ -1,48 +1,45 @@
 export default class Alert {
-    constructor() {
-        this.alert = document.querySelector(".alert");
-        this.alertText = this.alert.querySelector(".alert__text");
-        this.btnClose = this.alert.querySelector(".alert__close");
-        this.icons = this.alert.querySelectorAll(".alert__icon");
-    }
+	constructor() {
+		this.alert = document.querySelector(".alert");
+		this.alertText = this.alert.querySelector(".alert__text");
+		this.btnClose = this.alert.querySelector(".alert__close");
+		this.icons = this.alert.querySelectorAll(".alert__icon");
+	}
 
-    _close() {
-        this.btnClose.addEventListener("click", () => {
-            this.alert.classList.add("hide");
-            this._hideAllIcons();
-        });
-    }
+	_close() {
+		this.btnClose.addEventListener("click", () => {
+			this.alert.classList.add("hide");
+			this._hideAllIcons();
+		});
+	}
 
-    _hideAllIcons() {
-        this.icons.forEach((icon) => icon.classList.add("hide"));
-    }
+	_hideAllIcons() {
+		this.icons.forEach((icon) => icon.classList.add("hide"));
+	}
 
-    _showIcon(success) {
-        [...this.icons]
-            .find((icon) => icon.dataset.alertIcon === (success ? "success" : "error"))
-            .classList
-            .remove("hide");
-    }
+	_showIcon(success) {
+		[...this.icons]
+			.find((icon) => icon.dataset.alertIcon === (success ? "success" : "error"))
+			.classList
+			.remove("hide");
+	}
 
-    _clearOldStyles() {
-        this._hideAllIcons();
+	_clearOldStyles() {
+		this._hideAllIcons();
+		this.alert.className = "alert";
+	}
 
-        this.alert.classList.remove("hide");
-        this.alert.classList.remove("alert--error");
-        this.alert.classList.remove("alert--success");
-    }
+	show(message, success = true) {
+		this._clearOldStyles();
+		this._showIcon(success);
 
-    show(message, success = true) {
-        this._clearOldStyles();
-        this._showIcon(success);
+		this.alert.classList.add(`alert--${success ? "success" : "error"}`);
+		this.alertText.textContent = message;
+	}
 
-        this.alert.classList.add(`alert--${success ? "success" : "error"}`);
-        this.alertText.textContent = message;
-    }
+	init() {
+		this._close();
 
-    init() {
-        this._close();
-
-        return this;
-    }
+		return this;
+	}
 }
