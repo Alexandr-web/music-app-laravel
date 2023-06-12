@@ -19,6 +19,10 @@ Route::prefix('user')->group(function () {
         ->middleware('redirect_if_token_not_exist')
         ->middleware('get_current_user_data')
         ->where('id', '[0-9]+');
+        
+	Route::post("/update/{id}", [UserController::class, "update"])
+		->middleware("check_token")
+		->where("id", "[0-9]+");
 });
 
 Route::get('/', function (Request $request) {

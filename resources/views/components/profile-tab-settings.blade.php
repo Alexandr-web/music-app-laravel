@@ -3,6 +3,7 @@
     $url_storage = "$host/storage/avatars/";
 ?>
 
+<x-alert />
 <div class="profile__tab">
     <div class="profile__tab-inner">
         <h1 class="title">Настройки</h1>

@@ -65,12 +65,12 @@ class AudioController extends Controller
 
         $poster = [
             'file' => $request->file('poster'),
-            'ext' => $request->extPoster,
+            'ext' => $request->file('poster')->getClientOriginalExtension(),
         ];
 
         $audio = [
             'file' => $request->file('audio'),
-            'ext' => $request->extAudio,
+            'ext' => $request->file('audio')->getClientOriginalExtension(),
         ];
 
         $audio_data = [
@@ -108,7 +108,7 @@ class AudioController extends Controller
         $owner->audio = json_encode($ownerAudio);
         $owner->save();
 
-        return response(['success' => true, 'message' => 'Аудио загружено'], 200)
+        return response(['success' => true, 'message' => 'Аудио загружено'], 201)
             ->header('Content-Type', 'application/json');
     }
 }

@@ -3,6 +3,7 @@
 @section('title', 'Загрузка аудио')
 
 @section('content')
+    <x-alert />
     <h1 class="title sticky-title">Загрузка аудио</h1>
     <div class="main-content__container">
         <form class="form" autocomplete="off" id="add-music-form" enctype="multipart/form-data">

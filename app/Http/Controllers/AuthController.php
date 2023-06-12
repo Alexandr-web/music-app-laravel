@@ -66,7 +66,7 @@ class AuthController extends Controller
 			'email.required' => 'Электронная почта обязательна для заполнения',
 			'email.email' => 'Электронная почта должна быть в формате электронной почты',
 			'avatar.max' => 'Файл аватара не может весить больше 1мб',
-			'avatar.mimes' => 'Файл аватара может иметь следующее расширение: png, jpg, jpeg, svg'
+			'avatar.mimes' => 'Файл аватара может иметь следующие расширения: png, jpg, jpeg, svg'
 		]);
 
 		$avatar = $request->file("avatar");
@@ -74,7 +74,6 @@ class AuthController extends Controller
 		$email = $request->input("email");
 		$password = $request->input("password");
 		$gender = $request->input("gender");
-		$fileExt = $request->fileExt;
 
 		$find_user = User::where("email", $email)->orWhere("nickname", $nickname)->first();
 
@@ -93,14 +92,15 @@ class AuthController extends Controller
 		]);
 
 		if ($request->hasFile("avatar") && $avatar->isValid()) {
-			$file_name = $nickname.'-'.date('Y-m-d-H-i-s').".".$fileExt;
+			$fileExt = $request->file('avatar')->getClientOriginalExtension();
+			$file_name = $nickname.'-'.date('Y-m-d-H-i-s').'.'.$fileExt;
 			$avatar->storeAs("public/avatars", $file_name);
 
 			$new_user->avatar = $file_name;
 			$new_user->save();
 		}
 
-		return response(["success" => true, "message" => "Регистрация прошла успешно"], 200)
+		return response(["success" => true, "message" => "Регистрация прошла успешно"], 201)
 			->header("Content-Type", "application/json");
 	}
 }

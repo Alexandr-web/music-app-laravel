@@ -9,35 +9,27 @@ class Auth {
 		const allHeaders = Object.assign(headers, {
 			"X-CSRF-TOKEN": this.CSRF_TOKEN,
 			"X-Requested-With": "XMLHttpRequest",
+			"Accept-Type": "application/json",
 		});
 
 		return fetch(url, {
 			method: "POST",
 			headers: allHeaders,
 			body: data,
-		});
+		})
+			.then((response) => response.json())
+			.catch((error) => {
+				console.error(error);
+				return { success: false, message: error.message, error, };
+			});
 	}
 
 	login(data) {
-		const url = `${host}/auth/login`;
-
-		return this._fetchPost(url, data)
-			.then((response) => response.json())
-			.catch((error) => {
-				console.error(error);
-				return { success: false, message: error.message, error, };
-			});
+		return this._fetchPost(`${host}/auth/login`, data);
 	}
 
 	registration(data) {
-		const url = `${host}/auth/registration`;
-
-		return this._fetchPost(url, data)
-			.then((response) => response.json())
-			.catch((error) => {
-				console.error(error);
-				return { success: false, message: error.message, error, };
-			});
+		return this._fetchPost(`${host}/auth/registration`, data);
 	}
 }
 
