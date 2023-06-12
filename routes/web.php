@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AudioController;
+use App\Http\Controllers\PlaylistController;
 use Illuminate\Http\Request;
 
 Route::prefix('auth')->group(function () {
@@ -49,12 +50,6 @@ Route::prefix('playlist')->group(function () {
         ->middleware('redirect_if_token_not_exist')
         ->middleware('get_current_user_data');
 
-    Route::post('/upload', [PlaylistController::class, 'upload'])
+    Route::post('/add', [PlaylistController::class, 'add'])
         ->middleware('check_token');
 });
-
-Route::get('/logout', function (Request $request) {
-    return view('logout', ['current_user' => $request->user]);
-})
-    ->middleware('redirect_if_token_not_exist')
-    ->middleware('get_current_user_data');

@@ -73,6 +73,8 @@ class AudioController extends Controller
             'ext' => $request->file('audio')->getClientOriginalExtension(),
         ];
 
+        $current_user = $request->user;
+
         $audio_data = [
             'ownerId' => $request->user_id,
             'path' => '',
@@ -99,14 +101,13 @@ class AudioController extends Controller
 		}
 
         $created_audio = Audio::create($audio_data);
-        $owner = User::find($request->user_id);
 
-        $ownerAudio = json_decode($owner->audio, true);
+        $ownerAudio = json_decode($current_user->audio, true);
 
         array_push($ownerAudio, $created_audio['id']);
 
-        $owner->audio = json_encode($ownerAudio);
-        $owner->save();
+        $current_user->audio = json_encode($ownerAudio);
+        $current_user->save();
 
         return response(['success' => true, 'message' => 'Аудио загружено'], 201)
             ->header('Content-Type', 'application/json');

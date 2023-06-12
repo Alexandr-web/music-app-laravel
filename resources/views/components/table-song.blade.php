@@ -1,8 +1,3 @@
-<?php
-    $host = $_ENV['HOST'];
-    $url_storage = "$host/storage/posters/";
-?>
-
 <table class="table">
     <thead class="table__head">
         <tr class="table__head-inner">
@@ -24,7 +19,7 @@
                     </div>
                     <div class="audio__block audio__block--flex">
                         <div class="audio__poster">
-                            <img class="audio__poster-image" src="{{ $url_storage.$song['poster'] }}" alt='Постер песни "{{ $song['name'] }}"'>
+                            <img class="audio__poster-image" src="{{ asset('storage/posters').'/'.$song['poster'] }}" alt='Постер песни "{{ $song['name'] }}"'>
                         </div>
                         <div class="audio__song-info">
                             <h4 class="audio__name">{{ $song['name'] }}</h4>

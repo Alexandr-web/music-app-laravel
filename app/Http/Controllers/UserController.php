@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Playlist;
 use App\Models\Audio;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -42,7 +43,12 @@ class UserController extends Controller
 			case "favorites":
 				return $default_view;
 			case "playlists":
-				return $default_view;
+				$array_playlists_id = json_decode($find_user['playlists'], true);
+				$array_playlists_data = array_map(function ($playlist_id) {
+					return Playlist::find($playlist_id);
+				}, $array_playlists_id);
+
+				return view('user', array_merge(['playlists' => $array_playlists_data], $page_data));
 			case "settings":
 				return $default_view;
 		}
@@ -52,9 +58,7 @@ class UserController extends Controller
 			return Audio::find($audio_id);
 		}, $array_audios_id);
 
-		$page_data["audio"] = $array_audios_data;
-
-		return view('user', $page_data);
+		return view('user', array_merge(['audio' => $array_audios_data], $page_data));
 	}
 
 	public function update(Request $request, string $id) {
@@ -129,9 +133,9 @@ class UserController extends Controller
 		}
 
 		if ($request->hasFile("avatar") && $new_avatar->isValid()) {
-			$old_avatar = $request->user->avatar;
+			$old_avatar = $current_user->avatar;
 			$ext = $new_avatar->getClientOriginalExtension();
-			$file_name = $current_user->nickname . '-' . date('Y-m-d-H-i-s') . "." . $ext;
+			$file_name = $current_user->id . '-' . date('Y-m-d-H-i-s') . "." . $ext;
 
 			if ($old_avatar !== "default.png") {
 				Storage::delete("public/avatars/" . $old_avatar);

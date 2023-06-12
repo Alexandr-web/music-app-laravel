@@ -3,6 +3,7 @@
 @section('title', 'Создание плейлиста')
 
 @section('content')
+    <x-alert />
     <h1 class="title sticky-title">Создание плейлиста</h1>
     <div class="main-content__container">
         <form class="form" autocomplete="off" id="add-playlist-form" enctype="multipart/form-data">

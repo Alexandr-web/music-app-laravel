@@ -5,15 +5,16 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\Playlist;
 
 class CustomPlaylist extends Component
 {
-    public array $playlist;
+    public Playlist $playlist;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(array $playlist)
+    public function __construct(Playlist $playlist)
     {
         $this->playlist = $playlist;
     }
