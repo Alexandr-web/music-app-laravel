@@ -1,6 +1,6 @@
 import Alert from "../../classes/Alert";
 import User from "../../classes/User";
-import ValidForm from "../../helpers/ValidForm";
+import ValidForm from "../../classes/ValidForm";
 import changePasswordState from "../../scripts/changePasswordState";
 import uploadFile from "../../scripts/uploadFile";
 import Cookie from "js-cookie";

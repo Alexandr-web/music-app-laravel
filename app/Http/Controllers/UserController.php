@@ -139,10 +139,10 @@ class UserController extends Controller
 
 			if ($old_avatar !== "default.png") {
 				Storage::delete("public/avatars/" . $old_avatar);
-
-				$new_avatar->storeAs("public/avatars", $file_name);
-				$new_data["avatar"] = $file_name;
 			}
+			
+			$new_avatar->storeAs("public/avatars", $file_name);
+			$new_data["avatar"] = $file_name;
 		}
 
 		if (!count($new_data)) {

@@ -1,4 +1,4 @@
-import ValidForm from "../helpers/ValidForm";
+import ValidForm from "../classes/ValidForm";
 import uploadFile from "../scripts/uploadFile";
 import AudioSearch from "../classes/AudioSearch";
 import Alert from "../classes/Alert";

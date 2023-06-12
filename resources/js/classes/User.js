@@ -1,37 +1,8 @@
-import host from "../helpers/host";
 import jwtDecode from "jwt-decode";
 import Cookie from "js-cookie";
+import Request from "./Request";
 
-export default class User {
-	constructor() {
-		this.CSRF_TOKEN = document.querySelector("meta[name=csrf-token]").content;
-		this.TOKEN = Cookie.get("token") || "";
-	}
-
-	_fetch(url, method, options = { body: {}, headers: {}, }) {
-		const allHeaders = Object.assign(options.headers, {
-			"Accept-Type": "application/json",
-			"X-Requested-With": "XMLHttpRequest",
-			"X-CSRF-TOKEN": this.CSRF_TOKEN,
-		});
-
-		const config = { method, headers: allHeaders, };
-
-		if (
-			Object.keys(options.body).length ||
-			(options.body instanceof FormData && Array.from(options.body.keys()).length)
-		) {
-			config.body = options.body;
-		}
-
-		return fetch(url, config)
-			.then((data) => data.json())
-			.catch((error) => {
-				console.error(error);
-				return { success: false, message: error.message, error, };
-			});
-	}
-
+export default class User extends Request {
 	setDataInCookie() {
 		const res = this.getByToken();
 
@@ -57,30 +28,27 @@ export default class User {
 	}
 
 	getOne(id) {
-		return this._fetch(
-			`${host}/api/user/${id}`,
-			"GET"
-		);
+		const url = `${this.HOST}/api/user/${id}`;
+
+		return this.send(url, "GET");
 	}
 
 	removeOne(id) {
-		return this._fetch(
-			`${host}/user/delete/${id}`,
-			"DELETE",
-			{
-				headers: { "Authorization": `Bearer ${this.TOKEN}`, },
-			}
-		);
+		const url = `${this.HOST}/user/delete/${id}`;
+		const options = {
+			headers: { "Authorization": `Bearer ${this.TOKEN}`, },
+		};
+
+		return this.send(url, "DELETE", options);
 	}
 
 	updateOne(id, fd) {
-		return this._fetch(
-			`${host}/user/update/${id}`,
-			"POST",
-			{
-				headers: { "Authorization": `Bearer ${this.TOKEN}`, },
-				body: fd,
-			}
-		);
+		const url = `${this.HOST}/user/update/${id}`;
+		const options = {
+			headers: { "Authorization": `Bearer ${this.TOKEN}`, },
+			body: fd,
+		};
+
+		return this.send(url, "POST", options);
 	}
 }

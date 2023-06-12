@@ -1,25 +1,13 @@
-import host from "../helpers/host";
-import Cookie from "js-cookie";
+import Request from "./Request";
 
-export default class Playlist {
-    constructor() {
-        this.CSRF_TOKEN = document.querySelector("meta[name=csrf-token]").content;
-        this.token = Cookie.get("token") || "";
-    }
-
+export default class Playlist extends Request {
     add(fd) {
-        const url = `${host}/playlist/add`;
-        const res = fetch(url, {
-            method: "POST",
-            headers: {
-                "Accept-Type": "application/json",
-                "X-CSRF-TOKEN": this.CSRF_TOKEN,
-                "Authorization": `Bearer ${this.token}`,
-                "X-Requested-With": "XMLHttpRequest",
-            },
+        const url = `${this.HOST}/playlist/add`;
+        const options = {
+            headers: { "Authorization": `Bearer ${this.TOKEN}`, },
             body: fd,
-        });
+        };
 
-        return res.then((data) => data.json());
+        return this.send(url, "POST", options);
     }
 }

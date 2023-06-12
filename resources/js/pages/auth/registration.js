@@ -1,5 +1,5 @@
 import uploadFile from "../../scripts/uploadFile";
-import ValidForm from "../../helpers/ValidForm";
+import ValidForm from "../../classes/ValidForm";
 import Auth from "../../classes/Auth";
 import Alert from "../../classes/Alert";
 
