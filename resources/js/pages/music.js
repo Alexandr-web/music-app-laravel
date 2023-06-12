@@ -1,10 +1,12 @@
-import ValidForm from "../helpers/ValidForm";
+import ValidForm from "../classes/ValidForm";
 import uploadFile from "../scripts/uploadFile";
 import Audio from "../classes/Audio";
 import getAudioDuration from "../helpers/getAudioDuration";
 import convertToCorrectTime from "../helpers/convertToCorrectTime";
+import Alert from "../classes/Alert";
 
 window.addEventListener("load", () => {
+    const alert = new Alert().init();
     const options = {
         poster: { file: true, },
         audio: { file: true, },
@@ -12,19 +14,15 @@ window.addEventListener("load", () => {
         singer: { min: 1, max: 16, },
     };
     const callbackWhenAllCompleted = (fd) => {
-        const extPoster = fd.get("poster").type.match(/\w+$/);
-        const extAudio = fd.get("audio").type.match(/\w+$/);
-
         getAudioDuration(fd.get("audio"))
             .then((duration) => {
-                fd.append("extPoster", extPoster);
-                fd.append("extAudio", extAudio);
                 fd.append("time", convertToCorrectTime(duration));
 
                 new Audio()
                     .add(fd)
-                    .then((data) => console.log(data))
-                    .catch((err) => {
+                    .then(({ success, message, }) => {
+                        alert.show(message, success);
+                    }).catch((err) => {
                         throw err;
                     });
             });

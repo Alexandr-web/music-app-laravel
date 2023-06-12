@@ -1,8 +1,3 @@
-<?php
-    $host = $_ENV['HOST'];
-    $url_storage = "$host/storage/avatars/";
-?>
-
 <header class="header">
     <div class="header__inner">
         <nav class="header__nav">
@@ -19,8 +14,8 @@
                     </button>
                 </div>
                 <div class="header__profile">
-                    <a class="header__profile-link" href="{{ $user['id'] }}">
-                        <img class="header__profile-avatar" src="{{ $url_storage.$user['avatar'] }}" alt="Аватар пользователя">
+                    <a class="header__profile-link" href="/user/{{ $user['id'] }}">
+                        <img class="header__profile-avatar" src="{{ asset('storage/avatars').'/'.$user['avatar'] }}" alt="Аватар пользователя">
                     </a>
                 </div>
             </div>

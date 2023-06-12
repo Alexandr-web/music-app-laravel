@@ -49,12 +49,8 @@
         ],
         "import/no-extraneous-dependencies": "off",
         "linebreak-style": "off",
-        "object-curly-newline": [
-            "error",
-            {
-                "multiline": true
-            }
-        ],
+        "object-curly-newline": "off",
+		"operator-linebreak": "off",
         "import/order": "off",
         "import/no-unresolved": "off",
         "import/extensions": "off",

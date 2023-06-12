@@ -1,1 +1,1 @@
-<div class="nothing-find">{{ $text }}</div>
+<div class="nothing-find {{ $hide ? 'hide' : '' }}" id="{{ $id }}">{{ $text }}</div>

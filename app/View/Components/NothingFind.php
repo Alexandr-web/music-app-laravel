@@ -9,13 +9,17 @@ use Illuminate\View\Component;
 class NothingFind extends Component
 {
     public string $text = '';
+    public bool $hide = false;
+    public string $id = '';
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $text)
+    public function __construct(string $text, string $id = '', bool $hide = false)
     {
         $this->text = $text;
+        $this->hide = $hide;
+        $this->id = $id;
     }
 
     /**

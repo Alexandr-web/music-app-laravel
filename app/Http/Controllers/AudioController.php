@@ -20,8 +20,17 @@ class AudioController extends Controller
             ->header('Content-Type', 'application/json');
     }
 
-    public function getAll() {
-        $audio = Audio::all() ?? [];
+    public function getAll(Request $request) {
+        $name = $_GET['name'] ?? '';
+        $audio;
+
+        if (strlen($name) >= 3 && $request->is_authenticated) {
+            $audio = Audio::where('name', $name)
+                ->where('ownerId', $request->user_id)
+                ->get() ?? [];
+        } else {
+            $audio = Audio::all() ?? [];
+        }
         
         return response(['audio' => $audio, 'success' => true], 200)
             ->header('Content-Type', 'application/json');
@@ -56,13 +65,15 @@ class AudioController extends Controller
 
         $poster = [
             'file' => $request->file('poster'),
-            'ext' => $request->extPoster,
+            'ext' => $request->file('poster')->getClientOriginalExtension(),
         ];
 
         $audio = [
             'file' => $request->file('audio'),
-            'ext' => $request->extAudio,
+            'ext' => $request->file('audio')->getClientOriginalExtension(),
         ];
+
+        $current_user = $request->user;
 
         $audio_data = [
             'ownerId' => $request->user_id,
@@ -90,16 +101,15 @@ class AudioController extends Controller
 		}
 
         $created_audio = Audio::create($audio_data);
-        $owner = User::find($request->user_id);
 
-        $ownerAudio = json_decode($owner->audio, true);
+        $ownerAudio = json_decode($current_user->audio, true);
 
         array_push($ownerAudio, $created_audio['id']);
 
-        $owner['audio'] = json_encode($ownerAudio);
-        $owner->save();
+        $current_user->audio = json_encode($ownerAudio);
+        $current_user->save();
 
-        return response(['success' => true, 'message' => 'Аудио загружено'], 200)
+        return response(['success' => true, 'message' => 'Аудио загружено'], 201)
             ->header('Content-Type', 'application/json');
     }
 }

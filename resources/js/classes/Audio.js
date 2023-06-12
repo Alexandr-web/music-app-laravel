@@ -1,47 +1,34 @@
-import host from "../helpers/host";
-import Cookie from "../helpers/Cookie";
+import Request from "./Request";
 
-export default class Audio {
-    constructor() {
-        this.CSRF_TOKEN = document.querySelector("meta[name=csrf-token]").content;
-        this.token = new Cookie().get("token");
-    }
-
+export default class Audio extends Request {
     add(fd) {
-        const url = `${host}/audio/upload`;
-        const res = fetch(url, {
-            method: "POST",
-            headers: {
-                "Accept-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-TOKEN": this.CSRF_TOKEN,
-                "Authorization": `Bearer ${this.token}`,
-            },
+        const url = `${this.HOST}/audio/upload`;
+        const options = {
+            headers: { "Authorization": `Bearer ${this.TOKEN}`, },
             body: fd,
-        });
+        };
 
-        return res.then((data) => data.json());
+        return this.send(url, "POST", options);
     }
 
     getOne(id) {
-        const url = `${host}/api/audio/${id}`;
-        const res = fetch(url, {
-            "Accept-Type": "application/json",
-            "X-CSRF-TOKEN": this.CSRF_TOKEN,
-            "X-Requested-With": "XMLHttpRequest",
-        });
+        const url = `${this.HOST}/api/audio/${id}`;
 
-        return res.then((data) => data.json());
+        return this.send(url, "GET");
+    }
+
+    getByName(name) {
+        const url = `${this.HOST}/api/audio/?name=${name}`;
+        const options = {
+            headers: { "Authorization": `Bearer ${this.TOKEN}`, },
+        };
+
+        return this.send(url, "GET", options);
     }
 
     getAll() {
-        const url = `${host}/api/audio`;
-        const res = fetch(url, {
-            "Accept-Type": "application/json",
-            "X-CSRF-TOKEN": this.CSRF_TOKEN,
-            "X-Requested-With": "XMLHttpRequest",
-        });
+        const url = `${this.HOST}/api/audio`;
 
-        return res.then((data) => data.json());
+        return this.send(url, "GET");
     }
 }

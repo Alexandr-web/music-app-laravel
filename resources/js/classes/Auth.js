@@ -1,43 +1,22 @@
-import host from "../helpers/host";
+import Request from "./Request";
 
-class Auth {
-	constructor() {
-		this.CSRF_TOKEN = document.querySelector("meta[name=csrf-token]").content;
-	}
-
-	_fetchPost(url, data, headers = {}) {
-		const allHeaders = Object.assign(headers, {
-			"X-CSRF-TOKEN": this.CSRF_TOKEN,
-			"X-Requested-With": "XMLHttpRequest",
-		});
-
-		return fetch(url, {
-			method: "POST",
-			headers: allHeaders,
-			body: data,
-		});
-	}
-
+class Auth extends Request {
 	login(data) {
-		const url = `${host}/auth/login`;
+		const url = `${this.HOST}/auth/login`;
+		const options = {
+			body: data,
+		};
 
-		return this._fetchPost(url, data)
-			.then((response) => response.json())
-			.catch((error) => {
-				console.error(error);
-				return { success: false, message: error.message, error, };
-			});
+		return this.send(url, "POST", options);
 	}
 
 	registration(data) {
-		const url = `${host}/auth/registration`;
+		const url = `${this.HOST}/auth/registration`;
+		const options = {
+			body: data,
+		};
 
-		return this._fetchPost(url, data)
-			.then((response) => response.json())
-			.catch((error) => {
-				console.error(error);
-				return { success: false, message: error.message, error, };
-			});
+		return this.send(url, "POST", options);
 	}
 }
 
