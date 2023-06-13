@@ -4,6 +4,7 @@ import ValidForm from "../../classes/ValidForm";
 import changePasswordState from "../../scripts/changePasswordState";
 import uploadFile from "../../scripts/uploadFile";
 import Cookie from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 export default () => {
 	const form = document.querySelector(".form#edit-form");
@@ -23,8 +24,8 @@ export default () => {
 	};
 
 	const callbackWhenAllCompleted = (fd) => {
-		const { id: userId, } = JSON.parse(Cookie.get("currentUser") || "");
-		const promiseUpdateUser = new User().updateOne(userId, fd);
+		const { user_id: id, } = jwtDecode(Cookie.get("token") || "");
+		const promiseUpdateUser = new User().updateOne(id, fd);
 
 		promiseUpdateUser
 			.then(({ success, message, }) => {

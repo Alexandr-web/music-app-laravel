@@ -62,4 +62,11 @@ class PlaylistController extends Controller
         return response(['success' => true, 'message' => 'Плейлист создан', 'playlists' => $current_user->playlists], 201)
             ->header('Content-Type', 'application/json');
     }
+
+    public function getOne(Request $request, string $id) {
+        $find_playlist = Playlist::find($id) ?? [];
+
+        return response(['success' => true, 'playlist' => $find_playlist])
+            ->header('Content-Type', 'application/json');
+    }
 }

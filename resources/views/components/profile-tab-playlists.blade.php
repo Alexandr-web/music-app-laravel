@@ -1,4 +1,5 @@
 <div class="profile__tab">
+    <x-modal-window-playlist />
     <div class="profile__tab-inner">
         <h1 class="title">Плейлисты</h1>
         @if (count($playlists))

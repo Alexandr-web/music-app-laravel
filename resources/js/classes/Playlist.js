@@ -10,4 +10,10 @@ export default class Playlist extends Request {
 
         return this.send(url, "POST", options);
     }
+
+    getOne(id) {
+        const url = `${this.HOST}/api/playlist/${id}`;
+
+        return this.send(url, "GET");
+    }
 }
