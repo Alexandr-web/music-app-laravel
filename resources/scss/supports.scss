@@ -10,6 +10,11 @@
 		backdrop-filter: blur(15px);
 	}
 
+	.modal-window-playlist__inner {
+		@include getColor(255, 255, 255, .8);
+		backdrop-filter: blur(15px);
+	}
+
 	.playlist__poster::before {
 		backdrop-filter: blur(5px);
 	}

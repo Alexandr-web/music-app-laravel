@@ -1,22 +1,7 @@
 import jwtDecode from "jwt-decode";
-import Cookie from "js-cookie";
 import Request from "./Request";
 
 export default class User extends Request {
-	setDataInCookie() {
-		const res = this.getByToken();
-
-		if (res) {
-			res.then(({ success, user, }) => {
-				if (success) {
-					Cookie.set("currentUser", JSON.stringify(user));
-				}
-			}).catch((err) => {
-				throw err;
-			});
-		}
-	}
-
 	getByToken() {
 		const data = jwtDecode(this.TOKEN);
 
