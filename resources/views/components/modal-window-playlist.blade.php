@@ -14,27 +14,7 @@
         </div>
         <div class="modal-window-playlist__audio">
             <h3 class="modal-window-playlist__audio-title"></h3>
-            <ul class="modal-window-playlist__audio-list">
-                <li class="modal-window-playlist__audio-item">
-                    <div class="audio" data-audio-id="">
-                        <div class="audio__block">
-                            <button class="btn audio__btn audio__play-btn">
-                                <x-play-icon :show="true" />
-                                <x-pause-icon />
-                            </button>
-                        </div>
-                        <div class="audio__block audio__block--flex">
-                            <div class="audio__poster">
-                                <img class="audio__poster-image" src="" alt="">
-                            </div>
-                            <div class="audio__song-info">
-                                <h4 class="audio__name"></h4>
-                                <h5 class="audio__singer"></h5>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+            <ul class="modal-window-playlist__audio-list"></ul>
         </div>
     </div>
 </div>

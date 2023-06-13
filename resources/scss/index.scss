@@ -854,7 +854,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: $lightGrey;
+        background: linear-gradient(-25deg, $grey, $lightGrey);
         min-height: 200px;
 
         &::before {
@@ -901,6 +901,9 @@
         justify-content: center;
         align-items: center;
         min-height: 200px;
+        min-width: 200px;
+        max-width: 250px;
+        background: linear-gradient(-25deg, $grey, $lightGrey);
     }
 
     &__name {
@@ -914,7 +917,7 @@
         max-width: 1150px;
         display: flex;
         flex-direction: column;
-        gap: 25px;
+        gap: 10px;
         padding: 10px;
         background: $white;
         border-radius: 5px;
@@ -932,11 +935,6 @@
     }
 
     &__audio {
-        &-title {
-            font-weight: 400;
-            margin-bottom: 10px;
-        }
-
         &-list {
             display: flex;
             flex-direction: column;
