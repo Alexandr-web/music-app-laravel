@@ -29,7 +29,7 @@ export default class Alert {
 		this.alert.className = "alert";
 	}
 
-	show(message, success = true) {
+	show(message, success) {
 		this._clearOldStyles();
 		this._showIcon(success);
 

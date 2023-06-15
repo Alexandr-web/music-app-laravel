@@ -47,8 +47,12 @@ class AudioController extends Controller
 			'audio' => 'required|max:15360|mimes:flac,mpeg,mp3',
 			'name' => 'required|min:3|max:46',
 			'singer' => 'required|min:1|max:16',
+			'time' => 'required',
+			'duration' => 'required',
 		],
 		[
+            'time.required' => 'Время аудио обязательно для загрузки',
+            'duration.required' => 'Продолжительность аудио обязательно для загрузки',
 			'poster.required' => 'Постер обязателен для загрузки',
 			'poster.max' => 'Постер должен весить не более 5 мб',
 			'poster.mimes' => 'Постер может иметь следующие расширения: png, jpg, jpeg, svg',
@@ -81,7 +85,8 @@ class AudioController extends Controller
             'poster' => '',
             'time' => $request->time,
             'singer' => $request->input('singer'),
-            'name' => $request->input('name')
+            'name' => $request->input('name'),
+            'duration' => $request->duration,
         ];
 
         if ($request->hasFile('poster') && $poster['file']->isValid()) {

@@ -27,6 +27,7 @@
             </div>
         </div>
     </div>
+    @vite(['resources/js/pages/index'])
     @yield('scripts')
 </body>
 </html>

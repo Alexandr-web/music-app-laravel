@@ -68,17 +68,15 @@ class UserController extends Controller
         }
 
 		$request->validate([
-			'nickname' => 'required|min:3|max:16',
+			'nickname' => 'nullable|min:3|max:16',
 			'password' => 'nullable|min:9',
-			'email' => 'required|email',
+			'email' => 'nullable|email',
 			'avatar' => 'max:1024|mimes:png,jpg,jpeg,svg'
 		],
 		[
-			'nickname.required' => 'Никнейм обязателен для заполнения',
 			'nickname.min' => 'Никнейм должен иметь минимум 3 символа',
 			'nickname.max' => 'Никнейм должен иметь максимум 16 символов',
 			'password.min' => 'Пароль должен иметь минимум 9 символов',
-			'email.required' => 'Электронная почта обязательна для заполнения',
 			'email.email' => 'Электронная почта должна быть в формате электронной почты',
 			'avatar.max' => 'Файл аватара не может весить больше 1мб',
 			'avatar.mimes' => 'Файл аватара может иметь следующие расширения: png, jpg, jpeg, svg'

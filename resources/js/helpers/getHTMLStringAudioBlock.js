@@ -4,7 +4,7 @@ import getHTMLStringPlusIcon from "./getHTMLStringPlusIcon";
 import getHTMLStringCrossIcon from "./getHTMLStringCrossIcon";
 import host from "./host";
 
-export default (audioData, play = false, add = true, poster = false) => {
+export default (audioData, playlistId, play = false, add = true, poster = false) => {
     const htmlStringPoster = `
         <div class="audio__poster">
             <img class="audio__poster-image" src="${host}/storage/posters/${audioData.poster}" alt="Постер песни &quot;${audioData.name}&quot;">    
@@ -12,7 +12,7 @@ export default (audioData, play = false, add = true, poster = false) => {
     `;
 
     return `
-    <div class="audio" data-audio-id="${audioData.id}">
+    <div class="audio" data-audio-id="${audioData.id}" data-playlist-id="${playlistId}">
         <div class="audio__block">
             <button class="btn audio__btn audio__play-btn" type="button">
                 ${getHTMLStringPlayIcon(!play)}

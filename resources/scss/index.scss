@@ -586,7 +586,8 @@
         overflow: hidden;
 
         &-image {
-            border-radius: inherit;
+            width: 100%;
+            height: 100%;
         }
     }
 
@@ -643,10 +644,37 @@
         gap: 10px;
     }
 
+    &--disabled-data {
+        min-width: 50px;
+        min-height: 15px;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: 9;
+            width: 100%;
+            height: 100%;
+            background: $lightGrey;
+            left: 0;
+            top: 0;
+        }
+    }
+
     &__poster {
         width: 76px;
         height: 76px;
         border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-image {
+            width: 100%;
+            height: 100%;
+        }
     }
 
     &__song {
@@ -721,7 +749,6 @@
         &-line {
             height: 100%;
             width: 0%;
-            transition: width .06s;
             background: $blue;
         }
     }
@@ -843,35 +870,23 @@
     border-radius: 3px;
     cursor: pointer;
     background: $white;
+    transition: transform .3s;
 
-    &:hover &__poster::before {
-        opacity: 1;
+    &:hover {
+        transform: translateY(-10px);
     }
 
     &__poster {
-        position: relative;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
         background: linear-gradient(-25deg, $grey, $lightGrey);
-        min-height: 200px;
+        height: 200px;
+        padding: 15px;
 
-        &::before {
-            content: "Открыть";
-            position: absolute;
-            z-index: 9;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: $white;
-            left: 0;
-            top: 0;
-            @include getColor(0, 0, 0, .6);
-            opacity: 0;
-            transition: opacity .3s;
+        &-image {
+            max-height: 100%;
         }
     }
 
@@ -896,18 +911,12 @@
     top: 0;
     overflow: auto;
 
-    &__poster {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 200px;
-        min-width: 200px;
-        max-width: 250px;
-        background: linear-gradient(-25deg, $grey, $lightGrey);
-    }
-
     &__name {
         font-weight: 400;
+    }
+
+    &__poster {
+        width: 200px;
     }
 
     &__inner {
@@ -962,12 +971,12 @@
     }
 }
 
-.hide {
-    display: none;
-}
-
 .show {
     display: inline-block;
+}
+
+.hide {
+    display: none;
 }
 
 @import "./supports.scss";

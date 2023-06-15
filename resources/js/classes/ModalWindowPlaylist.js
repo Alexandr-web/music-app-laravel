@@ -36,12 +36,12 @@ export default class ModalWindowPlaylist {
     }
 
     _addToAudioList(audio) {
-        const audioStr = getHTMLStringAudioBlock(audio, true, false);
+        const audioStr = getHTMLStringAudioBlock(audio, this.playlistId, true, false);
 
         this.audioList.innerHTML += `<li class="modal-window-playlist__audio-item">${audioStr}</li>`;
     }
 
-    setData(poster, name, playlistId) {
+    setData(poster, name, playlistId, callbackWhenAdded) {
         this.poster.src = `${this.urlStoragePosters}/${poster}`;
         this.name.textContent = name;
         this.linkChange.href = `/playlist/${playlistId}/edit`;
@@ -55,6 +55,8 @@ export default class ModalWindowPlaylist {
 
                     this._addToAudioList(audio);
                 });
+
+                callbackWhenAdded();
             }).then(() => this._show()).catch((err) => {
                 throw err;
             });

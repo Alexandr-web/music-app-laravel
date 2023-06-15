@@ -17,6 +17,7 @@ window.addEventListener("load", () => {
         getAudioDuration(fd.get("audio"))
             .then((duration) => {
                 fd.append("time", convertToCorrectTime(duration));
+                fd.append("duration", duration);
 
                 new Audio()
                     .add(fd)

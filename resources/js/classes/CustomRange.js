@@ -105,7 +105,7 @@ export default class CustomRange {
         this._addEvents();
     }
 
-    setDefaultPosition(val) {
+    setPosition(val) {
         const percent = this._getPercent(val, this.value);
 
         this._setWidthLine(percent);

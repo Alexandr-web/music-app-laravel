@@ -12,7 +12,7 @@ export default class AudioSearch {
     }
 
     _displayResult(audio) {
-        const strHTMLAudio = getHTMLStringAudioBlock(audio, true, !this.addedAudiosId.includes(audio.id));
+        const strHTMLAudio = getHTMLStringAudioBlock(audio, "add-audio-to-playlist", true, !this.addedAudiosId.includes(audio.id));
 
         this.searchAudioResultList.innerHTML += `<li class="form__search-result-item">${strHTMLAudio}</li>`;
     }
@@ -109,7 +109,7 @@ export default class AudioSearch {
                 return;
             }
 
-            const strHTMLAudio = getHTMLStringAudioBlock(audio, true, false);
+            const strHTMLAudio = getHTMLStringAudioBlock(audio, "add-audio-to-playlist", true, false);
 
             this.nothingElementInAddedList.classList.add("hide");
             this.addedAudioList.innerHTML += `<li class="form__search-result-item">${strHTMLAudio}</li>`;

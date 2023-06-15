@@ -10,7 +10,7 @@
         @foreach ($songs as $index => $song)
             <tr class="table__body-inner">
                 <td class="table__body-item">{{ $index + 1 }}</td>
-                <td class="table__body-item audio" data-audio-id="{{ $song['id'] }}">
+                <td class="table__body-item audio" data-audio-id="{{ $song['id'] }}" data-playlist-id="{{ $playlistId }}">
                     <div class="audio__block">
                         <button class="btn audio__btn audio__play-btn">
                             <x-play-icon :show="true" />
