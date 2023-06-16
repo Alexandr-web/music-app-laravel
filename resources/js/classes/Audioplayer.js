@@ -52,43 +52,27 @@ export default class Audioplayer {
         return idx;
     }
 
-    _setSwitchingAudio(btn, prev) {
-        btn.addEventListener("click", () => {
-            const activeIdx = this._getIdxActiveAudio();
-            const prevIdx = this._checkSwitchingIdx(activeIdx + (prev ? 1 : -1));
-            const newActiveId = this.playlistData[prevIdx];
+    _switchAudio(next = true) {
+        const activeIdx = this._getIdxActiveAudio();
+        const newIdx = this._checkSwitchingIdx(activeIdx + (next ? 1 : -1));
+        const newActiveId = this.playlistData[newIdx];
 
-            new Audio()
-                .getOne(newActiveId)
-                .then(({ success, audio, }) => {
-                    if (!success) {
-                        return;
-                    }
+        new Audio()
+            .getOne(newActiveId)
+            .then(({ success, audio, }) => {
+                if (!success) {
+                    return;
+                }
 
-                    this.displayAudioData(audio);
-                });
-        });
+                this.play = true;
+
+                this.displayAudioData(audio);
+                this.playAudio(`${host}/storage/audio/${audio.path}`);
+            });
     }
 
-    playAudio(audioSrc) {
-        if (audioSrc !== this.elAudio.src) {
-            this.elAudio.src = audioSrc;
-            this.play = true;
-        }
-
-        this._changeShowIconsAtPlayBtn();
-
-        const promise = fetch(audioSrc)
-            .then((res) => res.blob())
-            .then(() => this.elAudio.play());
-
-        if (promise !== undefined) {
-            promise
-                .then(() => this.elAudio[this.play ? "play" : "pause"]())
-                .catch((err) => {
-                    throw err;
-                });
-        }
+    _setEventSwitchingAudio(btn, next) {
+        btn.addEventListener("click", this._switchAudio.bind(this, next));
     }
 
     _changeShowIconsAtPlayBtn() {
@@ -115,36 +99,6 @@ export default class Audioplayer {
         this.elPlayBtn[methodForAttributes]("disabled", true);
         this.elPrevBtn[methodForAttributes]("disabled", true);
         this.elNextBtn[methodForAttributes]("disabled", true);
-    }
-
-    displayAudioData(audio, setTimeToElement = false) {
-        if (!Object.keys(audio).length) {
-            this._stateDefaultData();
-            return;
-        }
-
-        this._stateDefaultData(false);
-
-        const { name, poster, singer, time, duration, } = audio;
-
-        this.elPoster.src = `${host}/storage/posters/${poster}`;
-        this.elAudioName.textContent = name;
-        this.elAudioSinger.textContent = singer;
-        this.elAudioTotalTime.textContent = time;
-        this.audioData = audio;
-
-        this.progressTimeRange = new CustomRange(+duration, "#audio-progress", (v) => {
-            this.currentTime = v;
-            this._displayCurrentTime.call(this, true);
-        }).init();
-
-        this.progressVolumeRange = new CustomRange(1, "#volume-progress", (v) => {
-            this.volume = v;
-            this._setVolumeAudio.call(this);
-        }).init();
-
-        this._displayCurrentTime(setTimeToElement);
-        this._setTimeupdate();
     }
 
     _displayCurrentTime(setTimeToElement = false) {
@@ -194,8 +148,63 @@ export default class Audioplayer {
 
         this.elAudio.addEventListener("ended", () => {
             this.play = false;
+
             this._changeShowIconsAtPlayBtn();
+            this._switchAudio();
         });
+    }
+
+    playAudio(audioSrc) {
+        if (audioSrc !== this.elAudio.src) {
+            this.elAudio.src = audioSrc;
+            this.play = true;
+        }
+
+        this._changeShowIconsAtPlayBtn();
+
+        const promise = fetch(audioSrc)
+            .then((res) => res.blob())
+            .then(() => this.elAudio.play());
+
+        if (promise !== undefined) {
+            promise
+                .then(() => this.elAudio[this.play ? "play" : "pause"]())
+                .catch((err) => {
+                    throw err;
+                });
+        }
+    }
+
+    displayAudioData(audio, setTimeToElement = false) {
+        if (!Object.keys(audio).length) {
+            this._stateDefaultData();
+            return;
+        }
+
+        this._stateDefaultData(false);
+
+        const { name, poster, singer, time, duration, } = audio;
+
+        this.elPoster.src = `${host}/storage/posters/${poster}`;
+        this.elAudioName.textContent = name;
+        this.elAudioSinger.textContent = singer;
+        this.elAudioTotalTime.textContent = time;
+        this.audioData = audio;
+
+        this.progressTimeRange = new CustomRange(+duration, "#audio-progress", (v) => {
+            this.currentTime = v;
+
+            this._displayCurrentTime.call(this, true);
+        }).init();
+
+        this.progressVolumeRange = new CustomRange(1, "#volume-progress", (v) => {
+            this.volume = v;
+
+            this._setVolumeAudio.call(this);
+        }).init();
+
+        this._displayCurrentTime(setTimeToElement);
+        this._setTimeupdate();
     }
 
     init() {
@@ -213,8 +222,8 @@ export default class Audioplayer {
         this._setVolumeAudio();
         this._setEventPlayBtn();
         this._setEventEndedAudio();
-        this._setSwitchingAudio(this.elPrevBtn, true);
-        this._setSwitchingAudio(this.elNextBtn, false);
+        this._setEventSwitchingAudio(this.elPrevBtn, false);
+        this._setEventSwitchingAudio(this.elNextBtn);
 
         return this;
     }
