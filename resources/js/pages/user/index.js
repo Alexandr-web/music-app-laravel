@@ -4,6 +4,6 @@ import audioScripts from "./audio";
 
 export default (audioplayer) => {
     audioScripts(audioplayer);
-    settingsScripts();
     playlistsScripts(audioplayer);
+    settingsScripts();
 };

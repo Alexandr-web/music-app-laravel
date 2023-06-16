@@ -2,6 +2,14 @@ import Audio from "../classes/Audio";
 import User from "../classes/User";
 import host from "../helpers/host";
 
+function clearActiveClassAtAudioElements(elements) {
+    elements.forEach((el) => el.classList.remove("audio--active"));
+}
+
+function setActiveClassToAudioEl(el) {
+    el.classList.add("audio--active");
+}
+
 export default (selectorElements, audioplayer, arrayAudioId = []) => {
     const elements = document.querySelectorAll(selectorElements);
 
@@ -57,6 +65,9 @@ export default (selectorElements, audioplayer, arrayAudioId = []) => {
                         if (!success) {
                             return;
                         }
+
+                        clearActiveClassAtAudioElements(elements);
+                        setActiveClassToAudioEl(track);
 
                         localStorage.setItem("audio", JSON.stringify(audio));
                         localStorage.setItem("playlist", JSON.stringify(audioIds));

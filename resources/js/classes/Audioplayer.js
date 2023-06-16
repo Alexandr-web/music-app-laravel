@@ -87,7 +87,6 @@ export default class Audioplayer {
 
     _stateDefaultData(add = true) {
         const methodForClasses = add ? "add" : "remove";
-        const methodForAttributes = add ? "setAttribute" : "removeAttribute";
 
         this.elAudioName.classList[methodForClasses]("audio-player--disabled-data");
         this.elAudioSinger.classList[methodForClasses]("audio-player--disabled-data");
@@ -96,9 +95,7 @@ export default class Audioplayer {
         this.elAudioTotalTime.classList[methodForClasses]("audio-player--disabled-data");
         this.elPosterWrapper.classList[methodForClasses]("audio-player--disabled-data");
 
-        this.elPlayBtn[methodForAttributes]("disabled", true);
-        this.elPrevBtn[methodForAttributes]("disabled", true);
-        this.elNextBtn[methodForAttributes]("disabled", true);
+        this._setDisabledControlsBtn(add);
     }
 
     _displayCurrentTime(setTimeToElement = false) {
@@ -154,6 +151,14 @@ export default class Audioplayer {
         });
     }
 
+    _setDisabledControlsBtn(add = true) {
+        const method = add ? "setAttribute" : "removeAttribute";
+
+        this.elPlayBtn[method]("disabled", true);
+        this.elPrevBtn[method]("disabled", true);
+        this.elNextBtn[method]("disabled", true);
+    }
+
     playAudio(audioSrc) {
         if (audioSrc !== this.elAudio.src) {
             this.elAudio.src = audioSrc;
@@ -161,6 +166,7 @@ export default class Audioplayer {
         }
 
         this._changeShowIconsAtPlayBtn();
+        this._setDisabledControlsBtn();
 
         const promise = fetch(audioSrc)
             .then((res) => res.blob())
@@ -168,8 +174,10 @@ export default class Audioplayer {
 
         if (promise !== undefined) {
             promise
-                .then(() => this.elAudio[this.play ? "play" : "pause"]())
-                .catch((err) => {
+                .then(() => {
+                    this.elAudio[this.play ? "play" : "pause"]();
+                    this._setDisabledControlsBtn(false);
+                }).catch((err) => {
                     throw err;
                 });
         }
@@ -202,6 +210,9 @@ export default class Audioplayer {
 
             this._setVolumeAudio.call(this);
         }).init();
+
+        localStorage.setItem("audio", JSON.stringify(this.audioData));
+        localStorage.setItem("playlist", JSON.stringify(this.playlistData));
 
         this._displayCurrentTime(setTimeToElement);
         this._setTimeupdate();
