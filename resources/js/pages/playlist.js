@@ -4,7 +4,11 @@ import AudioSearch from "../classes/AudioSearch";
 import Alert from "../classes/Alert";
 import Playlist from "../classes/Playlist";
 
-window.addEventListener("load", () => {
+export default () => {
+    if (!document.querySelector("#add-playlist-form")) {
+        return;
+    }
+
     const options = {
         poster: { file: true, },
         name: { min: 3, max: 26, },
@@ -37,4 +41,4 @@ window.addEventListener("load", () => {
         image.src = result;
         image.classList.remove("hide");
     });
-});
+};

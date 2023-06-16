@@ -1,11 +1,9 @@
-import Audioplayer from "../classes/AudioPlayer";
 import Audio from "../classes/Audio";
 import User from "../classes/User";
 import host from "../helpers/host";
 
-export default (selectorElements, arrayAudioId = []) => {
+export default (selectorElements, audioplayer, arrayAudioId = []) => {
     const elements = document.querySelectorAll(selectorElements);
-    const audioplayer = new Audioplayer().init();
 
     if (!elements.length) {
         return;
@@ -53,7 +51,8 @@ export default (selectorElements, arrayAudioId = []) => {
             const playBtn = track.querySelector(".audio__play-btn");
 
             playBtn.addEventListener("click", () => {
-                new Audio().getOne(audioId)
+                new Audio()
+                    .getOne(audioId)
                     .then(({ success, audio, }) => {
                         if (!success) {
                             return;

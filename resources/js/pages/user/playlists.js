@@ -2,7 +2,7 @@ import Playlist from "../../classes/Playlist";
 import ModalWindowPlaylist from "../../classes/ModalWindowPlaylist";
 import setTrackData from "../../scripts/setTrackData";
 
-export default () => {
+export default (audioplayer) => {
     const playlistsList = document.querySelector(".playlists");
 
     if (!playlistsList) {
@@ -24,7 +24,7 @@ export default () => {
                     const modalWindowPlaylist = new ModalWindowPlaylist(id, JSON.parse(audio)).init();
 
                     modalWindowPlaylist.setData(poster, name, id, () => {
-                        setTrackData(".modal-window-playlist .audio", JSON.parse(audio));
+                        setTrackData(".modal-window-playlist .audio", audioplayer, JSON.parse(audio));
                     });
                 }).catch((err) => {
                     throw err;

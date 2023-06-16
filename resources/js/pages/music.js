@@ -5,7 +5,11 @@ import getAudioDuration from "../helpers/getAudioDuration";
 import convertToCorrectTime from "../helpers/convertToCorrectTime";
 import Alert from "../classes/Alert";
 
-window.addEventListener("load", () => {
+export default () => {
+    if (!document.querySelector("#add-music-form")) {
+        return;
+    }
+
     const alert = new Alert().init();
     const options = {
         poster: { file: true, },
@@ -48,4 +52,4 @@ window.addEventListener("load", () => {
         audioName.textContent = file.name;
         audioSize.textContent = `${mb} мб`;
     });
-});
+};

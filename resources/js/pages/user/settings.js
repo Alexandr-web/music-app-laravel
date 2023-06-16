@@ -8,13 +8,14 @@ import jwtDecode from "jwt-decode";
 
 export default () => {
 	const form = document.querySelector(".form#edit-form");
-	const alert = new Alert();
-
-	alert.init();
 
 	if (!form) {
 		return;
 	}
+
+	const alert = new Alert();
+
+	alert.init();
 
 	const options = {
 		avatar: { optional: true, file: true, },

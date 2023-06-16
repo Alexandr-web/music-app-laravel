@@ -1,6 +1,7 @@
 import host from "../helpers/host";
 import convertToCorrectTime from "../helpers/convertToCorrectTime";
 import CustomRange from "./CustomRange";
+import Audio from "./Audio";
 
 export default class Audioplayer {
     constructor() {
@@ -31,6 +32,42 @@ export default class Audioplayer {
         const data = localStorage.getItem(dataName);
 
         return data ? JSON.parse(data) : defaultValue;
+    }
+
+    _getIdxActiveAudio() {
+        const { id, } = this.audioData;
+
+        return this.playlistData.indexOf(id);
+    }
+
+    _checkSwitchingIdx(idx) {
+        if (idx > this.playlistData.length - 1) {
+            return 0;
+        }
+
+        if (idx < 0) {
+            return this.playlistData.length - 1;
+        }
+
+        return idx;
+    }
+
+    _setSwitchingAudio(btn, prev) {
+        btn.addEventListener("click", () => {
+            const activeIdx = this._getIdxActiveAudio();
+            const prevIdx = this._checkSwitchingIdx(activeIdx + (prev ? 1 : -1));
+            const newActiveId = this.playlistData[prevIdx];
+
+            new Audio()
+                .getOne(newActiveId)
+                .then(({ success, audio, }) => {
+                    if (!success) {
+                        return;
+                    }
+
+                    this.displayAudioData(audio);
+                });
+        });
     }
 
     playAudio(audioSrc) {
@@ -96,7 +133,7 @@ export default class Audioplayer {
         this.elAudioTotalTime.textContent = time;
         this.audioData = audio;
 
-        this.progressTimeRange = new CustomRange(duration, "#audio-progress", (v) => {
+        this.progressTimeRange = new CustomRange(+duration, "#audio-progress", (v) => {
             this.currentTime = v;
             this._displayCurrentTime.call(this, true);
         }).init();
@@ -150,6 +187,17 @@ export default class Audioplayer {
         });
     }
 
+    _setEventEndedAudio() {
+        if (!this.elAudio) {
+            return;
+        }
+
+        this.elAudio.addEventListener("ended", () => {
+            this.play = false;
+            this._changeShowIconsAtPlayBtn();
+        });
+    }
+
     init() {
         const localAudio = this._getActiveDataFromLocalStorage("audio", {});
         const localPlaylist = this._getActiveDataFromLocalStorage("playlist", []);
@@ -164,6 +212,9 @@ export default class Audioplayer {
         this.displayAudioData(localAudio, true);
         this._setVolumeAudio();
         this._setEventPlayBtn();
+        this._setEventEndedAudio();
+        this._setSwitchingAudio(this.elPrevBtn, true);
+        this._setSwitchingAudio(this.elNextBtn, false);
 
         return this;
     }

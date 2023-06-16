@@ -1,5 +1,12 @@
-import setTrackData from "../scripts/setTrackData";
+import Audioplayer from "../classes/AudioPlayer";
+import musicScripts from "./music";
+import playlistScripts from "./playlist";
+import userScripts from "./user/index";
 
 window.addEventListener("load", () => {
-    setTrackData(".audio[data-audio-id]");
+    const audioplayer = new Audioplayer().init();
+
+    userScripts(audioplayer);
+    musicScripts();
+    playlistScripts();
 });
