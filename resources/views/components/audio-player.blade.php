@@ -1,12 +1,14 @@
 <div class="audio-player">
     <div class="audio-player__inner">
-        <div class="audio-player__block audio-player__song">
-            <div class="audio-player__poster">
-                <img class="audio-player__poster-image" src="" alt="Постер аудио">
-            </div>
-            <div class="audio-player__song-info">
-                <h3 class="audio-player__song-name"></h3>
-                <h4 class="audio-player__song-singer"></h4>
+        <div class="audio-player__block audio-player__song-block">
+            <div class="audio-player__song">
+                <div class="audio-player__poster">
+                    <img class="audio-player__poster-image" src="" alt="Постер аудио">
+                </div>
+                <div class="audio-player__song-info">
+                    <h3 class="audio-player__song-name"></h3>
+                    <h4 class="audio-player__song-singer"></h4>
+                </div>
             </div>
         </div>
         <div class="audio-player__block audio-player__controls">

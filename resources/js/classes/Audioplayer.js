@@ -18,6 +18,7 @@ export default class Audioplayer {
         this.elIconPlay = this.elPlayBtn.querySelector(".play-icon");
         this.elIconPause = this.elPlayBtn.querySelector(".pause-icon");
         this.elAudio = document.createElement("audio");
+        this.elAudioInfo = document.querySelector(".audio-player__song");
 
         this.currentTime = 0;
         this.volume = 1;
@@ -66,9 +67,15 @@ export default class Audioplayer {
 
                 this.play = true;
 
+                this.elAudioInfo.classList.add("slide-left-anim");
+
                 this.displayAudioData(audio);
                 this.playAudio(`${host}/storage/audio/${audio.path}`);
             });
+    }
+
+    _setEventAnimationEnd() {
+        this.elAudioInfo.addEventListener("animationend", () => this.elAudioInfo.classList.remove("slide-left-anim"));
     }
 
     _setEventSwitchingAudio(btn, next) {
@@ -203,13 +210,13 @@ export default class Audioplayer {
             this.currentTime = v;
 
             this._displayCurrentTime.call(this, true);
-        }).init();
+        }).init(this.currentTime);
 
         this.progressVolumeRange = new CustomRange(1, "#volume-progress", (v) => {
             this.volume = v;
 
             this._setVolumeAudio.call(this);
-        }).init();
+        }).init(this.volume);
 
         localStorage.setItem("audio", JSON.stringify(this.audioData));
         localStorage.setItem("playlist", JSON.stringify(this.playlistData));
@@ -235,6 +242,7 @@ export default class Audioplayer {
         this._setEventEndedAudio();
         this._setEventSwitchingAudio(this.elPrevBtn, false);
         this._setEventSwitchingAudio(this.elNextBtn);
+        this._setEventAnimationEnd();
 
         return this;
     }

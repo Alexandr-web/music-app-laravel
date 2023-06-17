@@ -1,7 +1,7 @@
 export default class CustomRange {
-    constructor(value, idArea, callbackWhenGrabbing) {
+    constructor(value, idArea, callbackWhenEndGrabbing) {
         this.value = value;
-        this.callbackWhenGrabbing = callbackWhenGrabbing;
+        this.callbackWhenEndGrabbing = callbackWhenEndGrabbing;
         this.isGrabbing = false;
         this.abscissa = 0;
         this.area = document.querySelector(idArea);
@@ -32,6 +32,13 @@ export default class CustomRange {
     }
 
     _releaseHandler() {
+        if (this.isGrabbing && this.callbackWhenEndGrabbing instanceof Function) {
+            const percent = this._getPercent(this.abscissa, this._getAreaWidth());
+            const value = (percent * this.value) / 100;
+
+            this.callbackWhenEndGrabbing(value);
+        }
+
         this.isGrabbing = false;
         this._setUserSelect();
     }
@@ -70,12 +77,6 @@ export default class CustomRange {
         this.abscissa = this._checkAbscissa(e.layerX);
         this._setWidthLine(percent);
         this._setUserSelect(false);
-
-        if (this.callbackWhenGrabbing instanceof Function) {
-            const value = (percent * this.value) / 100;
-
-            this.callbackWhenGrabbing(value);
-        }
     }
 
     _grabbingEvent(add = true) {
@@ -111,9 +112,10 @@ export default class CustomRange {
         this._setWidthLine(percent);
     }
 
-    init() {
+    init(currentValue) {
         this._addEvents();
         this._resizeScreen();
+        this.setPosition(currentValue);
 
         return this;
     }

@@ -688,6 +688,10 @@
         align-items: center;
         gap: 10px;
 
+        &-block {
+            overflow-x: hidden;
+        }
+
         &-info {
             display: flex;
             flex-direction: column;
@@ -826,6 +830,10 @@
     &__avatar {
         width: 128px;
     }
+}
+
+.slide-left-anim {
+    animation: slide-left .3s linear;
 }
 
 .link-anim {
