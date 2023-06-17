@@ -52,8 +52,6 @@ export default (selectorElements, audioplayer, arrayAudioId = []) => {
             }
         }
     }).then((audioIds) => {
-        audioplayer.playlistData = audioIds;
-
         elements.forEach((track) => {
             const audioId = parseInt(track.dataset.audioId);
             const playBtn = track.querySelector(".audio__play-btn");
@@ -66,11 +64,10 @@ export default (selectorElements, audioplayer, arrayAudioId = []) => {
                             return;
                         }
 
+                        audioplayer.playlistData = audioIds;
+
                         clearActiveClassAtAudioElements(elements);
                         setActiveClassToAudioEl(track);
-
-                        localStorage.setItem("audio", JSON.stringify(audio));
-                        localStorage.setItem("playlist", JSON.stringify(audioIds));
 
                         audioplayer.play = !audioplayer.play;
 

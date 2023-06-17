@@ -848,6 +848,7 @@
         height: 100%;
         background: $lightGrey;
         transition: width, background, .3s;
+        z-index: -1;
     }
 
     &--active {
