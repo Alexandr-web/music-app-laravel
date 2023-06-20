@@ -19,7 +19,15 @@ export default class Audioplayer {
         this.elIconPause = this.elPlayBtn.querySelector(".pause-icon");
         this.elAudio = document.createElement("audio");
         this.elAudioInfo = document.querySelector(".audio-player__song");
+        this.elCanvasAnim = document.querySelector(".audio-player__anim-canvas");
 
+        this.audio = {
+            context: new AudioContext(),
+            source: null,
+            analyser: null,
+            dataArray: null,
+            bufferLength: null,
+        };
         this.currentTime = 0;
         this.volume = 1;
         this.play = false;
@@ -27,6 +35,41 @@ export default class Audioplayer {
         this.progressVolumeRange = null;
         this.audioData = {};
         this.playlistData = [];
+    }
+
+    playAudio(audioSrc) {
+        if (audioSrc !== this.elAudio.src) {
+            this.elAudio.src = audioSrc;
+            this.play = true;
+        }
+
+        this._changeShowIconsAtPlayBtn();
+        this._setDisabledControlsBtn();
+
+        const promise = fetch(audioSrc)
+            .then((res) => res.blob())
+            .then(() => this.elAudio.play());
+
+        if (promise !== undefined) {
+            promise
+                .then(() => {
+                    this.elAudio[this.play ? "play" : "pause"]();
+                    this._setDisabledControlsBtn(false);
+
+                    this.audio.source = this.audio.context.createMediaElementSource(this.elAudio);
+                    this.audio.analyser = this.audio.context.createAnalyser();
+
+                    this.audio.source.connect(this.audio.analyser);
+                    this.audio.analyser.connect(this.audio.context.destination);
+
+                    this.audio.analyser.fftSize = 4096;
+
+                    this.audio.bufferLength = this.audio.analyser.frequencyBinCount;
+                    this.audio.dataArray = new Uint8Array(this.audio.bufferLength);
+                }).catch((err) => {
+                    throw err;
+                });
+        }
     }
 
     _getActiveDataFromLocalStorage(dataName, defaultValue) {
@@ -137,6 +180,39 @@ export default class Audioplayer {
         });
     }
 
+    _setAudioAnim() {
+        const canvas = this.elCanvasAnim;
+        const ctx = canvas.getContext("2d");
+        const countLinesOnArea = 100;
+        const widthLine = canvas.offsetWidth / countLinesOnArea;
+
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        const anim = () => {
+            if (this.audio.analyser) {
+                this.audio.analyser.getByteFrequencyData(this.audio.dataArray);
+
+                ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+
+                const data = this.audio.dataArray.slice(0, countLinesOnArea);
+
+                data.forEach((n, i) => {
+                    const x = i * widthLine;
+                    const percent = Math.ceil((n / 255) * 100);
+                    const height = (percent * canvas.offsetHeight) / 100;
+
+                    ctx.fillStyle = "white";
+                    ctx.fillRect(x, canvas.offsetHeight - height, widthLine, height);
+                });
+            }
+
+            requestAnimationFrame(anim);
+        };
+
+        anim();
+    }
+
     _setEventPlayBtn() {
         this.elPlayBtn.addEventListener("click", () => {
             this.play = !this.play;
@@ -164,30 +240,6 @@ export default class Audioplayer {
         this.elPlayBtn[method]("disabled", true);
         this.elPrevBtn[method]("disabled", true);
         this.elNextBtn[method]("disabled", true);
-    }
-
-    playAudio(audioSrc) {
-        if (audioSrc !== this.elAudio.src) {
-            this.elAudio.src = audioSrc;
-            this.play = true;
-        }
-
-        this._changeShowIconsAtPlayBtn();
-        this._setDisabledControlsBtn();
-
-        const promise = fetch(audioSrc)
-            .then((res) => res.blob())
-            .then(() => this.elAudio.play());
-
-        if (promise !== undefined) {
-            promise
-                .then(() => {
-                    this.elAudio[this.play ? "play" : "pause"]();
-                    this._setDisabledControlsBtn(false);
-                }).catch((err) => {
-                    throw err;
-                });
-        }
     }
 
     displayAudioData(audio, setTimeToElement = false) {
@@ -243,6 +295,7 @@ export default class Audioplayer {
         this._setEventSwitchingAudio(this.elPrevBtn, false);
         this._setEventSwitchingAudio(this.elNextBtn);
         this._setEventAnimationEnd();
+        this._setAudioAnim();
 
         return this;
     }

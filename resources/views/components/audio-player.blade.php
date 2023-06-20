@@ -3,6 +3,9 @@
         <div class="audio-player__block audio-player__song-block">
             <div class="audio-player__song">
                 <div class="audio-player__poster">
+                    <div class="audio-player__block audio-player__anim">
+                        <canvas class="audio-player__anim-canvas"></canvas>
+                    </div>
                     <img class="audio-player__poster-image" src="" alt="Постер аудио">
                 </div>
                 <div class="audio-player__song-info">
