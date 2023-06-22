@@ -21,20 +21,14 @@ export default class Audioplayer {
         this.elAudioInfo = document.querySelector(".audio-player__song");
         this.elCanvasAnim = document.querySelector(".audio-player__anim-canvas");
 
-        this.audio = {
-            context: new AudioContext(),
-            source: null,
-            analyser: null,
-            dataArray: null,
-            bufferLength: null,
-        };
+        this.audioAnalyser = null;
         this.currentTime = 0;
-        this.volume = 1;
         this.play = false;
         this.progressTimeRange = null;
         this.progressVolumeRange = null;
         this.audioData = {};
         this.playlistData = [];
+        this.animIsActive = false;
     }
 
     playAudio(audioSrc) {
@@ -53,19 +47,28 @@ export default class Audioplayer {
         if (promise !== undefined) {
             promise
                 .then(() => {
-                    this.elAudio[this.play ? "play" : "pause"]();
                     this._setDisabledControlsBtn(false);
 
-                    this.audio.source = this.audio.context.createMediaElementSource(this.elAudio);
-                    this.audio.analyser = this.audio.context.createAnalyser();
+                    if (this.play) {
+                        this.elAudio.play();
 
-                    this.audio.source.connect(this.audio.analyser);
-                    this.audio.analyser.connect(this.audio.context.destination);
+                        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                        const source = ctx.createMediaElementSource(this.elAudio);
 
-                    this.audio.analyser.fftSize = 4096;
+                        this.audioAnalyser = ctx.createAnalyser();
+                        this.audioAnalyser.connect(ctx.destination);
 
-                    this.audio.bufferLength = this.audio.analyser.frequencyBinCount;
-                    this.audio.dataArray = new Uint8Array(this.audio.bufferLength);
+                        source.connect(ctx.destination);
+                        source.connect(this.audioAnalyser);
+
+                        if (!this.animIsActive) {
+                            this.animIsActive = true;
+
+                            this._setAudioBarsAnim();
+                        }
+                    } else {
+                        this.elAudio.pause();
+                    }
                 }).catch((err) => {
                     throw err;
                 });
@@ -163,7 +166,7 @@ export default class Audioplayer {
     }
 
     _setVolumeAudio() {
-        this.elAudio.volume = this.volume;
+        // this.elAudio.volume = this.volume;
 
         localStorage.setItem("volume", this.volume);
 
@@ -180,37 +183,35 @@ export default class Audioplayer {
         });
     }
 
-    _setAudioAnim() {
+    _setAudioBarsAnim() {
         const canvas = this.elCanvasAnim;
         const ctx = canvas.getContext("2d");
-        const countLinesOnArea = 100;
+        const countLinesOnArea = 250;
         const widthLine = canvas.offsetWidth / countLinesOnArea;
 
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
 
-        const anim = () => {
-            if (this.audio.analyser) {
-                this.audio.analyser.getByteFrequencyData(this.audio.dataArray);
+        const drawBars = () => {
+            const fbcArray = new Uint8Array(this.audioAnalyser.frequencyBinCount);
 
-                ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+            this.audioAnalyser.getByteFrequencyData(fbcArray);
 
-                const data = this.audio.dataArray.slice(0, countLinesOnArea);
+            ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
 
-                data.forEach((n, i) => {
-                    const x = i * widthLine;
-                    const percent = Math.ceil((n / 255) * 100);
-                    const height = (percent * canvas.offsetHeight) / 100;
+            fbcArray.slice(0, countLinesOnArea).forEach((n, i) => {
+                const x = i * widthLine;
+                const percent = Math.ceil((n / 255) * 100);
+                const height = (percent * canvas.offsetHeight) / 100;
 
-                    ctx.fillStyle = "white";
-                    ctx.fillRect(x, canvas.offsetHeight - height, widthLine, height);
-                });
-            }
+                ctx.fillStyle = "white";
+                ctx.fillRect(x, canvas.offsetHeight - height, widthLine, height);
+            });
 
-            requestAnimationFrame(anim);
+            (window.requestAnimationFrame || window.webkitRequestAnimationFrame)(drawBars);
         };
 
-        anim();
+        drawBars();
     }
 
     _setEventPlayBtn() {
@@ -295,7 +296,6 @@ export default class Audioplayer {
         this._setEventSwitchingAudio(this.elPrevBtn, false);
         this._setEventSwitchingAudio(this.elNextBtn);
         this._setEventAnimationEnd();
-        this._setAudioAnim();
 
         return this;
     }

@@ -662,7 +662,6 @@
         height: 100%;
         left: 0;
         top: 0;
-        opacity: .8;
         @include getColor(0, 0, 0, .2);
     }
 
@@ -690,6 +689,10 @@
             background: $lightGrey;
             left: 0;
             top: 0;
+        }
+
+        .audio-player__anim {
+            display: none;
         }
     }
 
