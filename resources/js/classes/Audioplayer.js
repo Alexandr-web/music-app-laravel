@@ -166,7 +166,7 @@ export default class Audioplayer {
     }
 
     _setVolumeAudio() {
-        // this.elAudio.volume = this.volume;
+        this.elAudio.volume = this.volume;
 
         localStorage.setItem("volume", this.volume);
 
