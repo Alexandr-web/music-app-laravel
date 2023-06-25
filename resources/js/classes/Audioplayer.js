@@ -21,6 +21,7 @@ export default class Audioplayer {
         this.elAudioInfo = document.querySelector(".audio-player__song");
         this.elCanvasAnim = document.querySelector(".audio-player__anim-canvas");
 
+        this.isGrabbing = false;
         this.audioAnalyser = null;
         this.currentTime = 0;
         this.play = false;
@@ -151,12 +152,14 @@ export default class Audioplayer {
         this._setDisabledControlsBtn(add);
     }
 
-    _displayCurrentTime(setTimeToElement = false) {
-        this.elAudioCurrentTime.textContent = convertToCorrectTime(this.currentTime);
+    _displayCurrentTime(setTimeToElement = false, displayCurrentTime = true, changeProgressTimeRange = true) {
+        if (displayCurrentTime) {
+            this.elAudioCurrentTime.textContent = convertToCorrectTime(this.currentTime);
+        }
 
         localStorage.setItem("currentTime", this.currentTime);
 
-        if (this.progressTimeRange) {
+        if (this.progressTimeRange && changeProgressTimeRange) {
             this.progressTimeRange.setPosition(this.currentTime);
         }
 
@@ -179,7 +182,7 @@ export default class Audioplayer {
         this.elAudio.addEventListener("timeupdate", () => {
             this.currentTime = this.elAudio.currentTime;
 
-            this._displayCurrentTime();
+            this._displayCurrentTime(false, !this.isGrabbing, !this.isGrabbing);
         });
     }
 
@@ -238,9 +241,34 @@ export default class Audioplayer {
     _setDisabledControlsBtn(add = true) {
         const method = add ? "setAttribute" : "removeAttribute";
 
-        this.elPlayBtn[method]("disabled", true);
-        this.elPrevBtn[method]("disabled", true);
-        this.elNextBtn[method]("disabled", true);
+        this.elPlayBtn[method]("disabled", add ? true : undefined);
+        this.elPrevBtn[method]("disabled", add ? true : undefined);
+        this.elNextBtn[method]("disabled", add ? true : undefined);
+    }
+
+    _setProgressTimeRange(duration) {
+        const callbackWhenEndGrabbing = (v) => {
+            this.currentTime = v;
+            this.isGrabbing = false;
+
+            this._displayCurrentTime.call(this, true);
+        };
+        const callbackWhenGrabbing = (v) => {
+            this.currentTime = v;
+            this.isGrabbing = true;
+
+            this._displayCurrentTime.call(this);
+        };
+
+        this.progressTimeRange = new CustomRange(+duration, "#audio-progress", callbackWhenEndGrabbing, callbackWhenGrabbing).init(this.currentTime);
+    }
+
+    _setProgressVolumeRange() {
+        this.progressVolumeRange = new CustomRange(1, "#volume-progress", null, (v) => {
+            this.volume = v;
+
+            this._setVolumeAudio.call(this);
+        }).init(this.volume);
     }
 
     displayAudioData(audio, setTimeToElement = false) {
@@ -259,17 +287,8 @@ export default class Audioplayer {
         this.elAudioTotalTime.textContent = time;
         this.audioData = audio;
 
-        this.progressTimeRange = new CustomRange(+duration, "#audio-progress", (v) => {
-            this.currentTime = v;
-
-            this._displayCurrentTime.call(this, true);
-        }).init(this.currentTime);
-
-        this.progressVolumeRange = new CustomRange(1, "#volume-progress", (v) => {
-            this.volume = v;
-
-            this._setVolumeAudio.call(this);
-        }).init(this.volume);
+        this._setProgressTimeRange(duration);
+        this._setProgressVolumeRange();
 
         localStorage.setItem("audio", JSON.stringify(this.audioData));
         localStorage.setItem("playlist", JSON.stringify(this.playlistData));

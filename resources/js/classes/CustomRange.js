@@ -1,11 +1,13 @@
 export default class CustomRange {
-    constructor(value, idArea, callbackWhenEndGrabbing) {
-        this.value = value;
-        this.callbackWhenEndGrabbing = callbackWhenEndGrabbing;
-        this.isGrabbing = false;
-        this.abscissa = 0;
+    constructor(value, idArea, callbackWhenEndGrabbing, callbackWhenGrabbing) {
         this.area = document.querySelector(idArea);
         this.line = document.querySelector(`${idArea} .custom-range__progress-line`);
+
+        this.value = value;
+        this.callbackWhenEndGrabbing = callbackWhenEndGrabbing;
+        this.callbackWhenGrabbing = callbackWhenGrabbing;
+        this.isGrabbing = false;
+        this.abscissa = 0;
     }
 
     _getAreaWidth() {
@@ -34,7 +36,7 @@ export default class CustomRange {
     _releaseHandler() {
         if (this.isGrabbing && this.callbackWhenEndGrabbing instanceof Function) {
             const percent = this._getPercent(this.abscissa, this._getAreaWidth());
-            const value = (percent * this.value) / 100;
+            const value = this._getValueFromPercent(percent, this.value);
 
             this.callbackWhenEndGrabbing(value);
         }
@@ -67,16 +69,25 @@ export default class CustomRange {
         return Math.ceil((current / max) * 100);
     }
 
+    _getValueFromPercent(percent, value) {
+        return (percent * value) / 100;
+    }
+
     _grabbingHandler(e) {
         if (!this.isGrabbing) {
             return;
         }
 
         const percent = this._getPercent(this.abscissa, this._getAreaWidth());
+        const value = this._getValueFromPercent(percent, this.value);
 
         this.abscissa = this._checkAbscissa(e.layerX);
         this._setWidthLine(percent);
         this._setUserSelect(false);
+
+        if (this.callbackWhenGrabbing instanceof Function) {
+            this.callbackWhenGrabbing(value);
+        }
     }
 
     _grabbingEvent(add = true) {
