@@ -21,6 +21,8 @@ export default class Audioplayer {
         this.elAudioInfo = document.querySelector(".audio-player__song");
         this.elCanvasAnim = document.querySelector(".audio-player__anim-canvas");
 
+        this.gainNode = null;
+        this.audioContext = null;
         this.isGrabbing = false;
         this.audioAnalyser = null;
         this.currentTime = 0;
@@ -41,26 +43,21 @@ export default class Audioplayer {
         this._changeShowIconsAtPlayBtn();
         this._setDisabledControlsBtn();
 
-        const promise = fetch(audioSrc)
-            .then((res) => res.blob())
-            .then(() => this.elAudio.play());
+        const promise = this.elAudio.play();
 
-        if (promise !== undefined) {
+        if (promise instanceof Promise) {
             promise
                 .then(() => {
                     this._setDisabledControlsBtn(false);
 
+                    if (this.audioContext instanceof AudioContext && this.audioContext.state === "suspended") {
+                        this.audioContext.resume();
+                    }
+
                     if (this.play) {
                         this.elAudio.play();
 
-                        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                        const source = ctx.createMediaElementSource(this.elAudio);
-
-                        this.audioAnalyser = ctx.createAnalyser();
-                        this.audioAnalyser.connect(ctx.destination);
-
-                        source.connect(ctx.destination);
-                        source.connect(this.audioAnalyser);
+                        this._initAudioContext();
 
                         if (!this.animIsActive) {
                             this.animIsActive = true;
@@ -74,6 +71,25 @@ export default class Audioplayer {
                     throw err;
                 });
         }
+    }
+
+    _initAudioContext() {
+        if (this.audioContext) {
+            return;
+        }
+
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        this.gainNode = this.audioContext.createGain();
+        this.audioAnalyser = this.audioContext.createAnalyser();
+
+        const source = this.audioContext.createMediaElementSource(this.elAudio);
+
+        this.audioAnalyser.fftSize = 2048;
+
+        source
+            .connect(this.gainNode)
+            .connect(this.audioAnalyser)
+            .connect(this.audioContext.destination);
     }
 
     _getActiveDataFromLocalStorage(dataName, defaultValue) {
@@ -172,6 +188,10 @@ export default class Audioplayer {
         this.elAudio.volume = this.volume;
 
         localStorage.setItem("volume", this.volume);
+
+        if (this.gainNode instanceof GainNode) {
+            this.gainNode.gain.value = this.volume;
+        }
 
         if (this.progressVolumeRange) {
             this.progressVolumeRange.setPosition(this.volume);
