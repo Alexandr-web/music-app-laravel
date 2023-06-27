@@ -1,9 +1,9 @@
-import ValidForm from "../classes/ValidForm";
+import ValidForm from "../classes/ui/ValidForm";
 import uploadFile from "../scripts/uploadFile";
-import Audio from "../classes/Audio";
+import Audio from "../classes/request/Audio";
 import getAudioDuration from "../helpers/getAudioDuration";
 import convertToCorrectTime from "../helpers/convertToCorrectTime";
-import Alert from "../classes/Alert";
+import Alert from "../classes/ui/Alert";
 
 export default () => {
     if (!document.querySelector("#add-music-form")) {

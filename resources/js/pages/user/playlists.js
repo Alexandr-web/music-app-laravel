@@ -1,5 +1,5 @@
-import Playlist from "../../classes/Playlist";
-import ModalWindowPlaylist from "../../classes/ModalWindowPlaylist";
+import Playlist from "../../classes/request/Playlist";
+import ModalWindowPlaylist from "../../classes/ui/ModalWindowPlaylist";
 import setTrackData from "../../scripts/setTrackData";
 
 export default (audioplayer) => {

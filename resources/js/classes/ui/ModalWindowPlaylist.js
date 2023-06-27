@@ -1,6 +1,6 @@
-import getHTMLStringAudioBlock from "../helpers/getHTMLStringAudioBlock";
-import Audio from "./Audio";
-import host from "../helpers/host";
+import getHTMLStringAudioBlock from "../../helpers/getHTMLStringAudioBlock";
+import Audio from "../request/Audio";
+import host from "../../helpers/host";
 
 export default class ModalWindowPlaylist {
     constructor(playlistId, audioId) {

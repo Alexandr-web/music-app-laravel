@@ -1,7 +1,7 @@
-import host from "../helpers/host";
-import convertToCorrectTime from "../helpers/convertToCorrectTime";
+import host from "../../helpers/host";
+import convertToCorrectTime from "../../helpers/convertToCorrectTime";
 import CustomRange from "./CustomRange";
-import Audio from "./Audio";
+import Audio from "../request/Audio";
 
 export default class Audioplayer {
     constructor() {

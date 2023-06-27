@@ -1,5 +1,5 @@
-import Audio from "./Audio";
-import getHTMLStringAudioBlock from "../helpers/getHTMLStringAudioBlock";
+import Audio from "../request/Audio";
+import getHTMLStringAudioBlock from "../../helpers/getHTMLStringAudioBlock";
 
 export default class AudioSearch {
     constructor() {

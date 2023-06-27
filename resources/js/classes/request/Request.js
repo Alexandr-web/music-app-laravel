@@ -1,5 +1,5 @@
 import Cookie from "js-cookie";
-import host from "../helpers/host";
+import host from "../../helpers/host";
 
 export default class Request {
     constructor() {

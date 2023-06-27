@@ -1,5 +1,5 @@
-import Audio from "../classes/Audio";
-import User from "../classes/User";
+import Audio from "../classes/request/Audio";
+import User from "../classes/request/User";
 import host from "../helpers/host";
 
 function clearActiveClassAtAudioElements(elements) {

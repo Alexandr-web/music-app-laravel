@@ -1,8 +1,8 @@
-import ValidForm from "../classes/ValidForm";
+import ValidForm from "../classes/ui/ValidForm";
 import uploadFile from "../scripts/uploadFile";
-import AudioSearch from "../classes/AudioSearch";
-import Alert from "../classes/Alert";
-import Playlist from "../classes/Playlist";
+import AudioSearch from "../classes/ui/AudioSearch";
+import Alert from "../classes/ui/Alert";
+import Playlist from "../classes/request/Playlist";
 
 export default () => {
     if (!document.querySelector("#add-playlist-form")) {

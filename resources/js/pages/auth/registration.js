@@ -1,7 +1,7 @@
 import uploadFile from "../../scripts/uploadFile";
-import ValidForm from "../../classes/ValidForm";
-import Auth from "../../classes/Auth";
-import Alert from "../../classes/Alert";
+import ValidForm from "../../classes/ui/ValidForm";
+import Auth from "../../classes/request/Auth";
+import Alert from "../../classes/ui/Alert";
 
 window.addEventListener("load", () => {
 	const alert = new Alert().init();

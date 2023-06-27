@@ -1,4 +1,4 @@
-import Audioplayer from "../classes/AudioPlayer";
+import Audioplayer from "../classes/ui/AudioPlayer";
 import musicScripts from "./music";
 import playlistScripts from "./playlist";
 import userScripts from "./user/index";
