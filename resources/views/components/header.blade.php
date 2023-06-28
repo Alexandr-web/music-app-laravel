@@ -2,7 +2,7 @@
     <div class="header__inner">
         <nav class="header__nav">
             <div class="header__block">
-                <button class="btn btn--back">
+                <button class="btn btn--back" id="btn-back-history">
                     <x-arrow-back-icon />
                 </button>
             </div>
