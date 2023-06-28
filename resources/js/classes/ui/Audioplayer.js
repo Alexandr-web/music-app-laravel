@@ -74,7 +74,7 @@ export default class Audioplayer {
     }
 
     _initAudioContext() {
-        if (this.audioContext) {
+        if (this.audioContext instanceof AudioContext) {
             return;
         }
 
