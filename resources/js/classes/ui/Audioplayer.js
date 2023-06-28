@@ -1,7 +1,7 @@
-import host from "../../helpers/host";
 import convertToCorrectTime from "../../helpers/convertToCorrectTime";
 import CustomRange from "./CustomRange";
 import Audio from "../request/Audio";
+import getStoragePath from "../../helpers/getStoragePath";
 
 export default class Audioplayer {
     constructor() {
@@ -133,7 +133,7 @@ export default class Audioplayer {
                 this.elAudioInfo.classList.add("slide-left-anim");
 
                 this.displayAudioData(audio);
-                this.playAudio(`${host}/storage/audio/${audio.path}`);
+                this.playAudio(getStoragePath("audio", audio.path));
             });
     }
 
@@ -241,7 +241,7 @@ export default class Audioplayer {
         this.elPlayBtn.addEventListener("click", () => {
             this.play = !this.play;
 
-            this.playAudio(`${host}/storage/audio/${this.audioData.path}`);
+            this.playAudio(getStoragePath("audio", this.audioData.path));
         });
     }
 
@@ -301,7 +301,7 @@ export default class Audioplayer {
 
         const { name, poster, singer, time, duration, } = audio;
 
-        this.elPoster.src = `${host}/storage/posters/${poster}`;
+        this.elPoster.src = getStoragePath("posters", poster);
         this.elAudioName.textContent = name;
         this.elAudioSinger.textContent = singer;
         this.elAudioTotalTime.textContent = time;

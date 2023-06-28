@@ -1,6 +1,6 @@
 import Audio from "../classes/request/Audio";
 import User from "../classes/request/User";
-import host from "../helpers/host";
+import getStoragePath from "../helpers/getStoragePath";
 
 function clearActiveClassAtAudioElements(elements) {
     elements.forEach((el) => el.classList.remove("audio--active"));
@@ -72,7 +72,7 @@ export default (selectorElements, audioplayer, arrayAudioId = []) => {
                         audioplayer.play = !audioplayer.play;
 
                         audioplayer.displayAudioData(audio);
-                        audioplayer.playAudio(`${host}/storage/audio/${audio.path}`);
+                        audioplayer.playAudio(getStoragePath("audio", audio.path));
                     }).catch((err) => {
                         throw err;
                     });
