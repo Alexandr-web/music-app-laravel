@@ -117,6 +117,10 @@ export default class Audioplayer {
     }
 
     _switchAudio(next = true) {
+        if (this.playlistData.length < 2) {
+            return;
+        }
+
         const activeIdx = this._getIdxActiveAudio();
         const newIdx = this._checkSwitchingIdx(activeIdx + (next ? 1 : -1));
         const newActiveId = this.playlistData[newIdx];

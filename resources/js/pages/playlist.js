@@ -4,7 +4,7 @@ import AudioSearch from "../classes/ui/AudioSearch";
 import Alert from "../classes/ui/Alert";
 import Playlist from "../classes/request/Playlist";
 
-export default () => {
+export default (audioplayer) => {
     if (!document.querySelector("#add-playlist-form")) {
         return;
     }
@@ -15,7 +15,7 @@ export default () => {
         audio: { optional: true, min: 3, max: 46, },
     };
     const alert = new Alert().init();
-    const audioSearch = new AudioSearch().search();
+    const audioSearch = new AudioSearch(audioplayer).search();
     const callbackWhenAllCompleted = (fd) => {
         const addedAudio = audioSearch.addedAudiosId;
 

@@ -8,7 +8,7 @@ window.addEventListener("load", () => {
     const audioplayer = new Audioplayer().init();
 
     userScripts(audioplayer);
+    playlistScripts(audioplayer);
     musicScripts();
-    playlistScripts();
     switchingHistory();
 });
