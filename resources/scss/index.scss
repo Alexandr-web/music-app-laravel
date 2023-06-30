@@ -567,7 +567,8 @@
     background: $white;
 
     &--active {
-        background: linear-gradient(-25deg, $lightGrey, $white);
+        background: $lightGrey;
+        border: none;
 
         .audio__poster {
             animation: rotation 5s infinite linear;
@@ -971,9 +972,6 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        padding: 10px;
-        background: $white;
-        border-radius: 5px;
     }
 
     &__btn-remove {
@@ -982,9 +980,17 @@
         padding: 0;
     }
 
+    &__top {
+        display: flex;
+        background-color: $white;
+        border-radius: 0 5px 5px 0;
+    }
+
     &__info {
         display: flex;
-        gap: 10px;
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px;
     }
 
     &__audio {
@@ -993,6 +999,12 @@
             flex-direction: column;
             gap: 10px;
         }
+    }
+
+    &__controls {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
     }
 }
 

@@ -34,6 +34,23 @@ export default class Audioplayer {
         this.animIsActive = false;
     }
 
+    setActiveClassToAudioById(activeId, selectorElements = ".audio", activeClassName = "audio--active") {
+        const audioElements = document.querySelectorAll(selectorElements);
+
+        if (!audioElements.length) {
+            return;
+        }
+
+        const activeEl = [...audioElements].find((audio) => parseInt(audio.dataset.audioId) === activeId);
+
+        if (!activeEl) {
+            return;
+        }
+
+        audioElements.forEach((audio) => audio.classList.remove(activeClassName));
+        activeEl.classList.add(activeClassName);
+    }
+
     playAudio(audioSrc) {
         if (audioSrc !== this.elAudio.src) {
             this.elAudio.src = audioSrc;
@@ -137,6 +154,7 @@ export default class Audioplayer {
                 this.elAudioInfo.classList.add("slide-left-anim");
 
                 this.displayAudioData(audio);
+                this.setActiveClassToAudioById(audio.id);
                 this.playAudio(getStoragePath("audio", audio.path));
             });
     }

@@ -25,6 +25,8 @@ export default (audioplayer) => {
 
                     modalWindowPlaylist.setData(poster, name, id, () => {
                         setTrackData(".modal-window-playlist .audio", audioplayer, JSON.parse(audio));
+
+                        audioplayer.setActiveClassToAudioById(audioplayer.audioData.id);
                     });
                 }).catch((err) => {
                     throw err;

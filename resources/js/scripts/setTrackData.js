@@ -2,14 +2,6 @@ import Audio from "../classes/request/Audio";
 import User from "../classes/request/User";
 import getStoragePath from "../helpers/getStoragePath";
 
-function clearActiveClassAtAudioElements(elements) {
-    elements.forEach((el) => el.classList.remove("audio--active"));
-}
-
-function setActiveClassToAudioEl(el) {
-    el.classList.add("audio--active");
-}
-
 export default (selectorElements, audioplayer, arrayAudioId = []) => {
     const elements = document.querySelectorAll(selectorElements);
 
@@ -65,12 +57,9 @@ export default (selectorElements, audioplayer, arrayAudioId = []) => {
                         }
 
                         audioplayer.playlistData = audioIds;
-
-                        clearActiveClassAtAudioElements(elements);
-                        setActiveClassToAudioEl(track);
-
                         audioplayer.play = !audioplayer.play;
 
+                        audioplayer.setActiveClassToAudioById(audio.id, selectorElements);
                         audioplayer.displayAudioData(audio);
                         audioplayer.playAudio(getStoragePath("audio", audio.path));
                     }).catch((err) => {

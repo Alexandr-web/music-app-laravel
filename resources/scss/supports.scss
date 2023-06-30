@@ -5,13 +5,9 @@
 
 	.sidebar,
 	.header,
-	.sticky-title {
+	.sticky-title,
+	.modal-window-playlist__top {
 		@include getColor(255, 255, 255, .3);
-		backdrop-filter: blur(15px);
-	}
-
-	.modal-window-playlist__inner {
-		@include getColor(255, 255, 255, .8);
 		backdrop-filter: blur(15px);
 	}
 
