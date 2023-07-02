@@ -4,9 +4,9 @@
         <h1 class="title">Плейлисты</h1>
         @if (count($playlists))
             <ul class="playlists">
-                @foreach ($playlists as $playlist)
+                @foreach ($playlists as $data)
                     <li class="playlists__item">
-                        <x-custom-playlist :playlist="$playlist" />
+                        <x-custom-playlist :playlist="$data['playlist']" :ownerNickname="$data['owner_nickname']" />
                     </li>
                 @endforeach
             </ul>

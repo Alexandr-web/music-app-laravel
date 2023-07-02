@@ -58,6 +58,7 @@ export default class AudioSearch {
             btnRemove.addEventListener("click", () => {
                 this._removeAudio(audioId);
                 this._removeChildAtAddedAudioList(audioId);
+                this._changeViewIconsPlusAndCross(false, audioId);
             });
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Playlist;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
@@ -65,8 +66,9 @@ class PlaylistController extends Controller
 
     public function getOne(Request $request, string $id) {
         $find_playlist = Playlist::find($id) ?? [];
+        $find_owner = User::find($find_playlist->ownerId);
 
-        return response(['success' => true, 'playlist' => $find_playlist])
+        return response(['success' => true, 'playlist' => $find_playlist, 'nickname_owner' => $find_owner->nickname])
             ->header('Content-Type', 'application/json');
     }
 }

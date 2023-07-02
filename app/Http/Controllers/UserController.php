@@ -45,7 +45,10 @@ class UserController extends Controller
 			case "playlists":
 				$array_playlists_id = json_decode($find_user['playlists'], true);
 				$array_playlists_data = array_map(function ($playlist_id) {
-					return Playlist::find($playlist_id);
+					$find_playlist = Playlist::find($playlist_id);
+					$find_owner_playlist = User::find($find_playlist->ownerId);
+
+					return ['playlist' => $find_playlist, 'owner_nickname' => $find_owner_playlist->nickname];
 				}, $array_playlists_id);
 
 				return view('user', array_merge(['playlists' => $array_playlists_data], $page_data));

@@ -565,10 +565,11 @@
     padding: 10px;
     border-radius: 10px;
     background: $white;
+    transition: border-color, background, .3s;
 
     &--active {
         background: $lightGrey;
-        border: none;
+        border-color: transparent;
 
         .audio__poster {
             animation: rotation 5s infinite linear;
@@ -910,18 +911,12 @@
 }
 
 .playlist {
-    border: 1px solid $lightGrey;
     padding: 10px;
     cursor: pointer;
     background: $white;
-    transition: transform, box-shadow, .3s;
-
-    &:hover {
-        transform: translateY(-10px);
-        box-shadow: $shadow;
-    }
 
     &__poster {
+        transition: box-shadow, .3s;
         overflow: hidden;
         display: flex;
         justify-content: center;
@@ -933,6 +928,16 @@
         &-image {
             max-height: 100%;
         }
+
+        &:hover {
+            box-shadow: $shadow;
+        }
+    }
+
+    &__owner-nickname {
+        text-transform: uppercase;
+        color: $grey;
+        font-weight: 400;
     }
 
     &__inner {
@@ -942,7 +947,8 @@
     }
 
     &__name {
-        font-weight: 400;
+        font-weight: 600;
+        font-family: "Ysabeau SC";
     }
 }
 
@@ -957,7 +963,8 @@
     overflow: auto;
 
     &__name {
-        font-weight: 400;
+        font-weight: 600;
+        font-family: "Ysabeau SC";
     }
 
     &__poster {
@@ -1005,6 +1012,7 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+        gap: 5px;
     }
 }
 

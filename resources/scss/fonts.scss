@@ -1,3 +1,4 @@
+// Inter
 @font-face {
     font-family: "Inter";
     src: url("../../public/font/Inter-ExtraBold.woff2") format("woff2"),
@@ -75,6 +76,88 @@
     src: url("../../public/font/Inter-SemiBold.woff2") format("woff2"),
         url("../../public/font/Inter-SemiBold.woff") format("woff");
     font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Ysabeau SC
+@font-face {
+    font-family: "Ysabeau SC";
+    src: url("../../public/font/YsabeauSC-ExtraLight.woff2") format("woff2"),
+        url("../../public/font/YsabeauSC-ExtraLight.woff") format("woff");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Ysabeau SC";
+    src: url("../../public/font/YsabeauSC-Bold.woff2") format("woff2"),
+        url("../../public/font/YsabeauSC-Bold.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Ysabeau SC";
+    src: url("../../public/font/YsabeauSC-ExtraBold.woff2") format("woff2"),
+        url("../../public/font/YsabeauSC-ExtraBold.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Ysabeau SC";
+    src: url("../../public/font/YsabeauSC-Black.woff2") format("woff2"),
+        url("../../public/font/YsabeauSC-Black.woff") format("woff");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Ysabeau SC";
+    src: url("../../public/font/YsabeauSC-Light.woff2") format("woff2"),
+        url("../../public/font/YsabeauSC-Light.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Ysabeau SC";
+    src: url("../../public/font/YsabeauSC-SemiBold.woff2") format("woff2"),
+        url("../../public/font/YsabeauSC-SemiBold.woff") format("woff");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Ysabeau SC";
+    src: url("../../public/font/YsabeauSC-Thin.woff2") format("woff2"),
+        url("../../public/font/YsabeauSC-Thin.woff") format("woff");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Ysabeau SC";
+    src: url("../../public/font/YsabeauSC-Medium.woff2") format("woff2"),
+        url("../../public/font/YsabeauSC-Medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Ysabeau SC";
+    src: url("../../public/font/YsabeauSC-Regular.woff2") format("woff2"),
+        url("../../public/font/YsabeauSC-Regular.woff") format("woff");
+    font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
