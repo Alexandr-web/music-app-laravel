@@ -2,6 +2,7 @@ import convertToCorrectTime from "../../helpers/convertToCorrectTime";
 import CustomRange from "./CustomRange";
 import Audio from "../request/Audio";
 import getStoragePath from "../../helpers/getStoragePath";
+import setAnim from "../../scripts/setAnim";
 
 export default class Audioplayer {
     constructor() {
@@ -151,16 +152,12 @@ export default class Audioplayer {
 
                 this.play = true;
 
-                this.elAudioInfo.classList.add("slide-left-anim");
+                setAnim(this.elAudioInfo, { opacity: [0, 1], translateX: [100, 0], duration: 2000, });
 
                 this.displayAudioData(audio);
                 this.setActiveClassToAudioById(audio.id);
                 this.playAudio(getStoragePath("audio", audio.path));
             });
-    }
-
-    _setEventAnimationEnd() {
-        this.elAudioInfo.addEventListener("animationend", () => this.elAudioInfo.classList.remove("slide-left-anim"));
     }
 
     _setEventSwitchingAudio(btn, next) {
@@ -321,7 +318,7 @@ export default class Audioplayer {
 
         this._stateDefaultData(false);
 
-        const { name, poster, singer, time, duration, } = audio;
+        const { name, poster, singer, time, duration, id, } = audio;
 
         this.elPoster.src = getStoragePath("posters", poster);
         this.elAudioName.textContent = name;
@@ -335,6 +332,7 @@ export default class Audioplayer {
         localStorage.setItem("audio", JSON.stringify(this.audioData));
         localStorage.setItem("playlist", JSON.stringify(this.playlistData));
 
+        this.setActiveClassToAudioById(id);
         this._displayCurrentTime(setTimeToElement);
         this._setTimeupdate();
     }
@@ -356,7 +354,6 @@ export default class Audioplayer {
         this._setEventEndedAudio();
         this._setEventSwitchingAudio(this.elPrevBtn, false);
         this._setEventSwitchingAudio(this.elNextBtn);
-        this._setEventAnimationEnd();
 
         return this;
     }

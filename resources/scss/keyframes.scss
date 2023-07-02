@@ -7,15 +7,3 @@
 		transform: rotate(360deg);
 	}
 }
-
-@keyframes slide-left {
-	0% {
-		transform: translateX(55%);
-		opacity: 0;
-	}
-
-	100% {
-		transform: translateX(0);
-		opacity: 1;
-	}
-}
