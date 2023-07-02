@@ -158,8 +158,7 @@ class UserController extends Controller
 
 		return response([
 			"success" => true,
-			"message" => "Данные обновлены",
-			"user" => $current_user
+			"message" => "Данные обновлены"
 		], 200)->header("Content-Type", "application/json");
 	}
 }

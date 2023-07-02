@@ -14,7 +14,6 @@
         </div>
         <div class="modal-window-playlist__bottom">
             <div class="modal-window-playlist__audio">
-                <h3 class="modal-window-playlist__audio-title"></h3>
                 <ul class="modal-window-playlist__audio-list"></ul>
             </div>
         </div>
