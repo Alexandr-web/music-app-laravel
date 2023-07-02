@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 
 Route::prefix('auth')->group(function () {
@@ -26,9 +27,7 @@ Route::prefix('user')->group(function () {
 		->where("id", "[0-9]+");
 });
 
-Route::get('/', function (Request $request) {
-    return view('index', ['current_user' => $request->user]);
-})  
+Route::get('/', [HomeController::class, 'renderPage'])
     ->middleware('redirect_if_token_not_exist')
     ->middleware('get_current_user_data');
 

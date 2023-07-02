@@ -16,6 +16,42 @@
     margin-bottom: 15px;
 }
 
+.welcome {
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__block {
+        display: flex;
+        flex-direction: column;
+
+        &-top {
+            text-align: center;
+            height: 50vh;
+            background: linear-gradient(45deg, $blue, $purple);
+            color: $white;
+            justify-content: center;
+        }
+
+        &-content:not(:last-child) {
+            margin-bottom: 15px;
+        }
+    }
+
+    &__title {
+        font-family: "Comfortaa";
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    &__subtitle {
+        color: $lightGrey;
+        font-weight: 400;
+    }
+}
+
 .form {
     &__inner {
         display: flex;
@@ -912,7 +948,6 @@
 
 .playlist {
     cursor: pointer;
-    background: $white;
 
     &__poster {
         transition: box-shadow, .3s;
