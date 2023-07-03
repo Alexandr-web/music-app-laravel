@@ -66,7 +66,7 @@ export default class CustomRange {
     }
 
     _getPercent(current, max) {
-        return Math.ceil((current / max) * 100);
+        return (current / max) * 100;
     }
 
     _getValueFromPercent(percent, value) {

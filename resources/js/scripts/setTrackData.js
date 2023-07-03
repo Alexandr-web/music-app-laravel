@@ -56,12 +56,15 @@ export default (selectorElements, audioplayer, arrayAudioId = []) => {
                             return;
                         }
 
-                        audioplayer.playlistData = audioIds;
-                        audioplayer.play = !audioplayer.play;
+                        if (audioplayer.audioData.id === audio.id) {
+                            audioplayer.play = !audioplayer.play;
+                        }
 
-                        audioplayer.setActiveClassToAudioById(audio.id, selectorElements);
+                        audioplayer.playlistData = audioIds;
+
                         audioplayer.displayAudioData(audio);
                         audioplayer.playAudio(getStoragePath("audio", audio.path));
+                        audioplayer.setActiveClassToAudioById(audio.id, selectorElements);
                     }).catch((err) => {
                         throw err;
                     });

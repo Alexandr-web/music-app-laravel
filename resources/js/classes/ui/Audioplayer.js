@@ -24,15 +24,15 @@ export default class Audioplayer {
 
         this.gainNode = null;
         this.audioContext = null;
-        this.isGrabbing = false;
-        this.audioAnalyser = null;
-        this.currentTime = 0;
-        this.play = false;
         this.progressTimeRange = null;
         this.progressVolumeRange = null;
+        this.audioAnalyser = null;
+        this.isGrabbing = false;
+        this.play = false;
+        this.animIsActive = false;
+        this.currentTime = 0;
         this.audioData = {};
         this.playlistData = [];
-        this.animIsActive = false;
     }
 
     setActiveClassToAudioById(activeId, selectorElements = ".audio", activeClassName = "audio--active") {
@@ -48,8 +48,32 @@ export default class Audioplayer {
             return;
         }
 
-        audioElements.forEach((audio) => audio.classList.remove(activeClassName));
+        audioElements.forEach((audio) => {
+            const playIcon = audio.querySelector(".play-icon");
+            const pauseIcon = audio.querySelector(".pause-icon");
+
+            audio.classList.remove(activeClassName);
+
+            this._changeShowIconsAtPlayBtn(playIcon, pauseIcon, true);
+        });
+
+        const playIconAtActiveEl = activeEl.querySelector(".play-icon");
+        const pauseIconAtActiveEl = activeEl.querySelector(".pause-icon");
+
         activeEl.classList.add(activeClassName);
+
+        this._changeShowIconsAtPlayBtn(playIconAtActiveEl, pauseIconAtActiveEl);
+    }
+
+    _getActiveAudioElements() {
+        const activeAudio = document.querySelector(".audio--active");
+        const playIconAtActiveEl = activeAudio.querySelector(".play-icon");
+        const pauseIconAtActiveEl = activeAudio.querySelector(".pause-icon");
+
+        return {
+            playIcon: playIconAtActiveEl,
+            pauseIcon: pauseIconAtActiveEl,
+        };
     }
 
     playAudio(audioSrc) {
@@ -58,7 +82,7 @@ export default class Audioplayer {
             this.play = true;
         }
 
-        this._changeShowIconsAtPlayBtn();
+        this._changeShowIconsAtPlayBtn(this.elIconPlay, this.elIconPause);
         this._setDisabledControlsBtn();
 
         const promise = this.elAudio.play();
@@ -164,13 +188,25 @@ export default class Audioplayer {
         btn.addEventListener("click", this._switchAudio.bind(this, next));
     }
 
-    _changeShowIconsAtPlayBtn() {
+    _changeShowIconsAtPlayBtn(iconPlay, iconPause, showPlay) {
+        if (showPlay !== undefined) {
+            if (showPlay) {
+                iconPause.classList.add("hide");
+                iconPlay.classList.remove("hide");
+            } else {
+                iconPause.classList.remove("hide");
+                iconPlay.classList.add("hide");
+            }
+
+            return;
+        }
+
         if (this.play) {
-            this.elIconPlay.classList.add("hide");
-            this.elIconPause.classList.remove("hide");
+            iconPlay.classList.add("hide");
+            iconPause.classList.remove("hide");
         } else {
-            this.elIconPause.classList.add("hide");
-            this.elIconPlay.classList.remove("hide");
+            iconPause.classList.add("hide");
+            iconPlay.classList.remove("hide");
         }
     }
 
@@ -261,6 +297,10 @@ export default class Audioplayer {
             this.play = !this.play;
 
             this.playAudio(getStoragePath("audio", this.audioData.path));
+
+            const { playIcon, pauseIcon, } = this._getActiveAudioElements();
+
+            this._changeShowIconsAtPlayBtn(playIcon, pauseIcon);
         });
     }
 
@@ -272,7 +312,7 @@ export default class Audioplayer {
         this.elAudio.addEventListener("ended", () => {
             this.play = false;
 
-            this._changeShowIconsAtPlayBtn();
+            this._changeShowIconsAtPlayBtn(this.elIconPlay, this.elIconPause);
             this._switchAudio();
         });
     }
