@@ -1,11 +1,13 @@
 export default class CustomRange {
-    constructor(value, idArea, callbackWhenGrabbing) {
+    constructor(value, idArea, callbackWhenEndGrabbing, callbackWhenGrabbing) {
+        this.area = document.querySelector(idArea);
+        this.line = document.querySelector(`${idArea} .custom-range__progress-line`);
+
         this.value = value;
+        this.callbackWhenEndGrabbing = callbackWhenEndGrabbing;
         this.callbackWhenGrabbing = callbackWhenGrabbing;
         this.isGrabbing = false;
         this.abscissa = 0;
-        this.area = document.querySelector(idArea);
-        this.line = document.querySelector(`${idArea} .custom-range__progress-line`);
     }
 
     _getAreaWidth() {
@@ -32,6 +34,13 @@ export default class CustomRange {
     }
 
     _releaseHandler() {
+        if (this.isGrabbing && this.callbackWhenEndGrabbing instanceof Function) {
+            const percent = this._getPercent(this.abscissa, this._getAreaWidth());
+            const value = this._getValueFromPercent(percent, this.value);
+
+            this.callbackWhenEndGrabbing(value);
+        }
+
         this.isGrabbing = false;
         this._setUserSelect();
     }
@@ -57,7 +66,11 @@ export default class CustomRange {
     }
 
     _getPercent(current, max) {
-        return Math.ceil((current / max) * 100);
+        return (current / max) * 100;
+    }
+
+    _getValueFromPercent(percent, value) {
+        return (percent * value) / 100;
     }
 
     _grabbingHandler(e) {
@@ -66,14 +79,13 @@ export default class CustomRange {
         }
 
         const percent = this._getPercent(this.abscissa, this._getAreaWidth());
+        const value = this._getValueFromPercent(percent, this.value);
 
         this.abscissa = this._checkAbscissa(e.layerX);
         this._setWidthLine(percent);
         this._setUserSelect(false);
 
         if (this.callbackWhenGrabbing instanceof Function) {
-            const value = (percent * this.value) / 100;
-
             this.callbackWhenGrabbing(value);
         }
     }
@@ -105,15 +117,16 @@ export default class CustomRange {
         this._addEvents();
     }
 
-    setDefaultPosition(val) {
+    setPosition(val) {
         const percent = this._getPercent(val, this.value);
 
         this._setWidthLine(percent);
     }
 
-    init() {
+    init(currentValue) {
         this._addEvents();
         this._resizeScreen();
+        this.setPosition(currentValue);
 
         return this;
     }

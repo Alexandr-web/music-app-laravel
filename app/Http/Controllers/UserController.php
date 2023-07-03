@@ -45,7 +45,10 @@ class UserController extends Controller
 			case "playlists":
 				$array_playlists_id = json_decode($find_user['playlists'], true);
 				$array_playlists_data = array_map(function ($playlist_id) {
-					return Playlist::find($playlist_id);
+					$find_playlist = Playlist::find($playlist_id);
+					$find_owner_playlist = User::find($find_playlist->ownerId);
+
+					return ['playlist' => $find_playlist, 'owner_nickname' => $find_owner_playlist->nickname];
 				}, $array_playlists_id);
 
 				return view('user', array_merge(['playlists' => $array_playlists_data], $page_data));
@@ -68,17 +71,15 @@ class UserController extends Controller
         }
 
 		$request->validate([
-			'nickname' => 'required|min:3|max:16',
+			'nickname' => 'nullable|min:3|max:16',
 			'password' => 'nullable|min:9',
-			'email' => 'required|email',
+			'email' => 'nullable|email',
 			'avatar' => 'max:1024|mimes:png,jpg,jpeg,svg'
 		],
 		[
-			'nickname.required' => 'Никнейм обязателен для заполнения',
 			'nickname.min' => 'Никнейм должен иметь минимум 3 символа',
 			'nickname.max' => 'Никнейм должен иметь максимум 16 символов',
 			'password.min' => 'Пароль должен иметь минимум 9 символов',
-			'email.required' => 'Электронная почта обязательна для заполнения',
 			'email.email' => 'Электронная почта должна быть в формате электронной почты',
 			'avatar.max' => 'Файл аватара не может весить больше 1мб',
 			'avatar.mimes' => 'Файл аватара может иметь следующие расширения: png, jpg, jpeg, svg'
@@ -157,8 +158,7 @@ class UserController extends Controller
 
 		return response([
 			"success" => true,
-			"message" => "Данные обновлены",
-			"user" => $current_user
+			"message" => "Данные обновлены"
 		], 200)->header("Content-Type", "application/json");
 	}
 }

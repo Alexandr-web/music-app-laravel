@@ -1,11 +1,15 @@
-import ValidForm from "../classes/ValidForm";
+import ValidForm from "../classes/ui/ValidForm";
 import uploadFile from "../scripts/uploadFile";
-import Audio from "../classes/Audio";
+import Audio from "../classes/request/Audio";
 import getAudioDuration from "../helpers/getAudioDuration";
 import convertToCorrectTime from "../helpers/convertToCorrectTime";
-import Alert from "../classes/Alert";
+import Alert from "../classes/ui/Alert";
 
-window.addEventListener("load", () => {
+export default () => {
+    if (!document.querySelector("#add-music-form")) {
+        return;
+    }
+
     const alert = new Alert().init();
     const options = {
         poster: { file: true, },
@@ -17,6 +21,7 @@ window.addEventListener("load", () => {
         getAudioDuration(fd.get("audio"))
             .then((duration) => {
                 fd.append("time", convertToCorrectTime(duration));
+                fd.append("duration", duration);
 
                 new Audio()
                     .add(fd)
@@ -47,4 +52,4 @@ window.addEventListener("load", () => {
         audioName.textContent = file.name;
         audioSize.textContent = `${mb} мб`;
     });
-});
+};

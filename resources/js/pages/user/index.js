@@ -1,7 +1,9 @@
-import settings from "./settings";
-import playlists from "./playlists";
+import settingsScripts from "./settings";
+import playlistsScripts from "./playlists";
+import audioScripts from "./audio";
 
-window.addEventListener("load", () => {
-    settings();
-    playlists();
-});
+export default (audioplayer) => {
+    audioScripts(audioplayer);
+    playlistsScripts(audioplayer);
+    settingsScripts();
+};

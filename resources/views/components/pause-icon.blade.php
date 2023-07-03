@@ -1,4 +1,4 @@
-<svg class="{{ $show ? 'show' : 'hide' }}" width="16px" height="16px" viewBox="-1 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg"
+<svg class="{{ $show ? 'show' : 'hide' }} pause-icon" width="16px" height="16px" viewBox="-1 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
         <g id="Dribbble-Light-Preview" transform="translate(-67.000000, -3765.000000)">

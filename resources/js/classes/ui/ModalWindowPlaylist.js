@@ -1,6 +1,6 @@
-import getHTMLStringAudioBlock from "../helpers/getHTMLStringAudioBlock";
-import Audio from "./Audio";
-import host from "../helpers/host";
+import getHTMLStringAudioBlock from "../../helpers/getHTMLStringAudioBlock";
+import Audio from "../request/Audio";
+import getStoragePath from "../../helpers/getStoragePath";
 
 export default class ModalWindowPlaylist {
     constructor(playlistId, audioId) {
@@ -13,7 +13,6 @@ export default class ModalWindowPlaylist {
 
         this.playlistId = playlistId;
         this.audioId = audioId;
-        this.urlStoragePosters = `${host}/storage/posters`;
     }
 
     _show() {
@@ -36,13 +35,13 @@ export default class ModalWindowPlaylist {
     }
 
     _addToAudioList(audio) {
-        const audioStr = getHTMLStringAudioBlock(audio, true, false);
+        const audioStr = getHTMLStringAudioBlock(audio, this.playlistId, true, false);
 
         this.audioList.innerHTML += `<li class="modal-window-playlist__audio-item">${audioStr}</li>`;
     }
 
-    setData(poster, name, playlistId) {
-        this.poster.src = `${this.urlStoragePosters}/${poster}`;
+    setData(poster, name, playlistId, callbackWhenAdded) {
+        this.poster.src = getStoragePath("posters", poster);
         this.name.textContent = name;
         this.linkChange.href = `/playlist/${playlistId}/edit`;
 
@@ -55,6 +54,8 @@ export default class ModalWindowPlaylist {
 
                     this._addToAudioList(audio);
                 });
+
+                callbackWhenAdded();
             }).then(() => this._show()).catch((err) => {
                 throw err;
             });

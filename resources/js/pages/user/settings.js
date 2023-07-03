@@ -1,6 +1,6 @@
-import Alert from "../../classes/Alert";
-import User from "../../classes/User";
-import ValidForm from "../../classes/ValidForm";
+import Alert from "../../classes/ui/Alert";
+import User from "../../classes/request/User";
+import ValidForm from "../../classes/ui/ValidForm";
 import changePasswordState from "../../scripts/changePasswordState";
 import uploadFile from "../../scripts/uploadFile";
 import Cookie from "js-cookie";
@@ -8,13 +8,14 @@ import jwtDecode from "jwt-decode";
 
 export default () => {
 	const form = document.querySelector(".form#edit-form");
-	const alert = new Alert();
-
-	alert.init();
 
 	if (!form) {
 		return;
 	}
+
+	const alert = new Alert();
+
+	alert.init();
 
 	const options = {
 		avatar: { optional: true, file: true, },

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('audio', function (Blueprint $table) {
             $table->id();
             $table->string('time');
+            $table->float('duration');
             $table->string('singer');
             $table->integer('ownerId');
             $table->string('name');

@@ -1,17 +1,21 @@
-import ValidForm from "../classes/ValidForm";
+import ValidForm from "../classes/ui/ValidForm";
 import uploadFile from "../scripts/uploadFile";
-import AudioSearch from "../classes/AudioSearch";
-import Alert from "../classes/Alert";
-import Playlist from "../classes/Playlist";
+import AudioSearch from "../classes/ui/AudioSearch";
+import Alert from "../classes/ui/Alert";
+import Playlist from "../classes/request/Playlist";
 
-window.addEventListener("load", () => {
+export default (audioplayer) => {
+    if (!document.querySelector("#add-playlist-form")) {
+        return;
+    }
+
     const options = {
         poster: { file: true, },
         name: { min: 3, max: 26, },
         audio: { optional: true, min: 3, max: 46, },
     };
     const alert = new Alert().init();
-    const audioSearch = new AudioSearch().search();
+    const audioSearch = new AudioSearch(audioplayer).search();
     const callbackWhenAllCompleted = (fd) => {
         const addedAudio = audioSearch.addedAudiosId;
 
@@ -37,4 +41,4 @@ window.addEventListener("load", () => {
         image.src = result;
         image.classList.remove("hide");
     });
-});
+};

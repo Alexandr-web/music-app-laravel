@@ -1,6 +1,6 @@
-import ValidForm from "../../classes/ValidForm";
-import Auth from "../../classes/Auth";
-import Alert from "../../classes/Alert";
+import ValidForm from "../../classes/ui/ValidForm";
+import Auth from "../../classes/request/Auth";
+import Alert from "../../classes/ui/Alert";
 import Cookie from "js-cookie";
 
 window.addEventListener("load", () => {

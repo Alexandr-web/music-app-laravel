@@ -8,14 +8,16 @@ use Illuminate\View\Component;
 
 class TableSong extends Component
 {
-    public array $songs = [];
+    public $songs = [];
+    public $playlistId;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(array $songs)
+    public function __construct($songs, $playlistId)
     {
         $this->songs = $songs;
+        $this->playlistId = $playlistId;
     }
 
     /**

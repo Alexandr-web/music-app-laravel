@@ -25,5 +25,8 @@
     "test": "tests"
   },
   "author": "Alexandr Yakovlev",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "animejs": "^3.2.1"
+  }
 }

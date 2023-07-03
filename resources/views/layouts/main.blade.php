@@ -28,5 +28,6 @@
         </div>
     </div>
     @yield('scripts')
+    @vite(['resources/js/pages/index'])
 </body>
 </html>

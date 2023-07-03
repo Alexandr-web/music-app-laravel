@@ -1,10 +1,17 @@
 <div class="audio-player">
     <div class="audio-player__inner">
-        <div class="audio-player__block audio-player__song">
-            <img class="audio-player__poster" src="https://images.genius.com/f4070376322053f8aee83f60c88710cb.1000x1000x1.png" alt="Постер аудио">
-            <div class="audio-player__song-info">
-                <h3 class="audio-player__song-name">Bleach</h3>
-                <h4 class="audio-player__song-singer">$uicideboy$</h4>
+        <div class="audio-player__block audio-player__song-block">
+            <div class="audio-player__song">
+                <div class="audio-player__poster">
+                    <div class="audio-player__block audio-player__anim">
+                        <canvas class="audio-player__anim-canvas"></canvas>
+                    </div>
+                    <img class="audio-player__poster-image" src="" alt="Постер аудио">
+                </div>
+                <div class="audio-player__song-info">
+                    <h3 class="audio-player__song-name"></h3>
+                    <h4 class="audio-player__song-singer"></h4>
+                </div>
             </div>
         </div>
         <div class="audio-player__block audio-player__controls">
@@ -20,9 +27,9 @@
             </button>
         </div>
         <div class="audio-player__block audio-player__progress">
-            <div class="audio-player__time">00:00</div>
+            <div class="audio-player__time" id="audio-current-time"></div>
             <x-custom-range id="audio-progress" />
-            <div class="audio-player__time">03:21</div>
+            <div class="audio-player__time" id="audio-total-time"></div>
         </div>
         <div class="audio-player__block audio-player__volume">
             <x-volume-icon />

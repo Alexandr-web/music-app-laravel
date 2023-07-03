@@ -29,7 +29,3 @@
         </div>
     </div>
 @endsection
-
-@section('scripts')
-    @vite(['resources/js/pages/user/index'])
-@endsection

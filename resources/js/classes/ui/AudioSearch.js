@@ -1,18 +1,21 @@
-import Audio from "./Audio";
-import getHTMLStringAudioBlock from "../helpers/getHTMLStringAudioBlock";
+import Audio from "../request/Audio";
+import getHTMLStringAudioBlock from "../../helpers/getHTMLStringAudioBlock";
+import setTrackData from "../../scripts/setTrackData";
 
 export default class AudioSearch {
-    constructor() {
+    constructor(audioplayer) {
         this.searchAudioResultList = document.querySelector("#search-audio-result-list");
         this.addedAudioList = document.querySelector("#added-audio-list");
         this.input = document.querySelector(".form__input#audio");
         this.nothingElementInSearchResult = document.querySelector("#search-nothing");
         this.nothingElementInAddedList = document.querySelector("#added-nothing");
+
+        this.audioplayer = audioplayer;
         this.addedAudiosId = [];
     }
 
     _displayResult(audio) {
-        const strHTMLAudio = getHTMLStringAudioBlock(audio, true, !this.addedAudiosId.includes(audio.id));
+        const strHTMLAudio = getHTMLStringAudioBlock(audio, "add-audio-to-playlist", true, !this.addedAudiosId.includes(audio.id));
 
         this.searchAudioResultList.innerHTML += `<li class="form__search-result-item">${strHTMLAudio}</li>`;
     }
@@ -40,11 +43,9 @@ export default class AudioSearch {
     }
 
     _changeStateNothingElement(list, element) {
-        if (!list.length) {
-            element.classList.remove("hide");
-        } else {
-            element.classList.add("hide");
-        }
+        const method = !list.length ? "remove" : "add";
+
+        element.classList[method]("hide");
     }
 
     _setRemoveAtAddedAudio() {
@@ -104,20 +105,24 @@ export default class AudioSearch {
             return;
         }
 
-        new Audio().getOne(audioId).then(({ success, audio, }) => {
-            if (!success) {
-                return;
-            }
+        new Audio()
+            .getOne(audioId)
+            .then(({ success, audio, }) => {
+                if (!success) {
+                    return;
+                }
 
-            const strHTMLAudio = getHTMLStringAudioBlock(audio, true, false);
+                const strHTMLAudio = getHTMLStringAudioBlock(audio, "add-audio-to-playlist", true, false);
 
-            this.nothingElementInAddedList.classList.add("hide");
-            this.addedAudioList.innerHTML += `<li class="form__search-result-item">${strHTMLAudio}</li>`;
+                this.nothingElementInAddedList.classList.add("hide");
+                this.addedAudioList.innerHTML += `<li class="form__search-result-item">${strHTMLAudio}</li>`;
 
-            this._setRemoveAtAddedAudio();
-        }).catch((err) => {
-            throw err;
-        });
+                this._setRemoveAtAddedAudio();
+
+                setTrackData("#added-audio-list .audio", this.audioplayer, this.addedAudiosId);
+            }).catch((err) => {
+                throw err;
+            });
     }
 
     search() {
@@ -138,6 +143,10 @@ export default class AudioSearch {
                             this._changeStateNothingElement(audio, this.nothingElementInSearchResult);
 
                             audio.forEach((audioData) => this._displayResult(audioData));
+
+                            const audiosId = audio.map(({ id, }) => id);
+
+                            setTrackData("#search-audio-result-list .audio", this.audioplayer, audiosId);
 
                             this._setAddAudio();
                         }).catch((err) => {

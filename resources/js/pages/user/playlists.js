@@ -1,7 +1,8 @@
-import Playlist from "../../classes/Playlist";
-import ModalWindowPlaylist from "../../classes/ModalWindowPlaylist";
+import Playlist from "../../classes/request/Playlist";
+import ModalWindowPlaylist from "../../classes/ui/ModalWindowPlaylist";
+import setTrackData from "../../scripts/setTrackData";
 
-export default () => {
+export default (audioplayer) => {
     const playlistsList = document.querySelector(".playlists");
 
     if (!playlistsList) {
@@ -22,7 +23,11 @@ export default () => {
 
                     const modalWindowPlaylist = new ModalWindowPlaylist(id, JSON.parse(audio)).init();
 
-                    modalWindowPlaylist.setData(poster, name, id);
+                    modalWindowPlaylist.setData(poster, name, id, () => {
+                        setTrackData(".modal-window-playlist .audio", audioplayer, JSON.parse(audio));
+
+                        audioplayer.setActiveClassToAudioById(audioplayer.audioData.id);
+                    });
                 }).catch((err) => {
                     throw err;
                 });

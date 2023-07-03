@@ -10,13 +10,15 @@ use App\Models\Playlist;
 class CustomPlaylist extends Component
 {
     public Playlist $playlist;
+    public string $ownerNickname;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(Playlist $playlist)
+    public function __construct(Playlist $playlist, string $ownerNickname)
     {
         $this->playlist = $playlist;
+        $this->ownerNickname = $ownerNickname;
     }
 
     /**

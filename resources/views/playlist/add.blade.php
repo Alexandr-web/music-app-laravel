@@ -43,7 +43,3 @@
         </form>
     </div>
 @endsection
-
-@section('scripts')
-    @vite(['resources/js/pages/playlist'])
-@endsection
