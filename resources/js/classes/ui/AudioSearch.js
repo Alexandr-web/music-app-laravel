@@ -12,12 +12,15 @@ export default class AudioSearch {
 
         this.audioplayer = audioplayer;
         this.addedAudiosId = [];
+        this.findedAudioBySearch = [];
     }
 
-    _displayResult(audio) {
-        const strHTMLAudio = getHTMLStringAudioBlock(audio, "add-audio-to-playlist", true, !this.addedAudiosId.includes(audio.id));
+    _displayAudioBySearch() {
+        this.findedAudioBySearch.forEach((audio) => {
+            const strHTMLAudio = getHTMLStringAudioBlock(audio, "add-audio-to-playlist", true, !this.addedAudiosId.includes(audio.id));
 
-        this.searchAudioResultList.innerHTML += `<li class="form__search-result-item">${strHTMLAudio}</li>`;
+            this.searchAudioResultList.innerHTML += `<li class="form__search-result-item">${strHTMLAudio}</li>`;
+        });
     }
 
     _addAudio(id) {
@@ -126,14 +129,17 @@ export default class AudioSearch {
     }
 
     search() {
-        this.input.addEventListener("input", () => {
-            const val = this.input.value.trim();
+        window.addEventListener("keydown", (e) => {
+            const code = e.keyCode;
+            const activeElement = document.activeElement;
 
-            this.searchAudioResultList.innerHTML = "";
-            this.nothingElementInSearchResult.classList.remove("hide");
+            if (code === 13 && activeElement.isEqualNode(this.input)) {
+                const val = this.input.value.trim();
 
-            if (val.length >= 3) {
-                setTimeout(() => {
+                this.searchAudioResultList.innerHTML = "";
+                this.nothingElementInSearchResult.classList.remove("hide");
+
+                if (val.length >= 3) {
                     new Audio().getByName(val)
                         .then(({ audio, success, }) => {
                             if (!success) {
@@ -141,18 +147,16 @@ export default class AudioSearch {
                             }
 
                             this._changeStateNothingElement(audio, this.nothingElementInSearchResult);
+                            this.findedAudioBySearch = audio;
 
-                            audio.forEach((audioData) => this._displayResult(audioData));
-
-                            const audiosId = audio.map(({ id, }) => id);
-
-                            setTrackData("#search-audio-result-list .audio", this.audioplayer, audiosId);
+                            this._displayAudioBySearch();
+                            setTrackData("#search-audio-result-list .audio", this.audioplayer, audio.map(({ id, }) => id));
 
                             this._setAddAudio();
                         }).catch((err) => {
                             throw err;
                         });
-                }, 500);
+                }
             }
         });
 
