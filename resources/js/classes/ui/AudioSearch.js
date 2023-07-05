@@ -134,6 +134,8 @@ export default class AudioSearch {
             const activeElement = document.activeElement;
 
             if (code === 13 && activeElement.isEqualNode(this.input)) {
+                e.preventDefault();
+
                 const val = this.input.value.trim();
 
                 this.searchAudioResultList.innerHTML = "";
