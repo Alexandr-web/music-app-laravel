@@ -130,10 +130,10 @@ export default class AudioSearch {
 
     search() {
         window.addEventListener("keydown", (e) => {
-            const code = e.keyCode;
+            const key = e.code;
             const activeElement = document.activeElement;
 
-            if (code === 13 && activeElement.isEqualNode(this.input)) {
+            if (key === "Enter" && activeElement.isEqualNode(this.input)) {
                 e.preventDefault();
 
                 const val = this.input.value.trim();
