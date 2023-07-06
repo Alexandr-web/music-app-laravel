@@ -42,9 +42,9 @@ export default class Audioplayer {
             return;
         }
 
-        const activeEl = [...audioElements].find((audio) => parseInt(audio.dataset.audioId) === activeId);
+        const activeEls = [...audioElements].filter((audio) => parseInt(audio.dataset.audioId) === activeId);
 
-        if (!activeEl) {
+        if (!activeEls.length) {
             return;
         }
 
@@ -57,12 +57,13 @@ export default class Audioplayer {
             this._changeShowIconsAtPlayBtn(playIcon, pauseIcon, true);
         });
 
-        const playIconAtActiveEl = activeEl.querySelector(".play-icon");
-        const pauseIconAtActiveEl = activeEl.querySelector(".pause-icon");
+        activeEls.forEach((activeEl) => {
+            const playIconAtActiveEl = activeEl.querySelector(".play-icon");
+            const pauseIconAtActiveEl = activeEl.querySelector(".pause-icon");
 
-        activeEl.classList.add(activeClassName);
-
-        this._changeShowIconsAtPlayBtn(playIconAtActiveEl, pauseIconAtActiveEl);
+            activeEl.classList.add(activeClassName);
+            this._changeShowIconsAtPlayBtn(playIconAtActiveEl, pauseIconAtActiveEl);
+        });
     }
 
     _getActiveAudioElements() {
