@@ -39,7 +39,9 @@ class PlaylistController extends Controller
             'file' => $request->file('poster'),
         ];
 
-        if (Playlist::where(['name' => $playlist_data['name'], 'ownerId' => $request->user_id])->first()) {
+        $find_equal_playlist = Playlist::where(['name' => $playlist_data['name'], 'ownerId' => $request->user_id])->first();
+
+        if ($find_equal_playlist) {
             return response(['message' => 'Плейлист с таким названием у вас уже существует', 'success' => false], 409)
                 ->header('Content-Type', 'application/json');
         }
