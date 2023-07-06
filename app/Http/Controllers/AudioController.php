@@ -25,13 +25,13 @@ class AudioController extends Controller
         $audio;
 
         if (strlen($name) >= 3 && $request->is_authenticated) {
-            $audio = Audio::where('name', $name)
+            $audio = Audio::where('name', 'LIKE', '%'.$name.'%')
                 ->where('ownerId', $request->user_id)
                 ->get() ?? [];
         } else {
             $audio = Audio::all() ?? [];
         }
-        
+
         return response(['audio' => $audio, 'success' => true], 200)
             ->header('Content-Type', 'application/json');
     }

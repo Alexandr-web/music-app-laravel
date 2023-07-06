@@ -67,6 +67,11 @@ export default class Audioplayer {
 
     _getActiveAudioElements() {
         const activeAudio = document.querySelector(".audio--active");
+
+        if (!activeAudio) {
+            return;
+        }
+
         const playIconAtActiveEl = activeAudio.querySelector(".play-icon");
         const pauseIconAtActiveEl = activeAudio.querySelector(".pause-icon");
 
