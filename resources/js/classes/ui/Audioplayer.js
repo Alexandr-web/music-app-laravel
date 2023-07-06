@@ -35,37 +35,6 @@ export default class Audioplayer {
         this.playlistData = [];
     }
 
-    setActiveClassToAudioById(activeId, selectorElements = ".audio", activeClassName = "audio--active") {
-        const audioElements = document.querySelectorAll(selectorElements);
-
-        if (!audioElements.length) {
-            return;
-        }
-
-        const activeEls = [...audioElements].filter((audio) => parseInt(audio.dataset.audioId) === activeId);
-
-        if (!activeEls.length) {
-            return;
-        }
-
-        audioElements.forEach((audio) => {
-            const playIcon = audio.querySelector(".play-icon");
-            const pauseIcon = audio.querySelector(".pause-icon");
-
-            audio.classList.remove(activeClassName);
-
-            this._changeShowIconsAtPlayBtn(playIcon, pauseIcon, true);
-        });
-
-        activeEls.forEach((activeEl) => {
-            const playIconAtActiveEl = activeEl.querySelector(".play-icon");
-            const pauseIconAtActiveEl = activeEl.querySelector(".pause-icon");
-
-            activeEl.classList.add(activeClassName);
-            this._changeShowIconsAtPlayBtn(playIconAtActiveEl, pauseIconAtActiveEl);
-        });
-    }
-
     _getActiveAudioElements() {
         const activeAudio = document.querySelector(".audio--active");
 
@@ -80,45 +49,6 @@ export default class Audioplayer {
             playIcon: playIconAtActiveEl,
             pauseIcon: pauseIconAtActiveEl,
         };
-    }
-
-    playAudio(audioSrc) {
-        if (audioSrc !== this.elAudio.src) {
-            this.elAudio.src = audioSrc;
-            this.play = true;
-        }
-
-        this._changeShowIconsAtPlayBtn(this.elIconPlay, this.elIconPause);
-        this._setDisabledControlsBtn();
-
-        const promise = this.elAudio.play();
-
-        if (promise instanceof Promise) {
-            promise
-                .then(() => {
-                    this._setDisabledControlsBtn(false);
-
-                    if (this.audioContext instanceof AudioContext && this.audioContext.state === "suspended") {
-                        this.audioContext.resume();
-                    }
-
-                    if (this.play) {
-                        this.elAudio.play();
-
-                        this._initAudioContext();
-
-                        if (!this.animIsActive) {
-                            this.animIsActive = true;
-
-                            this._setAudioBarsAnim();
-                        }
-                    } else {
-                        this.elAudio.pause();
-                    }
-                }).catch((err) => {
-                    throw err;
-                });
-        }
     }
 
     _initAudioContext() {
@@ -245,6 +175,26 @@ export default class Audioplayer {
         }
     }
 
+    _checkVolume() {
+        if (this.volume > 1) {
+            this.volume = 1;
+        }
+
+        if (this.volume < 0) {
+            this.volume = 0;
+        }
+    }
+
+    _checkDurationAudio() {
+        if (this.currentTime < 0) {
+            this.currentTime = 0;
+        }
+
+        if (this.currentTime > this.audioData.duration) {
+            this.currentTime = this.audioData.duration;
+        }
+    }
+
     _setVolumeAudio() {
         this.elAudio.volume = this.volume;
 
@@ -345,15 +295,139 @@ export default class Audioplayer {
             this._displayCurrentTime.call(this);
         };
 
-        this.progressTimeRange = new CustomRange(+duration, "#audio-progress", callbackWhenEndGrabbing, callbackWhenGrabbing).init(this.currentTime);
+        this.progressTimeRange = new CustomRange(Number(duration), "#audio-progress", callbackWhenEndGrabbing, callbackWhenGrabbing).init(this.currentTime);
     }
 
     _setProgressVolumeRange() {
-        this.progressVolumeRange = new CustomRange(1, "#volume-progress", null, (v) => {
+        const callbackWhenGrabbing = (v) => {
             this.volume = v;
 
             this._setVolumeAudio.call(this);
-        }).init(this.volume);
+        };
+
+        this.progressVolumeRange = new CustomRange(1, "#volume-progress", null, callbackWhenGrabbing).init(this.volume);
+    }
+
+    _setKeyControls() {
+        const keys = ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Space"];
+
+        window.addEventListener("keydown", (e) => {
+            const key = e.code;
+
+            if (keys.includes(key)) {
+                e.preventDefault();
+            }
+
+            switch (key) {
+                case keys[0]:
+                    this.currentTime += 5;
+
+                    this._checkDurationAudio();
+                    this._displayCurrentTime(true);
+                    break;
+                case keys[1]:
+                    this.currentTime -= 5;
+
+                    this._checkDurationAudio();
+                    this._displayCurrentTime(true);
+                    break;
+                case keys[2]:
+                    this.volume += 0.1;
+
+                    this._checkVolume();
+                    this._setVolumeAudio();
+                    break;
+                case keys[3]:
+                    this.volume -= 0.1;
+
+                    this._checkVolume();
+                    this._setVolumeAudio();
+                    break;
+                case keys[4]:
+                    this.play = !this.play;
+
+                    this.playAudio(getStoragePath("audio", this.audioData.path));
+                    break;
+            }
+        });
+    }
+
+    setActiveClassToAudioById(activeId, selectorElements = ".audio", activeClassName = "audio--active") {
+        const audioElements = document.querySelectorAll(selectorElements);
+
+        if (!audioElements.length) {
+            return;
+        }
+
+        const activeEls = [...audioElements].filter((audio) => parseInt(audio.dataset.audioId) === activeId);
+
+        if (!activeEls.length) {
+            return;
+        }
+
+        audioElements.forEach((audio) => {
+            const playIcon = audio.querySelector(".play-icon");
+            const pauseIcon = audio.querySelector(".pause-icon");
+
+            audio.classList.remove(activeClassName);
+
+            this._changeShowIconsAtPlayBtn(playIcon, pauseIcon, true);
+        });
+
+        activeEls.forEach((activeEl) => {
+            const playIconAtActiveEl = activeEl.querySelector(".play-icon");
+            const pauseIconAtActiveEl = activeEl.querySelector(".pause-icon");
+
+            activeEl.classList.add(activeClassName);
+            this._changeShowIconsAtPlayBtn(playIconAtActiveEl, pauseIconAtActiveEl);
+        });
+    }
+
+    playAudio(audioSrc) {
+        if (audioSrc !== this.elAudio.src) {
+            this.elAudio.src = audioSrc;
+            this.play = true;
+        }
+
+        this._changeShowIconsAtPlayBtn(this.elIconPlay, this.elIconPause);
+        this._setDisabledControlsBtn();
+
+        const promise = this.elAudio.play();
+
+        if (promise instanceof Promise) {
+            promise
+                .then(() => {
+                    this._setDisabledControlsBtn(false);
+
+                    if (this.audioContext instanceof AudioContext && this.audioContext.state === "suspended") {
+                        this.audioContext.resume();
+                    }
+
+                    if (this.play) {
+                        this.elAudio.play();
+
+                        this._initAudioContext();
+
+                        if (!this.animIsActive) {
+                            this.animIsActive = true;
+
+                            this._setAudioBarsAnim();
+                        }
+                    } else {
+                        this.elAudio.pause();
+                    }
+                }).catch((err) => {
+                    throw err;
+                });
+        }
+    }
+
+    _setDataToAudioElements({ audio, name, poster, singer, time, }) {
+        this.elPoster.src = getStoragePath("posters", poster);
+        this.elAudioName.textContent = name;
+        this.elAudioSinger.textContent = singer;
+        this.elAudioTotalTime.textContent = time;
+        this.audioData = audio;
     }
 
     displayAudioData(audio, setTimeToElement = false) {
@@ -366,12 +440,7 @@ export default class Audioplayer {
 
         const { name, poster, singer, time, duration, id, } = audio;
 
-        this.elPoster.src = getStoragePath("posters", poster);
-        this.elAudioName.textContent = name;
-        this.elAudioSinger.textContent = singer;
-        this.elAudioTotalTime.textContent = time;
-        this.audioData = audio;
-
+        this._setDataToAudioElements({ audio, name, poster, singer, time, });
         this._setProgressTimeRange(duration);
         this._setProgressVolumeRange();
 
@@ -400,6 +469,7 @@ export default class Audioplayer {
         this._setEventEndedAudio();
         this._setEventSwitchingAudio(this.elPrevBtn, false);
         this._setEventSwitchingAudio(this.elNextBtn);
+        this._setKeyControls();
 
         return this;
     }

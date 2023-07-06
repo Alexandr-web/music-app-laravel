@@ -13,7 +13,7 @@
             <div class="welcome__block">
                 <div class="container">
                     <div class="welcome__block-content">
-                        <h2 class="title">Плейлисты</h2>
+                        <h2 class="title sticky-title">Плейлисты</h2>
                         @if (count($playlists))
                             <ul class="playlists">
                                 @foreach ($playlists as $data)
@@ -27,7 +27,7 @@
                         @endif
                     </div>
                     <div class="welcome__block-content">
-                        <h2 class="title">Аудио</h2>
+                        <h2 class="title sticky-title">Аудио</h2>
                         @if (count($audio))
                         <x-table-song :songs="$audio" playlistId="home" />
                         @else
