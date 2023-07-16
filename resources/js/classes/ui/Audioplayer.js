@@ -254,7 +254,13 @@ export default class Audioplayer {
 
             this.playAudio(getStoragePath("audio", this.audioData.path));
 
-            const { playIcon, pauseIcon, } = this._getActiveAudioElements();
+            const activeAudioElement = this._getActiveAudioElements();
+
+            if (!activeAudioElement) {
+                return;
+            }
+
+            const { pauseIcon, playIcon, } = activeAudioElement;
 
             this._changeShowIconsAtPlayBtn(playIcon, pauseIcon);
         });

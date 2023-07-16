@@ -5,6 +5,8 @@ import setTrackData from "../../scripts/setTrackData";
 export default (audioplayer) => {
     const playlistsList = document.querySelector(".playlists");
 
+    let pending = false;
+
     if (!playlistsList) {
         return;
     }
@@ -15,7 +17,14 @@ export default (audioplayer) => {
         const dataId = parseInt(playlist.dataset.id);
 
         playlist.addEventListener("click", () => {
-            new Playlist().getOne(dataId)
+            if (pending) {
+                return;
+            }
+
+            pending = true;
+
+            new Playlist()
+                .getOne(dataId)
                 .then(({ success, playlist: { id, poster, audio, name, }, }) => {
                     if (!success) {
                         return;
@@ -27,6 +36,8 @@ export default (audioplayer) => {
                         setTrackData(".modal-window-playlist .audio", audioplayer, JSON.parse(audio));
 
                         audioplayer.setActiveClassToAudioById(audioplayer.audioData.id);
+
+                        pending = false;
                     });
                 }).catch((err) => {
                     throw err;
